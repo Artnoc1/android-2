@@ -67,4 +67,5 @@
     <string name="help">ヘルプ</string>
     <string name="sign_out">ログアウト</string>
     <string name="no_client">クライアントがありません</string>
+    <string name="allow_calendar_access">カレンダーとリンク</string>
 </resources>

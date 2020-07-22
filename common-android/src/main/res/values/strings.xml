@@ -75,4 +75,6 @@
     <string name="search_for_clients">Search for clients</string>
     <string name="no_client">No client</string>
     <string name="create_client">Create client</string>
+    <string name="allow_calendar_access">Link calendars</string>
+    <string name="allow_calendar_message">Toggl needs access to your calendar in order to display events. Events are visible to you only and won’t appear in Reports.</string>
 </resources>

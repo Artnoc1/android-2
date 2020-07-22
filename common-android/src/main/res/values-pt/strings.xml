@@ -68,4 +68,5 @@
     <string name="help">Ajuda</string>
     <string name="sign_out">Sair</string>
     <string name="no_client">Sem Cliente</string>
+    <string name="allow_calendar_access">Vincular contas de calendário</string>
 </resources>
