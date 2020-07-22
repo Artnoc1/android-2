@@ -29,9 +29,7 @@ internal val previewButton = SettingsViewModel.ActionRow("Sign Out", SettingsTyp
 @Composable
 fun PreviewButtonLight() {
     ThemedPreview {
-        SettingsRow {
-            ActionSetting(previewButton)
-        }
+        SettingsRow(previewButton) { }
     }
 }
 
@@ -39,8 +37,6 @@ fun PreviewButtonLight() {
 @Composable
 fun PreviewButtonDark() {
     ThemedPreview(darkTheme = true) {
-        SettingsRow {
-            ActionSetting(previewButton)
-        }
+        SettingsRow(previewButton) { }
     }
 }

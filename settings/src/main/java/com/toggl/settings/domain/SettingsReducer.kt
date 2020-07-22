@@ -33,27 +33,6 @@ class SettingsReducer @Inject constructor(
         action: SettingsAction
     ): List<Effect<SettingsAction>> =
         when (action) {
-            is SettingsAction.SettingTapped -> when (action.selectedSetting) {
-                SettingsType.Name -> TODO()
-                SettingsType.Email -> TODO()
-                SettingsType.Workspace -> TODO()
-                SettingsType.DateFormat -> TODO()
-                SettingsType.TwentyFourHourClock -> effectOf(SettingsAction.Use24HourClockToggled)
-                SettingsType.DurationFormat -> TODO()
-                SettingsType.FirstDayOfTheWeek -> TODO()
-                SettingsType.GroupSimilar -> effectOf(SettingsAction.GroupSimilarTimeEntriesToggled)
-                SettingsType.CellSwipe -> effectOf(SettingsAction.CellSwipeActionsToggled)
-                SettingsType.ManualMode -> effectOf(SettingsAction.ManualModeToggled)
-                SettingsType.CalendarSettings -> effectOf(SettingsAction.AllowCalendarAccessToggled)
-                SettingsType.SmartAlert -> TODO()
-                SettingsType.SubmitFeedback -> TODO()
-                SettingsType.About -> TODO()
-                SettingsType.PrivacyPolicy -> TODO()
-                SettingsType.TermsOfService -> TODO()
-                SettingsType.Licenses -> TODO()
-                SettingsType.Help -> TODO()
-                SettingsType.SignOut -> effectOf(SettingsAction.SignOutTapped)
-            }
             is SettingsAction.UserPreferencesUpdated -> state.mutateWithoutEffects { copy(userPreferences = action.userPreferences) }
             is SettingsAction.ManualModeToggled -> state.updatePrefs { copy(manualModeEnabled = !manualModeEnabled) }
             is SettingsAction.Use24HourClockToggled -> state.updatePrefs { copy(twentyFourHourClockEnabled = !twentyFourHourClockEnabled) }

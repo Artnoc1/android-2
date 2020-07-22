@@ -12,7 +12,7 @@ import androidx.ui.core.setContent
 import com.toggl.architecture.extensions.select
 import com.toggl.settings.R
 import com.toggl.settings.domain.SettingsSelector
-import com.toggl.settings.ui.composables.SettingsPage
+import com.toggl.settings.ui.composables.pages.SettingsPage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
