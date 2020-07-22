@@ -6,6 +6,7 @@ import com.toggl.models.domain.SettingsType
 import com.toggl.models.domain.User
 import com.toggl.models.domain.UserPreferences
 import com.toggl.settings.R
+import java.lang.IllegalStateException
 import javax.inject.Inject
 
 class SettingsSelector @Inject constructor(
@@ -107,5 +108,7 @@ class SettingsSelector @Inject constructor(
                 context.getString(R.string.sign_out),
                 this
             )
+            SettingsType.AllowCalendarAccess,
+            is SettingsType.Calendar -> throw IllegalStateException("This settings should not be used in the main settings page")
         }
 }

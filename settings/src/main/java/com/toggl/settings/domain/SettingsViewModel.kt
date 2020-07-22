@@ -13,3 +13,8 @@ sealed class SettingsViewModel {
 }
 
 data class SettingsSectionViewModel(val title: String, val settingsOptions: List<SettingsViewModel>)
+
+sealed class CalendarSettingsViewModel {
+    data class AccessGranted(val accessGranted: Boolean) : CalendarSettingsViewModel()
+    data class CalendarSection(val section: SettingsSectionViewModel) : CalendarSettingsViewModel()
+}

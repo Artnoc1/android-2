@@ -1,23 +1,25 @@
 package com.toggl.models.domain
 
-enum class SettingsType {
-    Name,
-    Email,
-    Workspace,
-    DateFormat,
-    TwentyFourHourClock,
-    DurationFormat,
-    FirstDayOfTheWeek,
-    GroupSimilar,
-    CellSwipe,
-    ManualMode,
-    CalendarSettings,
-    SmartAlert,
-    SubmitFeedback,
-    About,
-    PrivacyPolicy,
-    TermsOfService,
-    Licenses,
-    Help,
-    SignOut
+sealed class SettingsType {
+    object Name : SettingsType()
+    object Email : SettingsType()
+    object Workspace : SettingsType()
+    object DateFormat : SettingsType()
+    object TwentyFourHourClock : SettingsType()
+    object DurationFormat : SettingsType()
+    object FirstDayOfTheWeek : SettingsType()
+    object GroupSimilar : SettingsType()
+    object CellSwipe : SettingsType()
+    object ManualMode : SettingsType()
+    object CalendarSettings : SettingsType()
+    object AllowCalendarAccess : SettingsType()
+    data class Calendar(val id: String) : SettingsType()
+    object SmartAlert : SettingsType()
+    object SubmitFeedback : SettingsType()
+    object About : SettingsType()
+    object PrivacyPolicy : SettingsType()
+    object TermsOfService : SettingsType()
+    object Licenses : SettingsType()
+    object Help : SettingsType()
+    object SignOut : SettingsType()
 }
