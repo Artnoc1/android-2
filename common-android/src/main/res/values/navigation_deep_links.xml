@@ -9,17 +9,8 @@
     <string name="deep_link_welcome" translatable="false">toggl://welcome</string>
     <string name="deep_link_contextual_menu" translatable="false">toggl://contextualMenu</string>
     <string name="deep_link_settings" translatable="false">toggl://settings</string>
-    <string name="deep_link_settings_workspace" translatable="false">toggl://settings/workspace</string>
-    <string name="deep_link_settings_date_format" translatable="false">toggl://settings/dateformat</string>
-    <string name="deep_link_settings_duration_format" translatable="false">toggl://settings/durationformat</string>
-    <string name="deep_link_settings_first_day_of_the_week" translatable="false">toggl://settings/firstdayoftheweek</string>
     <string name="deep_link_settings_calendar_settings" translatable="false">toggl://settings/calendarsettings</string>
-    <string name="deep_link_settings_smart_alert" translatable="false">toggl://settings/smartalert</string>
     <string name="deep_link_settings_submit_feedback" translatable="false">toggl://settings/submitfeedback</string>
     <string name="deep_link_settings_about" translatable="false">toggl://settings/about</string>
-    <string name="deep_link_settings_privacy_policy" translatable="false">toggl://settings/privacypolicy</string>
-    <string name="deep_link_settings_terms_of_service" translatable="false">toggl://settings/termsofservice</string>
-    <string name="deep_link_settings_licenses" translatable="false">toggl://settings/licenses</string>
-    <string name="deep_link_settings_help" translatable="false">toggl://settings/help</string>
     <string name="deep_link_login" translatable="false">toggl://login</string>
 </resources>

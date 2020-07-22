@@ -5,7 +5,6 @@ import com.toggl.common.DeepLinkUrls
 import com.toggl.common.feature.models.SelectedCalendarItem
 import com.toggl.models.domain.EditableProject
 import com.toggl.models.domain.EditableTimeEntry
-import com.toggl.models.domain.SettingsType
 
 sealed class Route {
     object Welcome : Route()
@@ -15,7 +14,7 @@ sealed class Route {
     data class Project(override val parameter: EditableProject) : Route(), ParameterRoute<EditableProject>
     data class ContextualMenu(override val parameter: SelectedCalendarItem) : Route(), ParameterRoute<SelectedCalendarItem>
     object Settings : Route()
-    data class SettingsEdit(override val parameter: SettingsType) : Route(), ParameterRoute<SettingsType>
+    object CalendarSettings : Route()
 }
 
 interface ParameterRoute<P> {
@@ -31,7 +30,7 @@ fun Route.isSameTypeAs(otherRoute: Route) =
         is Route.Project -> otherRoute is Route.Project
         is Route.ContextualMenu -> otherRoute is Route.ContextualMenu
         Route.Settings -> otherRoute is Route.Settings
-        is Route.SettingsEdit -> otherRoute is Route.SettingsEdit
+        Route.CalendarSettings -> otherRoute is Route.CalendarSettings
     }
 
 fun Route.deepLink(deepLinks: DeepLinkUrls): Uri {
@@ -43,26 +42,6 @@ fun Route.deepLink(deepLinks: DeepLinkUrls): Uri {
         is Route.Project -> deepLinks.projectDialog
         is Route.ContextualMenu -> deepLinks.contextualMenu
         Route.Settings -> deepLinks.settings
-        is Route.SettingsEdit -> when (this.parameter) {
-            SettingsType.Workspace -> deepLinks.workspace
-            SettingsType.DateFormat -> deepLinks.dateFormat
-            SettingsType.DurationFormat -> deepLinks.durationFormat
-            SettingsType.FirstDayOfTheWeek -> deepLinks.firstDayOfTheWeek
-            SettingsType.CalendarSettings -> deepLinks.calendarSettings
-            SettingsType.SmartAlert -> deepLinks.smartAlert
-            SettingsType.SubmitFeedback -> deepLinks.submitFeedback
-            SettingsType.About -> deepLinks.about
-            SettingsType.PrivacyPolicy -> deepLinks.privacyPolicy
-            SettingsType.TermsOfService -> deepLinks.termsOfService
-            SettingsType.Licenses -> deepLinks.licenses
-            SettingsType.Help -> deepLinks.help
-            SettingsType.Name -> TODO()
-            SettingsType.Email -> TODO()
-            SettingsType.TwentyFourHourClock -> TODO()
-            SettingsType.GroupSimilar -> TODO()
-            SettingsType.CellSwipe -> TODO()
-            SettingsType.ManualMode -> TODO()
-            SettingsType.SignOut -> TODO()
-        }
+        Route.CalendarSettings -> deepLinks.calendarSettings
     }
 }

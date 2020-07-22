@@ -68,53 +68,12 @@
         <deepLink app:uri="@string/deep_link_settings" />
     </fragment>
 
-    <dialog
-        android:id="@+id/settings_workspace"
-        tools:layout="@layout/fragment_edit_settings"
-        android:name="com.toggl.settings.ui.EditSettingsFragment"
-        android:label="EditSettingsDialog">
-        <deepLink app:uri="@string/deep_link_settings_workspace" />
-    </dialog>
-
-    <dialog
-        android:id="@+id/settings_date_format"
-        tools:layout="@layout/fragment_edit_settings"
-        android:name="com.toggl.settings.ui.EditSettingsFragment"
-        android:label="EditSettingsDialog">
-        <deepLink app:uri="@string/deep_link_settings_date_format" />
-    </dialog>
-
-    <dialog
-        android:id="@+id/settings_duration_format"
-        tools:layout="@layout/fragment_edit_settings"
-        android:name="com.toggl.settings.ui.EditSettingsFragment"
-        android:label="EditSettingsDialog">
-        <deepLink app:uri="@string/deep_link_settings_duration_format" />
-    </dialog>
-
-    <dialog
-        android:id="@+id/settings_first_day_of_the_week"
-        tools:layout="@layout/fragment_edit_settings"
-        android:name="com.toggl.settings.ui.EditSettingsFragment"
-        android:label="EditSettingsDialog">
-        <deepLink app:uri="@string/deep_link_settings_first_day_of_the_week" />
-    </dialog>
-
-    <dialog
+    <fragment
         android:id="@+id/settings_calendar_settings"
-        tools:layout="@layout/fragment_edit_settings"
-        android:name="com.toggl.settings.ui.EditSettingsFragment"
-        android:label="EditSettingsDialog">
+        android:name="com.toggl.settings.ui.CalendarSettingsFragment"
+        android:label="CalendarSettingsDialog">
         <deepLink app:uri="@string/deep_link_settings_calendar_settings" />
-    </dialog>
-
-    <dialog
-        android:id="@+id/settings_smart_alert"
-        tools:layout="@layout/fragment_edit_settings"
-        android:name="com.toggl.settings.ui.EditSettingsFragment"
-        android:label="EditSettingsDialog">
-        <deepLink app:uri="@string/deep_link_settings_smart_alert" />
-    </dialog>
+    </fragment>
 
     <dialog
         android:id="@+id/settings_submit_feedback"
@@ -130,38 +89,6 @@
         android:name="com.toggl.settings.ui.EditSettingsFragment"
         android:label="EditSettingsDialog">
         <deepLink app:uri="@string/deep_link_settings_about" />
-    </dialog>
-
-    <dialog
-        android:id="@+id/settings_privacy_policy"
-        tools:layout="@layout/fragment_edit_settings"
-        android:name="com.toggl.settings.ui.EditSettingsFragment"
-        android:label="EditSettingsDialog">
-        <deepLink app:uri="@string/deep_link_settings_privacy_policy" />
-    </dialog>
-
-    <dialog
-        android:id="@+id/settings_terms_of_service"
-        tools:layout="@layout/fragment_edit_settings"
-        android:name="com.toggl.settings.ui.EditSettingsFragment"
-        android:label="EditSettingsDialog">
-        <deepLink app:uri="@string/deep_link_settings_terms_of_service" />
-    </dialog>
-
-    <dialog
-        android:id="@+id/settings_licenses"
-        tools:layout="@layout/fragment_edit_settings"
-        android:name="com.toggl.settings.ui.EditSettingsFragment"
-        android:label="EditSettingsDialog">
-        <deepLink app:uri="@string/deep_link_settings_licenses" />
-    </dialog>
-
-    <dialog
-        android:id="@+id/settings_help"
-        tools:layout="@layout/fragment_edit_settings"
-        android:name="com.toggl.settings.ui.EditSettingsFragment"
-        android:label="EditSettingsDialog">
-        <deepLink app:uri="@string/deep_link_settings_help" />
     </dialog>
 
 </navigation>
