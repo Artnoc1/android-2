@@ -9,8 +9,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 interface Store<State, Action : Any> {
@@ -66,6 +68,7 @@ class FlowStore<State, Action : Any> private constructor(
         fun <State, Action : Any> create(
             initialState: State,
             reducer: Reducer<State, Action>,
+            subscription: Subscription<State, Action>,
             dispatcherProvider: DispatcherProvider,
             storeScopeProvider: StoreScopeProvider
         ): Store<State, Action> {
@@ -93,6 +96,10 @@ class FlowStore<State, Action : Any> private constructor(
                     dispatch(effectActions)
                 }
             }
+
+            subscription.subscribe(state)
+                .onEach { action -> dispatch(listOf(action)) }
+                .launchIn(storeScope)
 
             return FlowStore(state, dispatch)
         }

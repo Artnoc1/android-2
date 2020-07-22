@@ -91,7 +91,6 @@ class ProjectReducer @Inject constructor(
                 val (token, currentQuery) = editableTimeEntry.description.findTokenAndQueryMatchesForAutocomplete(projectToken, cursorPosition)
                 val delimiter = "$token$currentQuery"
                 copy(
-                    projects = projects + (action.project.id to action.project),
                     editableTimeEntry = editableTimeEntry.copy(
                         projectId = action.project.id,
                         description = editableTimeEntry.description.substringBeforeLast(delimiter)

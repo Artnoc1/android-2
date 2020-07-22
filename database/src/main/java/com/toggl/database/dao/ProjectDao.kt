@@ -6,11 +6,12 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.toggl.database.models.DatabaseProject
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ProjectDao {
     @Query("SELECT * FROM projects")
-    fun getAll(): List<DatabaseProject>
+    fun getAll(): Flow<List<DatabaseProject>>
 
     @Query("SELECT * FROM projects WHERE id = :id")
     fun getOne(id: Long): DatabaseProject

@@ -3,6 +3,7 @@ package com.toggl.repository.interfaces
 import com.toggl.models.domain.TimeEntry
 import com.toggl.repository.dto.CreateTimeEntryDTO
 import com.toggl.repository.dto.StartTimeEntryDTO
+import kotlinx.coroutines.flow.Flow
 
 data class StartTimeEntryResult(
     val startedTimeEntry: TimeEntry,
@@ -10,7 +11,7 @@ data class StartTimeEntryResult(
 )
 
 interface TimeEntryRepository {
-    suspend fun loadTimeEntries(): List<TimeEntry>
+    fun loadTimeEntries(): Flow<List<TimeEntry>>
     suspend fun timeEntriesCount(): Int
     suspend fun startTimeEntry(startTimeEntryDTO: StartTimeEntryDTO): StartTimeEntryResult
     suspend fun createTimeEntry(createTimeEntryDTO: CreateTimeEntryDTO): TimeEntry

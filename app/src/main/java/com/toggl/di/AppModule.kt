@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import com.toggl.architecture.DispatcherProvider
 import com.toggl.architecture.StoreScopeProvider
+import com.toggl.architecture.core.CompositeSubscription
 import com.toggl.architecture.core.FlowStore
 import com.toggl.architecture.core.Reducer
 import com.toggl.architecture.core.Store
@@ -64,12 +65,14 @@ object AppModule {
     @Singleton
     fun appStore(
         @ProvideLoggingReducer reducer: Reducer<AppState, AppAction>,
+        subscription: CompositeSubscription<AppState, AppAction>,
         dispatcherProvider: DispatcherProvider,
         application: Application
     ): Store<AppState, AppAction> {
         return FlowStore.create(
             initialState = AppState(),
             reducer = reducer,
+            subscription = subscription,
             dispatcherProvider = dispatcherProvider,
             storeScopeProvider = application as StoreScopeProvider
         )

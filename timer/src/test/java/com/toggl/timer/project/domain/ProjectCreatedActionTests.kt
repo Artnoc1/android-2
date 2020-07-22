@@ -3,10 +3,8 @@ package com.toggl.timer.project.domain
 import com.toggl.models.domain.EditableProject
 import com.toggl.models.domain.EditableTimeEntry
 import com.toggl.timer.common.CoroutineTest
-import com.toggl.timer.common.testReduce
 import com.toggl.timer.common.testReduceEffects
 import com.toggl.timer.common.testReduceState
-import io.kotlintest.matchers.collections.shouldContain
 import io.kotlintest.matchers.types.shouldNotBeNull
 import io.kotlintest.shouldBe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -23,21 +21,6 @@ internal class ProjectCreatedActionTests : CoroutineTest() {
         createProject(2, "Project 2", clientId = 1, workspaceId = 1),
         createProject(3, "Project 3", clientId = 1, workspaceId = 1)
     )
-
-    @Test
-    fun `adds the created project to the list of projects`() = runBlockingTest {
-
-        val initialState = createInitialState(EditableProject.createValidBecauseClientsAreDifferent(), listOfProjects)
-        val newProject = createProject(4, "Project 4")
-
-        reducer.testReduce(
-            initialState = initialState,
-            action = ProjectAction.ProjectCreated(newProject)
-        ) { state, _ ->
-            state.projects.count() shouldBe (listOfProjects.size + 1)
-            state.projects.values.shouldContain(newProject)
-        }
-    }
 
     @Test
     fun `updates the time entry description`() = runBlockingTest {

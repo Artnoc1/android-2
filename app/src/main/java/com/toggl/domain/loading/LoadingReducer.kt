@@ -11,21 +11,17 @@ import com.toggl.common.feature.extensions.mutateWithoutEffects
 import com.toggl.common.feature.extensions.returnEffect
 import com.toggl.common.feature.navigation.Route
 import com.toggl.repository.interfaces.ClientRepository
-import com.toggl.repository.interfaces.ProjectRepository
 import com.toggl.repository.interfaces.SettingsRepository
 import com.toggl.repository.interfaces.TagRepository
 import com.toggl.repository.interfaces.TaskRepository
-import com.toggl.repository.interfaces.TimeEntryRepository
-import com.toggl.repository.interfaces.UserRepository
 import com.toggl.repository.interfaces.WorkspaceRepository
+import com.toggl.repository.interfaces.UserRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class LoadingReducer @Inject constructor(
-    private val projectRepository: ProjectRepository,
     private val clientRepository: ClientRepository,
-    private val timeEntryRepository: TimeEntryRepository,
     private val workspaceRepository: WorkspaceRepository,
     private val tagsRepository: TagRepository,
     private val taskRepository: TaskRepository,
@@ -46,11 +42,9 @@ class LoadingReducer @Inject constructor(
                 if (action.user == null) state.mutateWithoutEffects { copy(user = Loadable.Uninitialized, backStack = listOf(Route.Login)) }
                 else state.mutate { copy(user = Loadable.Loaded(action.user), backStack = listOf(Route.Timer)) } returnEffect effects(
                     LoadWorkspacesEffect(workspaceRepository, dispatcherProvider),
-                    LoadProjectsEffect(projectRepository, dispatcherProvider),
                     LoadClientsEffect(clientRepository, dispatcherProvider),
                     LoadTagsEffect(tagsRepository, dispatcherProvider),
                     LoadTasksEffect(taskRepository, dispatcherProvider),
-                    LoadTimeEntriesEffect(timeEntryRepository, dispatcherProvider),
                     LoadUserPreferencesEffect(settingsRepository, dispatcherProvider)
                 )
             is LoadingAction.TimeEntriesLoaded -> state.mutateWithoutEffects { copy(timeEntries = action.timeEntries) }

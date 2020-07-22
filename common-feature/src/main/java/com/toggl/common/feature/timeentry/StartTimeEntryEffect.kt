@@ -14,6 +14,6 @@ class StartTimeEntryEffect(
     override suspend fun execute(): TimeEntryAction? = withContext(dispatcherProvider.io) {
         repository
             .startTimeEntry(startTimeEntryDTO)
-            .let { TimeEntryAction.TimeEntryStarted(it.startedTimeEntry, it.stoppedTimeEntry) }
+            .let { TimeEntryAction.TimeEntriesUpdated }
     }
 }

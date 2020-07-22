@@ -7,4 +7,5 @@ dependencies {
 
     implementation Libs.Kotlin.stdlib
     api Libs.AndroidX.Room.common
+    api Libs.AndroidX.Room.ktx
 }

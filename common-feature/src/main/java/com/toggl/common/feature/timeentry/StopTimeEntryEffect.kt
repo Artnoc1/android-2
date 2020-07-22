@@ -12,6 +12,6 @@ class StopTimeEntryEffect(
     override suspend fun execute(): TimeEntryAction? = withContext(dispatcherProvider.io) {
         repository
             .stopRunningTimeEntry()
-            ?.let(TimeEntryAction::TimeEntryUpdated)
+            ?.let { TimeEntryAction.TimeEntriesUpdated }
     }
 }

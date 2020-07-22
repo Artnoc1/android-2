@@ -27,9 +27,15 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
 import io.mockk.verify
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOf
 import java.time.Duration
 import java.time.OffsetDateTime
 
+@InternalCoroutinesApi
+@ExperimentalCoroutinesApi
 class RepositoryTest : StringSpec() {
     private val tagDao = mockk<TagDao>()
     private val projectDao = mockk<ProjectDao>()
@@ -49,7 +55,7 @@ class RepositoryTest : StringSpec() {
 
     init {
         "loadTimeEntries calls getAllTimeEntriesWithTags on the DAO" {
-            every { timeEntryDao.getAllTimeEntriesWithTags() } returns listOf()
+            every { timeEntryDao.getAllTimeEntriesWithTags() } returns flowOf(emptyList())
 
             val loaded = repository.loadTimeEntries()
 
@@ -59,7 +65,8 @@ class RepositoryTest : StringSpec() {
                 timeService wasNot called
                 clientDao wasNot called
             }
-            loaded.shouldBeEmpty()
+
+            loaded.collect { timeEntries -> timeEntries.shouldBeEmpty() }
         }
 
         "loadClients calls getAll on the DAO" {

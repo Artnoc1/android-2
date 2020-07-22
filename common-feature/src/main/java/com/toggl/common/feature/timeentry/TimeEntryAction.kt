@@ -12,9 +12,7 @@ sealed class TimeEntryAction {
     data class StartTimeEntry(val startTimeEntryDTO: StartTimeEntryDTO) : TimeEntryAction()
     data class EditTimeEntry(val timeEntry: TimeEntry) : TimeEntryAction()
 
-    data class TimeEntryDeleted(val deletedTimeEntry: TimeEntry) : TimeEntryAction()
-    data class TimeEntryUpdated(val updatedTimeEntry: TimeEntry) : TimeEntryAction()
-    data class TimeEntryStarted(val startedTimeEntry: TimeEntry, val stoppedTimeEntry: TimeEntry?) : TimeEntryAction()
+    object TimeEntriesUpdated : TimeEntryAction()
 
     companion object {
         fun <Action> fromTimeEntryActionHolder(action: Action): TimeEntryAction? =
@@ -30,9 +28,7 @@ fun TimeEntryAction.formatForDebug() =
         is TimeEntryAction.CreateTimeEntry -> "Create time entry $createTimeEntryDTO"
         is TimeEntryAction.StartTimeEntry -> "Start time entry $startTimeEntryDTO"
         is TimeEntryAction.EditTimeEntry -> "Edit time entry $timeEntry"
-        is TimeEntryAction.TimeEntryDeleted -> "Deleted time entry with id ${deletedTimeEntry.id}"
-        is TimeEntryAction.TimeEntryUpdated -> "Time entry with id ${updatedTimeEntry.id} updated to $updatedTimeEntry"
-        is TimeEntryAction.TimeEntryStarted -> "Time entry started $startedTimeEntry"
+        TimeEntryAction.TimeEntriesUpdated -> "Time Entries updated"
     }
 
 interface TimeEntryActionHolder {

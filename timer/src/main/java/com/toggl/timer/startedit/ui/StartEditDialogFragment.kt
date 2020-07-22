@@ -354,7 +354,8 @@ class StartEditDialogFragment : BottomSheetDialogFragment() {
         val newEditableTimeEntry = new.editableTimeEntry
 
         return oldEditableTimeEntry.projectId == newEditableTimeEntry.projectId &&
-            oldEditableTimeEntry.tagIds == newEditableTimeEntry.tagIds
+            oldEditableTimeEntry.tagIds == newEditableTimeEntry.tagIds &&
+            old.projects == new.projects
     }
 
     @FlowPreview

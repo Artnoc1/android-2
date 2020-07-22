@@ -14,6 +14,6 @@ class DeleteTimeEntryEffect(
     override suspend fun execute(): TimeEntryAction? = withContext(dispatcherProvider.io) {
         repository
             .deleteTimeEntry(timeEntryToDelete)
-            .let(TimeEntryAction::TimeEntryDeleted)
+            .let { TimeEntryAction.TimeEntriesUpdated }
     }
 }

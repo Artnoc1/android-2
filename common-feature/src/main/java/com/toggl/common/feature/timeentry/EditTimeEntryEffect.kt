@@ -14,6 +14,6 @@ class EditTimeEntryEffect(
     override suspend fun execute(): TimeEntryAction? = withContext(dispatcherProvider.io) {
         repository
             .editTimeEntry(timeEntry)
-            .let(TimeEntryAction::TimeEntryUpdated)
+            .let { TimeEntryAction.TimeEntriesUpdated }
     }
 }

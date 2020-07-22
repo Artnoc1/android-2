@@ -10,6 +10,7 @@ import androidx.room.Update
 import com.toggl.database.models.DatabaseTimeEntry
 import com.toggl.database.models.DatabaseTimeEntryTag
 import com.toggl.database.models.DatabaseTimeEntryWithTags
+import kotlinx.coroutines.flow.Flow
 import java.time.Duration
 import java.time.OffsetDateTime
 
@@ -80,9 +81,8 @@ interface TimeEntryDao {
 
     // TimeEntries & Tags
 
-    @Transaction
     @Query("SELECT * FROM time_entries WHERE NOT isDeleted")
-    fun getAllTimeEntriesWithTags(): List<DatabaseTimeEntryWithTags>
+    fun getAllTimeEntriesWithTags(): Flow<List<DatabaseTimeEntryWithTags>>
 
     @Query("SELECT count(*) FROM time_entries WHERE NOT isDeleted")
     fun count(): Int

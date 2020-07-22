@@ -9,7 +9,9 @@ import com.toggl.models.domain.Project
 import com.toggl.models.domain.Tag
 import com.toggl.models.domain.Task
 import com.toggl.models.domain.TimeEntry
+import com.toggl.models.domain.User
 import com.toggl.models.validation.ApiToken
+import com.toggl.models.validation.Email
 import io.kotlintest.matchers.collections.shouldBeEmpty
 import io.kotlintest.matchers.types.shouldBeTypeOf
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -18,6 +20,20 @@ import org.junit.jupiter.api.Assertions
 import java.time.Duration
 import java.time.OffsetDateTime
 
+fun createUser(
+    id: Long,
+    token: String = "12345678901234567890123456789012",
+    mail: String = "test@toggl.com",
+    name: String = "User test name",
+    defaultWorkspaceId: Long = 1
+) = User(
+    id,
+    ApiToken.from(token) as ApiToken.Valid,
+    Email.from(mail) as Email.Valid,
+    name,
+    defaultWorkspaceId
+)
+
 fun createTimeEntry(
     id: Long,
     description: String = "",
@@ -25,19 +41,18 @@ fun createTimeEntry(
     duration: Duration? = null,
     billable: Boolean = false,
     projectId: Long? = null
-) =
-    TimeEntry(
-        id,
-        description,
-        startTime,
-        duration,
-        billable,
-        1,
-        projectId,
-        null,
-        false,
-        emptyList()
-    )
+) = TimeEntry(
+    id,
+    description,
+    startTime,
+    duration,
+    billable,
+    1,
+    projectId,
+    null,
+    false,
+    emptyList()
+)
 
 fun createProject(
     id: Long,
