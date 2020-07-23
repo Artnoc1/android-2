@@ -34,7 +34,6 @@ class CalendarSettingsSelector @Inject constructor(
                 }
 
             yieldAll(calendarSections.map(CalendarSettingsViewModel::CalendarSection))
-
         }.toList()
     }
 }

@@ -60,7 +60,7 @@ fun CalendarSettingsPageContent(
         },
         bodyContent = {
             LazyColumnItems(calendarSettingsViewModels) { viewModel ->
-                when(viewModel) {
+                when (viewModel) {
                     is CalendarSettingsViewModel.AccessGranted -> {
                         val context = ContextAmbient.current
                         val setting = SettingsViewModel.Toggle(

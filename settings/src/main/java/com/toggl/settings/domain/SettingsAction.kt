@@ -50,7 +50,7 @@ fun SettingsAction.formatForDebug() =
         is SettingsAction.SmartAlertsOptionSelected -> "Smart alerts options toggled to $smartAlertsOption"
         is SettingsAction.UserCalendarIntegrationToggled -> "Toggled calendar integration for calendar $calendarId"
         is SettingsAction.AllowCalendarAccessToggled -> "Toggled calendar access"
-        is SettingsAction.CalendarPermissionReceived -> "Calendar permission was ${if(granted) "" else "not"} granted"
+        is SettingsAction.CalendarPermissionReceived -> "Calendar permission was ${if (granted) "" else "not"} granted"
         is SettingsAction.SendFeedbackTapped -> "Send feedback message: $feedbackMessage"
         is SettingsAction.SetSendFeedbackError -> "Setting SendFeedback error to $throwable"
         SettingsAction.CalendarPermissionRequested -> "Calendar permission requested"
