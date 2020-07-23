@@ -8,9 +8,11 @@ import androidx.ui.foundation.Text
 import androidx.ui.foundation.lazy.LazyColumnItems
 import androidx.ui.layout.Column
 import androidx.ui.layout.padding
+import androidx.ui.material.IconButton
 import androidx.ui.material.MaterialTheme
 import androidx.ui.material.Scaffold
 import androidx.ui.material.TopAppBar
+import androidx.ui.material.icons.filled.ArrowBack
 import androidx.ui.res.stringResource
 import androidx.ui.tooling.preview.Preview
 import com.toggl.models.domain.SettingsType
@@ -52,7 +54,12 @@ fun CalendarSettingsPageContent(
             TopAppBar(
                 backgroundColor = MaterialTheme.colors.surface,
                 contentColor = MaterialTheme.colors.onSurface,
-                title = { Text(text = stringResource(R.string.settings)) }
+                title = { Text(text = stringResource(R.string.settings)) },
+                navigationIcon = {
+                    IconButton(onClick = { }) {
+                        androidx.ui.foundation.Icon(androidx.ui.material.icons.Icons.Filled.ArrowBack)
+                    }
+                }
             )
         },
         bodyContent = {
