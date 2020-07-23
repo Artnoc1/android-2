@@ -1,6 +1,11 @@
 package com.toggl.common.feature.navigation
 
 import android.os.Bundle
+import android.view.View
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.OnLifecycleEvent
 import androidx.navigation.NavDestination
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
@@ -10,8 +15,9 @@ import javax.inject.Singleton
 
 @Singleton
 @Navigator.Name("bottom_sheet")
-class BottomSheetNavigator @Inject constructor() : Navigator<BottomSheetNavigator.Destination>() {
-    var bottomSheetBehavior: BottomSheetBehavior<*>? = null
+class BottomSheetNavigator @Inject constructor() : Navigator<BottomSheetNavigator.Destination>(), LifecycleObserver {
+    private var bottomSheetBehavior: BottomSheetBehavior<*>? = null
+    private var bottomSheetManualDismissCallback: (() -> Unit)? = null
 
     override fun navigate(
         destination: Destination,
@@ -19,17 +25,54 @@ class BottomSheetNavigator @Inject constructor() : Navigator<BottomSheetNavigato
         navOptions: NavOptions?,
         navigatorExtras: Extras?
     ): NavDestination? {
-        bottomSheetBehavior?.state = BottomSheetBehavior.STATE_EXPANDED
+        bottomSheetBehavior?.let {
+            it.state = BottomSheetBehavior.STATE_EXPANDED
+            it.addBottomSheetCallback(dismissCallback)
+        }
         return destination
     }
 
     override fun popBackStack(): Boolean {
-        bottomSheetBehavior?.state = BottomSheetBehavior.STATE_HIDDEN
+        bottomSheetBehavior?.let {
+            it.removeBottomSheetCallback(dismissCallback)
+            if (it.state != BottomSheetBehavior.STATE_HIDDEN) {
+                it.state = BottomSheetBehavior.STATE_HIDDEN
+            }
+        }
         return true
     }
 
     override fun createDestination(): Destination =
         Destination()
+
+    fun setupWithBehaviour(
+        behavior: BottomSheetBehavior<*>,
+        lifecycleOwner: LifecycleOwner,
+        onBottomSheetManualDismissCallback: () -> Unit
+    ) {
+        behavior.addBottomSheetCallback(dismissCallback)
+        bottomSheetManualDismissCallback = onBottomSheetManualDismissCallback
+        bottomSheetBehavior = behavior
+        lifecycleOwner.lifecycle.addObserver(this)
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    fun onDestroy() {
+        bottomSheetManualDismissCallback = null
+        bottomSheetBehavior?.removeBottomSheetCallback(dismissCallback)
+        bottomSheetBehavior = null
+    }
+
+    private var dismissCallback = object : BottomSheetBehavior.BottomSheetCallback() {
+        override fun onSlide(bottomSheet: View, slideOffset: Float) {
+        }
+
+        override fun onStateChanged(bottomSheet: View, newState: Int) {
+            if (newState == BottomSheetBehavior.STATE_HIDDEN) {
+                bottomSheetManualDismissCallback?.invoke()
+            }
+        }
+    }
 
     class Destination : NavDestination("bottom_sheet")
 }

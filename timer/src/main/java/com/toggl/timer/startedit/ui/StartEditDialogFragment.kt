@@ -36,14 +36,15 @@ import com.toggl.common.extensions.formatForDisplayingDate
 import com.toggl.common.extensions.formatForDisplayingTime
 import com.toggl.common.extensions.performClickHapticFeedback
 import com.toggl.common.extensions.requestFocus
+import com.toggl.common.extensions.setOnBackKeyEventUpCallback
 import com.toggl.common.feature.timeentry.extensions.isRepresentingGroup
 import com.toggl.common.feature.timeentry.extensions.wasNotYetPersisted
+import com.toggl.common.services.time.TimeService
 import com.toggl.common.sheet.AlphaSlideAction
 import com.toggl.common.sheet.BottomSheetCallback
 import com.toggl.common.ui.Position
 import com.toggl.common.ui.above
 import com.toggl.common.ui.showTooltip
-import com.toggl.common.services.time.TimeService
 import com.toggl.models.common.AutocompleteSuggestion
 import com.toggl.models.domain.EditableTimeEntry
 import com.toggl.models.domain.Workspace
@@ -119,6 +120,7 @@ class StartEditDialogFragment : BottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(DialogFragment.STYLE_NORMAL, R.style.BottomSheetDialog)
+        isCancelable = false
     }
 
     override fun onCreateView(
@@ -139,6 +141,8 @@ class StartEditDialogFragment : BottomSheetDialogFragment() {
                     }
                 }
                 .launchIn(lifecycleScope)
+
+            bottomSheetDialog.setOnBackKeyEventUpCallback { store.dispatch(StartEditAction.Close) }
         }
     }
 
@@ -146,7 +150,6 @@ class StartEditDialogFragment : BottomSheetDialogFragment() {
     @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val bottomSheetBehavior = (dialog as BottomSheetDialog).behavior
 
         autocompletePopup = AutocompleteSuggestionsPopup(
@@ -361,6 +364,7 @@ class StartEditDialogFragment : BottomSheetDialogFragment() {
     @FlowPreview
     @ExperimentalCoroutinesApi
     override fun onDestroyView() {
+        dialog?.setOnKeyListener(null)
         bottomSheetCallback.clear()
         autocompletePopup.dismiss()
         time_entry_description.clearDescriptionChangedListeners()

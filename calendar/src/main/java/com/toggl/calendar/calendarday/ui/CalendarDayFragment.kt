@@ -5,14 +5,12 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.toggl.calendar.R
 import com.toggl.calendar.calendarday.domain.CalendarDayAction
 import com.toggl.calendar.calendarday.domain.CalendarItemsSelector
-import dagger.hilt.android.AndroidEntryPoint
-import com.toggl.common.feature.navigation.BottomSheetNavigator
 import com.toggl.common.services.permissions.PermissionRequesterService
 import com.toggl.common.services.permissions.requestCalendarPermissionIfNeeded
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_calendarday.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -26,7 +24,6 @@ import kotlin.contracts.ExperimentalContracts
 @AndroidEntryPoint
 class CalendarDayFragment : Fragment(R.layout.fragment_calendarday) {
 
-    @Inject lateinit var bottomSheetNavigator: BottomSheetNavigator
     @Inject lateinit var calendarItemsSelector: CalendarItemsSelector
     @Inject lateinit var permissionService: PermissionRequesterService
 
@@ -72,14 +69,5 @@ class CalendarDayFragment : Fragment(R.layout.fragment_calendarday) {
             .onEach {
                 store.dispatch(CalendarDayAction.TimeEntryDragged(it))
             }.launchIn(lifecycleScope)
-
-        val behavior = BottomSheetBehavior.from(contextual_menu_bottom_sheet)
-        behavior.state = BottomSheetBehavior.STATE_HIDDEN
-        bottomSheetNavigator.bottomSheetBehavior = behavior
-    }
-
-    override fun onDestroyView() {
-        bottomSheetNavigator.bottomSheetBehavior = null
-        super.onDestroyView()
     }
 }

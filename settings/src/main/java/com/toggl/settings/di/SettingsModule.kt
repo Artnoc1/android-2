@@ -4,6 +4,7 @@ import android.content.Context
 import com.toggl.settings.domain.SettingsSectionBlueprint
 import com.toggl.settings.domain.SettingsSelector
 import com.toggl.settings.domain.SettingsStructureBlueprint
+import com.toggl.settings.domain.SingleChoiceSettingSelector
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,4 +28,8 @@ object FragmentSettingsModule {
     @Provides
     @FragmentScoped
     internal fun settingsSelector(@ActivityContext context: Context, sectionsBlueprint: List<SettingsSectionBlueprint>) = SettingsSelector(context, sectionsBlueprint)
+
+    @Provides
+    @FragmentScoped
+    internal fun singleChoiceSettingsSelector(@ActivityContext context: Context) = SingleChoiceSettingSelector(context)
 }

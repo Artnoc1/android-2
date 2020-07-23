@@ -10,7 +10,9 @@ import com.toggl.architecture.extensions.toEffect
 import com.toggl.calendar.common.domain.toCalendarEvent
 import com.toggl.calendar.common.domain.toEditableTimeEntry
 import com.toggl.common.feature.extensions.mutateWithoutEffects
+import com.toggl.common.feature.models.SelectedCalendarItem
 import com.toggl.common.feature.navigation.Route
+import com.toggl.common.feature.navigation.getRouteParam
 import com.toggl.common.feature.navigation.push
 import com.toggl.common.feature.timeentry.TimeEntryAction
 import com.toggl.common.feature.timeentry.exceptions.TimeEntryDoesNotExistException
@@ -41,7 +43,11 @@ class ContextualMenuReducer @Inject constructor(
         when (action) {
             ContextualMenuAction.DialogDismissed,
             ContextualMenuAction.DiscardButtonTapped,
-            ContextualMenuAction.CloseButtonTapped -> effectOf(ContextualMenuAction.Close)
+            ContextualMenuAction.CloseButtonTapped -> {
+                if (state().backStack.getRouteParam<SelectedCalendarItem>() != null)
+                    effectOf(ContextualMenuAction.Close)
+                else noEffect()
+            }
             ContextualMenuAction.DeleteButtonTapped -> {
                 val editableTimeEntry = state.mapToEditableTimeEntry()
                 editableTimeEntry.throwIfNotPersisted()

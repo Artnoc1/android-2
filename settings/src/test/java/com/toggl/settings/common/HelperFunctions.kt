@@ -13,6 +13,7 @@ import com.toggl.common.services.permissions.PermissionCheckerService
 import com.toggl.models.domain.DateFormat
 import com.toggl.models.domain.DurationFormat
 import com.toggl.models.domain.PlatformInfo
+import com.toggl.models.domain.SettingsType
 import com.toggl.models.domain.SmartAlertsOption
 import com.toggl.models.domain.User
 import com.toggl.models.domain.UserPreferences
@@ -42,13 +43,15 @@ fun createSettingsState(
     ),
     shouldRequestCalendarPermission: Boolean = false,
     sendFeedbackRequest: Loadable<Unit> = Loadable.Uninitialized,
+    singleChoiceSettingShowing: SettingsType? = null,
     backStack: BackStack = emptyList()
 ) = SettingsState(
     user = user,
     userPreferences = userPreferences,
+    workspaces = mapOf(),
     shouldRequestCalendarPermission = shouldRequestCalendarPermission,
     backStack = backStack,
-    localState = SettingsState.LocalState(sendFeedbackRequest)
+    localState = SettingsState.LocalState(sendFeedbackRequest, singleChoiceSettingShowing)
 )
 
 fun createUserPreferences(

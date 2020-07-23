@@ -69,4 +69,15 @@
     <string name="sign_out">Sair</string>
     <string name="no_client">Sem Cliente</string>
     <string name="allow_calendar_access">Vincular contas de calendário</string>
+    <string name="default_workspace">Workspace padrão</string>
+    <string name="monday">Segunda-feira</string>
+    <string name="friday">Sexta-feira</string>
+    <string name="tuesday">Terça-feira</string>
+    <string name="wednesday">Quarta-feira</string>
+    <string name="thursday">Quinta-feira</string>
+    <string name="saturday">Sábado</string>
+    <string name="sunday">Domingo</string>
+    <string name="duration_format_classic">Clássico (47:06 min)</string>
+    <string name="duration_format_improved">Melhorado (0:47:06)</string>
+    <string name="duration_format_decimal">Decimal (0.79 h)</string>
 </resources>

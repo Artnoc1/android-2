@@ -14,6 +14,7 @@ import com.toggl.common.feature.navigation.Route
 import com.toggl.common.feature.navigation.push
 import com.toggl.common.services.permissions.PermissionCheckerService
 import com.toggl.models.domain.PlatformInfo
+import com.toggl.models.domain.SettingsType
 import com.toggl.models.domain.UserPreferences
 import com.toggl.repository.interfaces.SettingsRepository
 import javax.inject.Inject
@@ -72,6 +73,9 @@ class SettingsReducer @Inject constructor(
             SettingsAction.OpenCalendarSettingsTapped -> state.mutateWithoutEffects {
                 copy(backStack = backStack.push(Route.CalendarSettings))
             }
+            is SettingsAction.DialogDismissed -> state.mutateWithoutEffects {
+                copy(localState = localState.copy(singleChoiceSettingShowing = null))
+            }
         }
 
     private fun MutableValue<SettingsState>.handleAllowCalendarAccessToggled(): List<Effect<SettingsAction>> {
@@ -95,5 +99,13 @@ class SettingsReducer @Inject constructor(
             SettingsState.localState.modify(this) {
                 it.copy(sendFeedbackRequest = loadable)
             }
+        }
+    SettingsType.Workspace, SettingsType.DateFormat, SettingsType.DurationFormat, SettingsType.FirstDayOfTheWeek -> state.handleSingleChoiceSettingNavigation(
+    action.selectedSetting
+    )
+
+    private fun MutableValue<SettingsState>.handleSingleChoiceSettingNavigation(settingsType: SettingsType): List<Effect<SettingsAction>> =
+        this.mutateWithoutEffects {
+            copy(localState = localState.copy(singleChoiceSettingShowing = settingsType))
         }
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,23 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/contextual_menu_bottom_sheet"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/contextual_menu_fragment"
+        android:name="com.toggl.calendar.contextualmenu.ui.ContextualMenuFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="180dp"
         app:behavior_hideable="true"
         app:behavior_skipCollapsed="true"
-        app:cardBackgroundColor="@color/surface"
-        app:cardElevation="8dp"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
-
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/contextual_menu_fragment"
-            android:name="com.toggl.calendar.contextualmenu.ui.ContextualMenuFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </com.google.android.material.card.MaterialCardView>
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

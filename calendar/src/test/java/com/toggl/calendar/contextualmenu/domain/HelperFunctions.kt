@@ -16,12 +16,17 @@ fun createInitialState(
     clients: List<Client> = emptyList(),
     calendars: List<Calendar> = emptyList(),
     editableTimeEntry: EditableTimeEntry? = null,
-    selectedItem: SelectedCalendarItem = SelectedCalendarItem.SelectedCalendarEvent(calendarEvent = createCalendarEvent())
+    selectedItem: SelectedCalendarItem =
+        if (editableTimeEntry != null) {
+            SelectedCalendarItem.SelectedTimeEntry(editableTimeEntry)
+        } else {
+            SelectedCalendarItem.SelectedCalendarEvent(calendarEvent = createCalendarEvent())
+        }
 ) = ContextualMenuState(
     validUser,
     timeEntries.associateBy { it.id },
     selectedItem = selectedItem,
-    backStack = if (editableTimeEntry != null) listOf(Route.StartEdit(editableTimeEntry)) else emptyList(),
+    backStack = listOf(Route.ContextualMenu(selectedItem)),
     projects = projects.associateBy { it.id },
     clients = clients.associateBy { it.id },
     calendars = calendars

@@ -69,4 +69,15 @@
     <string name="sign_out">Déconnexion</string>
     <string name="no_client">Aucun client</string>
     <string name="allow_calendar_access">Connecter des calendriers</string>
+    <string name="default_workspace">Espace de travail par défaut</string>
+    <string name="monday">Lundi</string>
+    <string name="tuesday">Mardi</string>
+    <string name="wednesday">Mercredi</string>
+    <string name="thursday">Jeudi</string>
+    <string name="friday">Vendredi</string>
+    <string name="saturday">Samedi</string>
+    <string name="sunday">Dimanche</string>
+    <string name="duration_format_classic">Classique (47:06 min)</string>
+    <string name="duration_format_improved">Améliorée (0:47:06)</string>
+    <string name="duration_format_decimal">Décimale (0.79 h)</string>
 </resources>

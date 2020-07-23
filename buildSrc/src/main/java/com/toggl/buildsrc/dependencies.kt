@@ -5,20 +5,20 @@ object Versions {
 }
 
 object Libs {
-    const val androidGradlePlugin = "com.android.tools.build:gradle:4.0.0"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:4.2.0-alpha05"
     const val gradleVersionsPlugin = "com.github.ben-manes:gradle-versions-plugin:0.28.0"
     const val leakCanary = "com.squareup.leakcanary:leakcanary-android:2.2"
     // fixes warning thrown by SLF4J
     const val slf4j = "org.slf4j:slf4j-simple:1.7.26"
 
     object Android {
-        const val desugarJdkLibs = "com.android.tools:desugar_jdk_libs:1.0.5"
+        const val desugarJdkLibs = "com.android.tools:desugar_jdk_libs:1.0.9"
     }
 
     object Test {
         const val junit4 = "junit:junit:4.13"
         const val robolectric = "org.robolectric:robolectric:4.3.1"
-        const val junit5Plugin = "de.mannodermaus.gradle.plugins:android-junit5:1.5.0.0"
+        const val junit5Plugin = "de.mannodermaus.gradle.plugins:android-junit5:1.6.2.0"
         const val kotlinTestRunner = "io.kotlintest:kotlintest-runner-junit5:3.4.2"
         const val kotlinTest = "org.jetbrains.kotlin:kotlin-test:1.3.71"
         const val kotlinCoroutineTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.4"
@@ -128,7 +128,7 @@ object Libs {
         }
 
         object Navigation {
-            private const val version = "2.3.0-alpha04"
+            private const val version = "2.3.0"
             const val fragment = "androidx.navigation:navigation-fragment-ktx:$version"
             const val ui = "androidx.navigation:navigation-ui-ktx:$version"
         }

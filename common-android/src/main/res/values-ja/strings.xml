@@ -68,4 +68,15 @@
     <string name="sign_out">ログアウト</string>
     <string name="no_client">クライアントがありません</string>
     <string name="allow_calendar_access">カレンダーとリンク</string>
+    <string name="default_workspace">デフォルトのワークスペース</string>
+    <string name="monday">月曜日</string>
+    <string name="tuesday">火曜日</string>
+    <string name="wednesday">水曜日</string>
+    <string name="thursday">木曜日</string>
+    <string name="friday">金曜日</string>
+    <string name="saturday">土曜日</string>
+    <string name="sunday">日曜日</string>
+    <string name="duration_format_classic">クラシック(47:06 min)</string>
+    <string name="duration_format_improved">時分秒 (0:47:06)</string>
+    <string name="duration_format_decimal">小数 (0.79 h)</string>
 </resources>

@@ -11,6 +11,7 @@ fun mapAppStateToSettingsState(appState: AppState): SettingsState? {
     return SettingsState(
         user = user,
         userPreferences = appState.userPreferences,
+        workspaces = appState.workspaces,
         shouldRequestCalendarPermission = appState.shouldRequestCalendarPermission,
         localState = appState.settingsLocalState,
         backStack = appState.backStack
@@ -22,6 +23,7 @@ fun mapSettingsStateToAppState(appState: AppState, settingsState: SettingsState?
         appState.copy(
             user = Loadable.Loaded(user),
             userPreferences = userPreferences,
+            workspaces = workspaces,
             shouldRequestCalendarPermission = shouldRequestCalendarPermission,
             settingsLocalState = localState,
             backStack = backStack

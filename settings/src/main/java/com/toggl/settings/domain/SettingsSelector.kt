@@ -5,6 +5,7 @@ import com.toggl.architecture.core.Selector
 import com.toggl.models.domain.SettingsType
 import com.toggl.models.domain.User
 import com.toggl.models.domain.UserPreferences
+import com.toggl.models.domain.Workspace
 import com.toggl.settings.R
 import java.lang.IllegalStateException
 import javax.inject.Inject
@@ -14,13 +15,13 @@ class SettingsSelector @Inject constructor(
     private val sectionsBlueprint: List<SettingsSectionBlueprint>
 ) : Selector<SettingsState, List<SettingsSectionViewModel>> {
     override suspend fun select(state: SettingsState): List<SettingsSectionViewModel> {
-        return sectionsBlueprint.map { it.toViewModel(state.user, state.userPreferences) }
+        return sectionsBlueprint.map { it.toViewModel(state.user, state.userPreferences, state.workspaces) }
     }
 
-    private fun SettingsSectionBlueprint.toViewModel(user: User, userPreferences: UserPreferences): SettingsSectionViewModel =
-        SettingsSectionViewModel(context.getString(title), settingsList.map { it.toViewModel(user, userPreferences) })
+    private fun SettingsSectionBlueprint.toViewModel(user: User, userPreferences: UserPreferences, workspaces: Map<Long, Workspace>): SettingsSectionViewModel =
+        SettingsSectionViewModel(context.getString(title), settingsList.map { it.toViewModel(user, userPreferences, workspaces) })
 
-    private fun SettingsType.toViewModel(user: User, userPreferences: UserPreferences): SettingsViewModel =
+    private fun SettingsType.toViewModel(user: User, userPreferences: UserPreferences, workspaces: Map<Long, Workspace>): SettingsViewModel =
         when (this) {
             SettingsType.Name -> SettingsViewModel.ListChoice(
                 context.getString(R.string.name),
@@ -35,7 +36,7 @@ class SettingsSelector @Inject constructor(
             SettingsType.Workspace -> SettingsViewModel.ListChoice(
                 context.getString(R.string.workspace),
                 this,
-                "Dummy workspace"
+                workspaces[userPreferences.selectedWorkspaceId]?.name ?: ""
             )
             SettingsType.DateFormat -> SettingsViewModel.ListChoice(
                 context.getString(R.string.date_format),
@@ -50,12 +51,12 @@ class SettingsSelector @Inject constructor(
             SettingsType.DurationFormat -> SettingsViewModel.ListChoice(
                 context.getString(R.string.duration_format),
                 this,
-                "Dummy Duration"
+                userPreferences.durationFormat.getTranslatedRepresentation(context)
             )
             SettingsType.FirstDayOfTheWeek -> SettingsViewModel.ListChoice(
                 context.getString(R.string.first_day_of_the_week),
                 this,
-                "Dummy Day"
+                userPreferences.firstDayOfTheWeek.getTranslatedRepresentation(context)
             )
             SettingsType.GroupSimilar -> SettingsViewModel.Toggle(
                 context.getString(R.string.group_similar_time_entries),

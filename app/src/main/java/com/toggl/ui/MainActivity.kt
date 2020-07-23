@@ -71,6 +71,8 @@ class MainActivity : AppCompatActivity(R.layout.main_activity) {
 
         bottom_navigation.setupWithNavController(navController)
         bottom_navigation.setOnNavigationItemReselectedListener(::scrollUpOnTab)
+        navController.setLifecycleOwner(this)
+        navController.setOnBackPressedDispatcher(onBackPressedDispatcher)
 
         return navController
     }

@@ -1,5 +1,6 @@
 package com.toggl.timer.project.ui
 
+import android.app.Dialog
 import android.os.Bundle
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -17,6 +18,7 @@ import com.toggl.common.extensions.addInterceptingOnClickListener
 import com.toggl.common.extensions.adjustForUserTheme
 import com.toggl.common.extensions.performClickHapticFeedback
 import com.toggl.common.extensions.requestFocus
+import com.toggl.common.extensions.setOnBackKeyEventUpCallback
 import com.toggl.common.extensions.setOvalBackground
 import com.toggl.common.extensions.setSafeText
 import com.toggl.common.feature.extensions.toColor
@@ -72,6 +74,13 @@ class ProjectDialogFragment : BottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(DialogFragment.STYLE_NORMAL, R.style.BottomSheetDialog)
+        isCancelable = false
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return super.onCreateDialog(savedInstanceState).also {
+            it.setOnBackKeyEventUpCallback { store.dispatch(ProjectAction.Close) }
+        }
     }
 
     override fun onCreateView(
@@ -233,7 +242,9 @@ class ProjectDialogFragment : BottomSheetDialogFragment() {
             .map { it.customColor }
             .distinctUntilChanged()
             .onEach { hsv ->
-                custom_project_color_indicator.setOvalBackground(hsv.toColor().adjustForUserTheme(custom_project_color_indicator.context))
+                custom_project_color_indicator.setOvalBackground(
+                    hsv.toColor().adjustForUserTheme(custom_project_color_indicator.context)
+                )
                 val (hue, saturation, value) = hsv
                 value_picker.hue = hue
                 value_picker.saturation = saturation
@@ -315,6 +326,7 @@ class ProjectDialogFragment : BottomSheetDialogFragment() {
     @FlowPreview
     @ExperimentalCoroutinesApi
     override fun onDestroyView() {
+        dialog?.setOnKeyListener(null)
         super.onDestroyView()
 
         colorPickerAnimator.finish()
@@ -345,10 +357,12 @@ class ProjectDialogFragment : BottomSheetDialogFragment() {
                 coloPickerVisibilityRequestFlow.value = false
             }
             is ColorViewModel.CustomColor -> {
-                store.dispatch(listOf(
-                    ProjectAction.ColorValueChanged(value_picker.value),
-                    ProjectAction.ColorHueSaturationChanged(hue_saturation_picker.hue, hue_saturation_picker.saturation)
-                ))
+                store.dispatch(
+                    listOf(
+                        ProjectAction.ColorValueChanged(value_picker.value),
+                        ProjectAction.ColorHueSaturationChanged(hue_saturation_picker.hue, hue_saturation_picker.saturation)
+                    )
+                )
             }
             ColorViewModel.PremiumLocked -> {
                 // TODO Show the awareness popup
