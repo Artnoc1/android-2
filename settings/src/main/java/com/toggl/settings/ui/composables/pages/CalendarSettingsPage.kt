@@ -65,21 +65,8 @@ fun CalendarSettingsPageContent(
         bodyContent = {
             LazyColumnItems(calendarSettingsViewModels) { viewModel ->
                 when (viewModel) {
-                    is CalendarSettingsViewModel.AccessGranted -> {
-                        val setting = SettingsViewModel.Toggle(
-                            stringResource(R.string.allow_calendar_access),
-                            SettingsType.AllowCalendarAccess,
-                            viewModel.accessGranted
-                        )
-                        Column {
-                            SettingsRow(setting, dispatcher)
-                            Text(
-                                text = stringResource(R.string.allow_calendar_message),
-                                style = MaterialTheme.typography.body2,
-                                modifier = Modifier.padding(grid_2)
-                            )
-                        }
-                    }
+                    is CalendarSettingsViewModel.AccessGranted ->
+                        LinkCalendarsSection(viewModel.accessGranted, dispatcher)
                     is CalendarSettingsViewModel.CalendarSection ->
                         Section(section = viewModel.section, dispatcher = dispatcher)
                 }
@@ -88,18 +75,37 @@ fun CalendarSettingsPageContent(
     )
 }
 
-@ExperimentalCoroutinesApi
-@Preview("Settings page light theme")
 @Composable
+fun LinkCalendarsSection(
+    accessGranted: Boolean,
+    dispatcher: (SettingsAction) -> Unit
+) {
+
+    val setting = SettingsViewModel.Toggle(
+        stringResource(R.string.allow_calendar_access),
+        SettingsType.AllowCalendarAccess,
+        accessGranted
+    )
+    Column {
+        SettingsRow(setting, dispatcher)
+        Text(
+            text = stringResource(R.string.allow_calendar_message),
+            style = MaterialTheme.typography.body2,
+            modifier = Modifier.padding(grid_2)
+        )
+    }
+}
+
+@Composable
+@Preview("Settings page light theme")
 fun PreviewCalendarSettingsPageLight() {
     ThemedPreview(false) {
         CalendarSettingsPageContent(calendarSettingsPreviewData) { }
     }
 }
 
-@ExperimentalCoroutinesApi
-@Preview("Settings page dark theme")
 @Composable
+@Preview("Settings page dark theme")
 fun PreviewCalendarSettingsPageDark() {
     ThemedPreview(true) {
         CalendarSettingsPageContent(calendarSettingsPreviewData) { }
