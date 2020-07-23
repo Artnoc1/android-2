@@ -3,7 +3,6 @@ package com.toggl.settings.ui.composables.pages
 import androidx.compose.Composable
 import androidx.compose.collectAsState
 import androidx.compose.getValue
-import androidx.ui.core.ContextAmbient
 import androidx.ui.core.Modifier
 import androidx.ui.foundation.Text
 import androidx.ui.foundation.lazy.LazyColumnItems
@@ -12,6 +11,7 @@ import androidx.ui.layout.padding
 import androidx.ui.material.MaterialTheme
 import androidx.ui.material.Scaffold
 import androidx.ui.material.TopAppBar
+import androidx.ui.res.stringResource
 import androidx.ui.tooling.preview.Preview
 import com.toggl.models.domain.SettingsType
 import com.toggl.settings.R
@@ -31,14 +31,12 @@ import kotlinx.coroutines.flow.Flow
 @Composable
 fun CalendarSettingsPage(
     calendarSettingsViewModels: Flow<List<CalendarSettingsViewModel>>,
-    pageTitle: String,
     dispatcher: (SettingsAction) -> Unit
 ) {
     val observableState by calendarSettingsViewModels.collectAsState(listOf())
     TogglTheme {
         CalendarSettingsPageContent(
             observableState,
-            pageTitle,
             dispatcher
         )
     }
@@ -47,7 +45,6 @@ fun CalendarSettingsPage(
 @Composable
 fun CalendarSettingsPageContent(
     calendarSettingsViewModels: List<CalendarSettingsViewModel>,
-    pageTitle: String,
     dispatcher: (SettingsAction) -> Unit
 ) {
     Scaffold(
@@ -55,23 +52,22 @@ fun CalendarSettingsPageContent(
             TopAppBar(
                 backgroundColor = MaterialTheme.colors.surface,
                 contentColor = MaterialTheme.colors.onSurface,
-                title = { Text(text = pageTitle) }
+                title = { Text(text = stringResource(R.string.settings)) }
             )
         },
         bodyContent = {
             LazyColumnItems(calendarSettingsViewModels) { viewModel ->
                 when (viewModel) {
                     is CalendarSettingsViewModel.AccessGranted -> {
-                        val context = ContextAmbient.current
                         val setting = SettingsViewModel.Toggle(
-                            context.getString(R.string.allow_calendar_access),
+                            stringResource(R.string.allow_calendar_access),
                             SettingsType.AllowCalendarAccess,
                             viewModel.accessGranted
                         )
                         Column {
                             SettingsRow(setting, dispatcher)
                             Text(
-                                text = context.getString(R.string.allow_calendar_message),
+                                text = stringResource(R.string.allow_calendar_message),
                                 style = MaterialTheme.typography.body2,
                                 modifier = Modifier.padding(grid_2)
                             )
@@ -90,11 +86,7 @@ fun CalendarSettingsPageContent(
 @Composable
 fun PreviewCalendarSettingsPageLight() {
     ThemedPreview(false) {
-        CalendarSettingsPageContent(
-            calendarSettingsPreviewData,
-            "Calendar Settings",
-            {}
-        )
+        CalendarSettingsPageContent(calendarSettingsPreviewData) { }
     }
 }
 
@@ -103,11 +95,7 @@ fun PreviewCalendarSettingsPageLight() {
 @Composable
 fun PreviewCalendarSettingsPageDark() {
     ThemedPreview(true) {
-        CalendarSettingsPageContent(
-            calendarSettingsPreviewData,
-            "Calendar Settings",
-            { }
-        )
+        CalendarSettingsPageContent(calendarSettingsPreviewData) { }
     }
 }
 

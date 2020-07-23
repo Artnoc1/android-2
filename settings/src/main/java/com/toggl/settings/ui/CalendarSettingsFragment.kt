@@ -34,7 +34,6 @@ class CalendarSettingsFragment : Fragment() {
             val selectedState = store.state.select(calendarSettingsSelector!!)
             CalendarSettingsPage(
                 selectedState,
-                getString(R.string.settings),
                 store::dispatch
             )
         }
