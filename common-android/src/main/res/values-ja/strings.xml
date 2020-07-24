@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="login">ログイン</string>
     <string name="add_description">説明を追加</string>
     <string name="calendar">カレンダー</string>
     <string name="reports">レポート</string>
@@ -68,6 +67,14 @@
     <string name="sign_out">ログアウト</string>
     <string name="no_client">クライアントがありません</string>
     <string name="allow_calendar_access">カレンダーとリンク</string>
+    <string name="feedback_note">Togglはいかがですか？感想や質問をお聞かせください  追伸　カスタマーサポートは現在英語だけで運営しております。ご不便をかけて申し訳ございません。</string>
+    <string name="sign_up_call_to_action">アカウントを持ってない？<u>登録(無料)</u></string>
+    <string name="sign_in_with_google">Googleでログイン</string>
+    <string name="log_in_with_sso">SSOでログイン</string>
+    <string name="sign_up">登録(無料)</string>
+    <string name="login_call_to_action">アカウントをお持ちですか？<u> ログイン</u></string>
+    <string name="login">ログイン</string>
+    <string name="send_email">メールを送る</string>
     <string name="default_workspace">デフォルトのワークスペース</string>
     <string name="monday">月曜日</string>
     <string name="tuesday">火曜日</string>
@@ -79,4 +86,5 @@
     <string name="duration_format_classic">クラシック(47:06 min)</string>
     <string name="duration_format_improved">時分秒 (0:47:06)</string>
     <string name="duration_format_decimal">小数 (0.79 h)</string>
+    <string name="feedback_thank_you">フィードバックありがとうございます。もしフィードバックの内容が質問の場合は、すぐにお返事いたします。</string>
 </resources>

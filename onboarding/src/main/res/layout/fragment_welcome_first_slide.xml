@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/slide_holder"
+    android:background="@color/onboarding_first_slide_background">
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="96dp"
+        android:layout_marginEnd="32dp"
+        android:lineSpacingExtra="10dp"
+        android:fontFamily="sans-serif-light"
+        android:maxLines="2"
+        android:textColor="@color/onboarding_title_text"
+        android:textSize="26sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside"
+        app:layout_constraintBottom_toTopOf="@+id/toggl_man"
+        tools:text="Simple time tracking.\nPowerful reporting." />
+
+    <ImageView
+        android:id="@+id/toggl_man"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="56dp"
+        android:paddingLeft="20dp"
+        android:layout_marginBottom="18dp"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintHeight_max="250dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/togglman"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/message"
+        app:layout_constraintBottom_toTopOf="@+id/chain_tail"
+        tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="192dp"
+        android:id="@+id/chain_tail"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toggl_man" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

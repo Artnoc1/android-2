@@ -12,7 +12,7 @@ import com.toggl.models.validation.Password
 import com.toggl.onboarding.R
 import com.toggl.onboarding.login.domain.LoginAction
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.login_fragment.*
+import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
-class LoginFragment : Fragment(R.layout.login_fragment) {
+class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private val store: LoginViewModel by viewModels()
 

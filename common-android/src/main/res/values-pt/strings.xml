@@ -8,7 +8,6 @@
     <string name="calendar">Calendário</string>
     <string name="settings">Configurações</string>
     <string name="add_description">Adicionar descrição</string>
-    <string name="login">Entrar</string>
     <string name="today">Hoje</string>
     <string name="yesterday">Ontem</string>
     <string name="continue_this">Continuar</string>
@@ -69,6 +68,17 @@
     <string name="sign_out">Sair</string>
     <string name="no_client">Sem Cliente</string>
     <string name="allow_calendar_access">Vincular contas de calendário</string>
+    <string name="feedback_note">Conte-nos o que você está achando do app. Use esse espaço para dar feedback e fazer perguntas.  PS. Nosso suporte atualmente só atende em inglês. Nos desculpamos por qualquer inconveniência!</string>
+    <string name="log_in_with_sso">Entrar usando SSO</string>
+    <string name="sign_in_with_google">Continuar com o Google</string>
+    <string name="sign_up">Criar conta</string>
+    <string name="sign_up_call_to_action">Não possui uma conta? <u>Criar conta</u></string>
+    <string name="sign_up_message">Boas-vindas ao Toggl!\nVamos deixar tudo pronto para você marcar seu tempo.</string>
+    <string name="login">Login</string>
+    <string name="login_call_to_action">Já possui uma conta? <u>Login</u></string>
+    <string name="password_reset_message">Por favor, digite seu email para redefinir sua senha.</string>
+    <string name="send_email">Enviar email</string>
+    <string name="continue_with_email">Continuar com email</string>
     <string name="default_workspace">Workspace padrão</string>
     <string name="monday">Segunda-feira</string>
     <string name="friday">Sexta-feira</string>
@@ -80,4 +90,5 @@
     <string name="duration_format_classic">Clássico (47:06 min)</string>
     <string name="duration_format_improved">Melhorado (0:47:06)</string>
     <string name="duration_format_decimal">Decimal (0.79 h)</string>
+    <string name="feedback_thank_you">Agradecemos o feedback. Caso você tenha perguntado algo, entramos em contato em breve.</string>
 </resources>

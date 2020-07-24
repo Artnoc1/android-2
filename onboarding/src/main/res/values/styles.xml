@@ -1,10 +1,53 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="login_text_field">
-        <item name="android:layout_marginLeft">@dimen/login_side_padding</item>
-        <item name="android:layout_marginRight">@dimen/login_side_padding</item>
-        <item name="android:layout_marginBottom">@dimen/login_side_padding</item>
+    <dimen name="onboarding_button_height">44dp</dimen>
+    <dimen name="onboarding_button_insets">0dp</dimen>
+
+    <style name="OnboardingButton" parent="TextAppearance.MaterialComponents.Button">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">@dimen/onboarding_button_height</item>
+        <item name="android:layout_marginLeft">@dimen/grid_4</item>
+        <item name="android:layout_marginRight">@dimen/grid_4</item>
+        <item name="android:layout_marginBottom">@dimen/grid_1</item>
+        <item name="android:insetTop">@dimen/onboarding_button_insets</item>
+        <item name="android:insetBottom">@dimen/onboarding_button_insets</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.02</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Toggl.MediumComponent</item>>
+        <item name="android:textColor">@color/onboarding_contained_button_text</item>
+        <item name="android:backgroundTint">@color/onboarding_contained_button_background</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconTint">@null</item>
+    </style>
+
+    <style name="OutlinedOnboardingButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/onboarding_button_height</item>
+        <item name="android:layout_marginLeft">@dimen/grid_4</item>
+        <item name="android:layout_marginRight">@dimen/grid_4</item>
+        <item name="android:layout_marginBottom">@dimen/grid_1</item>
+        <item name="android:insetTop">@dimen/onboarding_button_insets</item>
+        <item name="android:insetBottom">@dimen/onboarding_button_insets</item>
+        <item name="android:textColor">@color/onboarding_outline_button_text</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.02</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Toggl.MediumComponent</item>>
+        <item name="strokeColor">@color/onboarding_outline_button_stroke</item>
+    </style>
+
+    <style name="TextOnboardingButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/onboarding_button_height</item>
+        <item name="android:insetTop">@dimen/onboarding_button_insets</item>
+        <item name="android:insetBottom">@dimen/onboarding_button_insets</item>
+        <item name="android:layout_marginLeft">@dimen/grid_4</item>
+        <item name="android:layout_marginRight">@dimen/grid_4</item>
+        <item name="android:layout_marginBottom">@dimen/grid_1</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.02</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Toggl.MediumComponent</item>>
+        <item name="android:textColor">@color/onboarding_outline_button_text</item>
     </style>
 </resources>

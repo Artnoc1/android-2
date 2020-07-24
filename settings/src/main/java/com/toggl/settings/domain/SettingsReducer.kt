@@ -8,6 +8,7 @@ import com.toggl.architecture.core.Effect
 import com.toggl.architecture.core.MutableValue
 import com.toggl.architecture.core.Reducer
 import com.toggl.architecture.extensions.effect
+import com.toggl.architecture.extensions.effectOf
 import com.toggl.architecture.extensions.noEffect
 import com.toggl.common.feature.extensions.mutateWithoutEffects
 import com.toggl.common.feature.navigation.Route
@@ -34,6 +35,7 @@ class SettingsReducer @Inject constructor(
         action: SettingsAction
     ): List<Effect<SettingsAction>> =
         when (action) {
+            SettingsAction.OpenSubmitFeedbackTapped -> state.mutateWithoutEffects { copy(backStack = backStack.push(Route.Feedback)) }
             is SettingsAction.UserPreferencesUpdated -> state.mutateWithoutEffects { copy(userPreferences = action.userPreferences) }
             is SettingsAction.ManualModeToggled -> state.updatePrefs { copy(manualModeEnabled = !manualModeEnabled) }
             is SettingsAction.Use24HourClockToggled -> state.updatePrefs { copy(twentyFourHourClockEnabled = !twentyFourHourClockEnabled) }
@@ -64,7 +66,13 @@ class SettingsReducer @Inject constructor(
                 )
             }
             is SettingsAction.FeedbackSent -> state.updateSendFeedbackRequestStateWithoutEffects(Loadable.Loaded(Unit))
-            is SettingsAction.SendFeedbackResultSeen -> state.updateSendFeedbackRequestStateWithoutEffects(Loadable.Uninitialized)
+            is SettingsAction.SendFeedbackResultSeen -> {
+                val feedbackRequestResultThatWasSeen = state().localState.sendFeedbackRequest
+                state.updateSendFeedbackRequestStateWithoutEffects(Loadable.Uninitialized)
+                if (feedbackRequestResultThatWasSeen is Loadable.Loaded<Unit>) {
+                    effectOf(SettingsAction.SettingEditionDismissed)
+                } else noEffect()
+            }
             is SettingsAction.SetSendFeedbackError -> state.updateSendFeedbackRequestStateWithoutEffects(
                 Loadable.Error(Failure(action.throwable, ""))
             )
@@ -72,7 +80,10 @@ class SettingsReducer @Inject constructor(
             is SettingsAction.UpdateName -> state.mutateWithoutEffects { copy(user = user.copy(name = action.name)) }
             SettingsAction.OpenCalendarSettingsTapped -> state.navigateTo(Route.CalendarSettings)
             is SettingsAction.OpenSelectionDialog -> state.navigateTo(Route.SettingsDialog(action.settingType))
-            is SettingsAction.DialogDismissed -> state.popUntil<Route.Settings>()
+            is SettingsAction.SettingEditionDismissed -> {
+                state.updateSendFeedbackRequestStateWithoutEffects(Loadable.Uninitialized)
+                state.popUntil<Route.Settings>()
+            }
         }
 
     private fun MutableValue<SettingsState>.handleAllowCalendarAccessToggled(): List<Effect<SettingsAction>> {

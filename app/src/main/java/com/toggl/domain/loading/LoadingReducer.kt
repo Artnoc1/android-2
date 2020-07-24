@@ -39,14 +39,22 @@ class LoadingReducer @Inject constructor(
                 copy(user = Loadable.Loading)
             } returnEffect effect(TryLoadingUserEffect(userRepository, dispatcherProvider))
             is LoadingAction.UserLoaded ->
-                if (action.user == null) state.mutateWithoutEffects { copy(user = Loadable.Uninitialized, backStack = listOf(Route.Login)) }
-                else state.mutate { copy(user = Loadable.Loaded(action.user), backStack = listOf(Route.Timer)) } returnEffect effects(
-                    LoadWorkspacesEffect(workspaceRepository, dispatcherProvider),
-                    LoadClientsEffect(clientRepository, dispatcherProvider),
-                    LoadTagsEffect(tagsRepository, dispatcherProvider),
-                    LoadTasksEffect(taskRepository, dispatcherProvider),
-                    LoadUserPreferencesEffect(settingsRepository, dispatcherProvider)
-                )
+                if (action.user == null) {
+                    state.mutateWithoutEffects { copy(user = Loadable.Uninitialized, backStack = listOf(Route.Welcome)) }
+                } else {
+                    state.mutate {
+                        copy(
+                            user = Loadable.Loaded(action.user),
+                            backStack = listOf(Route.Timer)
+                        )
+                    } returnEffect effects(
+                        LoadWorkspacesEffect(workspaceRepository, dispatcherProvider),
+                        LoadClientsEffect(clientRepository, dispatcherProvider),
+                        LoadTagsEffect(tagsRepository, dispatcherProvider),
+                        LoadTasksEffect(taskRepository, dispatcherProvider),
+                        LoadUserPreferencesEffect(settingsRepository, dispatcherProvider)
+                    )
+                }
             is LoadingAction.TimeEntriesLoaded -> state.mutateWithoutEffects { copy(timeEntries = action.timeEntries) }
             is LoadingAction.WorkspacesLoaded -> state.mutateWithoutEffects { copy(workspaces = action.workspaces) }
             is LoadingAction.ProjectsLoaded -> state.mutateWithoutEffects { copy(projects = action.projects) }

@@ -29,14 +29,14 @@ sealed class SettingsAction {
     object SignOutCompleted : SettingsAction()
     data class CalendarPermissionReceived(val granted: Boolean) : SettingsAction()
     data class SendFeedbackTapped(val feedbackMessage: String) : SettingsAction()
+    object OpenSubmitFeedbackTapped : SettingsAction()
     object FeedbackSent : SettingsAction()
     object SendFeedbackResultSeen : SettingsAction()
     data class SetSendFeedbackError(val throwable: Throwable) : SettingsAction()
     data class UpdateEmail(val email: Email.Valid) : SettingsAction()
     data class UpdateName(val name: String) : SettingsAction()
+    object SettingEditionDismissed : SettingsAction()
     data class OpenSelectionDialog(val settingType: SettingsType) : SettingsAction()
-
-    object DialogDismissed : SettingsAction()
     companion object
 }
 
@@ -65,6 +65,8 @@ fun SettingsAction.formatForDebug() =
         is SettingsAction.UpdateEmail -> "Updated email to $email"
         is SettingsAction.UpdateName -> "Updated name to $name"
         SettingsAction.OpenCalendarSettingsTapped -> "Open calendar settings tapped"
-        is SettingsAction.DialogDismissed -> "Dialog dismissed"
+        SettingsAction.BackToMainScreenTapped -> "Back to main screen tapped"
+        is SettingsAction.SettingEditionDismissed -> "Dialog dismissed"
         is SettingsAction.OpenSelectionDialog -> "Selection dialog opened for setting $settingType"
+        SettingsAction.OpenSubmitFeedbackTapped -> "Open submit feedback tapped"
     }

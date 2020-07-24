@@ -18,7 +18,7 @@ class SignOutReducer(override val innerReducer: Reducer<AppState, AppAction>) : 
         if (action.isOrWraps<SettingsAction.SignOutCompleted>()) {
             state.mutate {
                 AppState(
-                    backStack = listOf(Route.Login),
+                    backStack = listOf(Route.Welcome),
                     calendarPermissionWasGranted = calendarPermissionWasGranted
                 )
             }

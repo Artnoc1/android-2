@@ -4,7 +4,6 @@ import com.toggl.architecture.Loadable
 import com.toggl.settings.common.CoroutineTest
 import com.toggl.settings.common.createSettingsReducer
 import com.toggl.settings.common.createSettingsState
-import com.toggl.settings.common.testReduceNoEffects
 import com.toggl.settings.common.testReduceState
 import io.kotlintest.matchers.types.shouldBeTypeOf
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -24,10 +23,5 @@ class FeedbackSentActionTests : CoroutineTest() {
             initialState,
             SettingsAction.FeedbackSent
         ) { state -> state.localState.sendFeedbackRequest.shouldBeTypeOf<Loadable.Loaded<Unit>>() }
-    }
-
-    @Test
-    fun `Should not produce any effects`() = runBlockingTest {
-        reducer.testReduceNoEffects(initialState, SettingsAction.FeedbackSent)
     }
 }

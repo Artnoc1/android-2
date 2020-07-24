@@ -2,8 +2,188 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:background="@color/onboarding_first_slide_background"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true">
 
-    <!-- TODO add view contents -->
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginBottom="@dimen/grid_2"
+        android:background="@null"
+        app:layout_constraintBottom_toTopOf="@+id/continue_with_google"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tabGravity="center"
+        app:tabBackground="@drawable/tab_indicator_deselected"
+        app:tabIndicator="@drawable/tab_indicator"
+        app:tabIndicatorColor="@color/onboarding_tab_indicator_selected"
+        app:tabIndicatorGravity="center"
+        app:tabMaxWidth="12dp" />
+
+    <ImageView
+        android:id="@+id/toggl_logo"
+        android:layout_width="76dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="@dimen/grid_4"
+        android:layout_marginTop="@dimen/grid_4"
+        android:src="@drawable/ic_toggl_logo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/sso_background"
+        android:visibility="gone"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/onboarding_first_slide_background"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <ImageView
+        android:id="@+id/sso_toggl_logo"
+        android:visibility="gone"
+        android:layout_width="76dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="@dimen/grid_4"
+        android:layout_marginTop="72dp"
+        android:src="@drawable/ic_toggl_logo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/sso_login_message"
+        android:visibility="gone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/grid_4"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="@dimen/grid_4"
+        android:lineSpacingExtra="10dp"
+        android:fontFamily="sans-serif-light"
+        android:maxLines="2"
+        android:textColor="@color/onboarding_title_text"
+        android:textSize="36sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sso_toggl_logo"
+        tools:text="Log in to enable SSO" />
+
+    <Button
+        android:id="@+id/sso_continue_with_google_button"
+        android:visibility="gone"
+        android:text="@string/sign_in_with_google"
+        app:icon="@drawable/logo_google"
+        style="@style/OnboardingButton"
+        app:layout_constraintTop_toBottomOf="@+id/sso_login_message"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/sso_continue_with_email"
+        android:visibility="gone"
+        android:text="@string/continue_with_email"
+        style="@style/OutlinedOnboardingButton"
+        app:layout_constraintTop_toBottomOf="@+id/sso_continue_with_google_button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/sso_cancel"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginLeft="@dimen/grid_4"
+        android:layout_marginRight="@dimen/grid_4"
+        android:layout_marginBottom="@dimen/grid_1"
+        android:background="@null"
+        android:letterSpacing="0.02"
+        android:textAllCaps="true"
+        android:textColor="@color/onboarding_outline_button_text"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/continue_with_google"
+        android:text="@string/sign_in_with_google"
+        app:icon="@drawable/logo_google"
+        style="@style/OnboardingButton"
+        app:layout_constraintBottom_toTopOf="@+id/continue_with_email"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/continue_with_email"
+        android:text="@string/continue_with_email"
+        style="@style/OutlinedOnboardingButton"
+        app:shapeAppearance="@style/ShapeAppearance.Toggl.MediumComponent"
+        app:layout_constraintBottom_toTopOf="@+id/continue_with_sso"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/continue_with_sso"
+        android:text="@string/log_in_with_sso"
+        style="@style/TextOnboardingButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/notLoadingViewsViewGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="toggl_logo,view_pager,continue_with_google,continue_with_email,continue_with_sso" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/ssoNotLoadingViewsViewGroup"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="sso_background,sso_toggl_logo,sso_login_message,sso_cancel,sso_continue_with_google_button,sso_continue_with_email" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/loadingViewsViewGroup"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="loadingBackground,loadingIndicator" />
+
+    <FrameLayout
+        android:id="@+id/loadingBackground"
+        android:visibility="gone"
+        android:background="@color/onboarding_first_slide_background"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/loadingIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

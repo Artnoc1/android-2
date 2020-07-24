@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.ui.core.setContent
 import com.toggl.architecture.extensions.select
+import com.toggl.common.extensions.adjustPaddingToStatusBarAndNavigationBarInsets
 import com.toggl.settings.R
 import com.toggl.settings.domain.SettingsSelector
 import com.toggl.settings.ui.composables.pages.SettingsPage
@@ -32,6 +33,8 @@ class SettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? = FrameLayout(requireContext()).apply {
         layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+
+        adjustPaddingToStatusBarAndNavigationBarInsets()
 
         (this as ViewGroup).setContent(Recomposer.current()) {
             val selectedState = store.state

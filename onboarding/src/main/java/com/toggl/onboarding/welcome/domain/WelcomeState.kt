@@ -1,19 +1,27 @@
 package com.toggl.onboarding.welcome.domain
 
 import arrow.optics.optics
+import com.toggl.architecture.Loadable
+import com.toggl.common.feature.navigation.BackStack
+import com.toggl.models.domain.User
 import com.toggl.onboarding.common.domain.OnboardingState
 
 @optics
 data class WelcomeState(
-    val exampleText: String
+    val user: Loadable<User>,
+    val backStack: BackStack
 ) {
     companion object {
-        @Suppress("UNUSED_PARAMETER")
         fun fromOnboardingState(onboardingState: OnboardingState) =
-            WelcomeState("")
+            WelcomeState(
+                onboardingState.user,
+                onboardingState.backStack
+            )
 
-        @Suppress("UNUSED_PARAMETER")
         fun toOnboardingState(onboardingState: OnboardingState, welcomeState: WelcomeState) =
-            onboardingState
+            onboardingState.copy(
+                user = welcomeState.user,
+                backStack = welcomeState.backStack
+            )
     }
 }

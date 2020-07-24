@@ -1,8 +1,10 @@
 package com.toggl.ui
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
@@ -53,6 +55,8 @@ class MainActivity : AppCompatActivity(R.layout.main_activity) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setFullScreenFlags()
+
         val navController = setUpNavigation()
         store.state
             .map { it.backStack }
@@ -89,4 +93,15 @@ class MainActivity : AppCompatActivity(R.layout.main_activity) {
             it.setGraph(R.navigation.tabs_nav_graph)
             it.addOnDestinationChangedListener(updateBottomBarVisibilityListener)
         }
+
+    private fun setFullScreenFlags() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) return
+
+        window.decorView.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+            View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+            if (resources.getBoolean(R.bool.is_dark_theme)) 0
+            else View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+    }
 }

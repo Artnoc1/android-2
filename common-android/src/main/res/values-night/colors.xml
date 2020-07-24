@@ -15,4 +15,20 @@
     <color name="stop_time_entry_button_background">#FFFF8879</color>
     <color name="icon">#FFB1B1B5</color>
     <color name="autocomplete_suggestion_background">#FF000000</color>
+
+    <!-- Login/Sign Up -->
+    <color name="authentication_background">#FF180A1E</color>
+    <color name="authentication_button_text">#FFFFFFFF</color>
+    <color name="authentication_text">#FDE5DC</color>
+
+    <!-- Onboarding -->
+    <color name="onboarding_overlay_background">#1A9DDDD3</color>
+    <color name="onboarding_outline_button_text">#000000</color>
+    <color name="onboarding_outline_button_stroke">#000000</color>
+    <color name="onboarding_contained_button_background">#000000</color>
+    <color name="onboarding_contained_button_text">#FFFFFF</color>
+    <color name="onboarding_title_text">#000000</color>
+    <color name="onboarding_tab_indicator_selected">#B3000000</color>
+    <color name="onboarding_tab_indicator_deselected">#33000000</color>
+
 </resources>

@@ -6,39 +6,65 @@
     android:scrollbars="none"
     android:fillViewport="true"
     android:clipToPadding="false"
+    android:background="@color/authentication_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:animateLayoutChanges="true"
         android:focusableInTouchMode="true"
+        android:layout_marginStart="@dimen/grid_4"
+        android:layout_marginEnd="@dimen/grid_4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/toggl_icon"
+            android:src="@mipmap/ic_launcher"
+            android:layout_marginTop="@dimen/grid_2"
+            android:layout_width="@dimen/authentication_icon_size"
+            android:layout_height="@dimen/authentication_icon_size"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/toggl_logo"
             android:src="@drawable/ic_toggl_logo"
-            android:layout_marginTop="@dimen/login_logo_top_margin"
-            android:layout_width="@dimen/login_logo_width"
-            android:layout_height="@dimen/login_logo_height"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/grid_2"
+            android:layout_width="@dimen/authentication_logo_width"
+            android:layout_height="@dimen/authentication_logo_height"
+            android:tint="@color/authentication_text"
+            app:layout_constraintTop_toBottomOf="@id/toggl_icon"
             app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/message"
+            android:text="@string/login_message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/grid_2"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:textColor="@color/authentication_text"
+            app:layout_constraintTop_toBottomOf="@id/toggl_logo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/email_label"
             android:hint="@string/email"
-            android:layout_marginTop="@dimen/login_logo_bottom_margin"
-            app:layout_constraintTop_toBottomOf="@id/toggl_logo"
+            android:layout_marginTop="@dimen/grid_3"
+            app:layout_constraintTop_toBottomOf="@id/message"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            style="@style/login_text_field">
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email"
+                android:textColor="@color/authentication_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/surface"
+                android:backgroundTint="@color/authentication_background"
                 android:inputType="textEmailAddress"
                 tools:ignore="Autofill" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -50,13 +76,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/email_label"
+            android:layout_marginTop="@dimen/grid_1"
             app:errorTextColor="@color/error"
             app:passwordToggleEnabled="true"
-            style="@style/login_text_field">
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password"
                 android:inputType="textPassword"
-                android:backgroundTint="@color/surface"
+                android:textColor="@color/authentication_text"
+                android:backgroundTint="@color/authentication_background"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:imeOptions="actionDone"
@@ -65,16 +94,29 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/login_button"
-            app:backgroundTint="@color/secondary"
+            app:backgroundTint="@color/primary_dark"
+            android:textColor="@color/authentication_button_text"
             android:text="@string/login"
-            android:layout_marginTop="@dimen/login_button_top_margin"
-            android:layout_marginLeft="@dimen/login_side_padding"
-            android:layout_marginRight="@dimen/login_side_padding"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:layout_marginTop="@dimen/grid_3"
             app:layout_constraintTop_toBottomOf="@id/password_label"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:text="@string/sign_up_call_to_action"
+            android:textSize="15sp"
+            android:textColor="@color/authentication_text"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/grid_2"
+            app:layout_constraintTop_toBottomOf="@id/login_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

@@ -77,6 +77,20 @@
     <string name="create_client">Create client</string>
     <string name="allow_calendar_access">Link calendars</string>
     <string name="allow_calendar_message">Toggl needs access to your calendar in order to display events. Events are visible to you only and won’t appear in Reports.</string>
+    <string name="feedback_note">Let us know what you think. Send us your feedback and questions. PS. Our customer support team currently operates in English only. Sorry for any inconvenience!</string>
+    <string name="feedback_thank_you">Thank you for the feedback. If you had any questions, we’ll get back to you soon.</string>
+
+    <string name="continue_with_email">Continue with email</string>
+    <string name="sign_in_with_google">Sign in With Google</string>
+    <string name="log_in_with_sso">Log in with SSO</string>
+    <string name="sign_up_call_to_action">Don’t have an account? <u>Sign up</u></string>
+    <string name="sign_up">Sign up</string>
+    <string name="login_call_to_action">Have an account? <u>Log in</u></string>
+    <string name="login_message">Welcome back!\nLog in to your account and start tracking again.</string>
+    <string name="sign_up_message">Welcome to Toggl Track!\nLet’s get you set up to start tracking.</string>
+    <string name="password_reset_message">Don’t worry!\nEnter your email to reset your password.</string>
+    <string name="send_email">Send Email</string>
+    <string name="password_reset_call_to_action">Still have problem? <u>Contact us</u></string>
     <string name="default_workspace">Default Workspace</string>
     <string name="monday">Monday</string>
     <string name="tuesday">Tuesday</string>

@@ -9,9 +9,18 @@
         android:id="@+id/login"
         android:name="com.toggl.onboarding.login.ui.LoginFragment"
         android:label="LoginFragment"
-        tools:layout="@layout/login_fragment"
+        tools:layout="@layout/fragment_login"
         app:launchSingleTop="true"  >
         <deepLink app:uri="@string/deep_link_login" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/welcome"
+        android:name="com.toggl.onboarding.welcome.ui.WelcomeFragment"
+        android:label="WelcomeFragment"
+        tools:layout="@layout/fragment_welcome"
+        app:launchSingleTop="true"  >
+        <deepLink app:uri="@string/deep_link_welcome" />
     </fragment>
 
     <fragment
@@ -75,13 +84,12 @@
         <deepLink app:uri="@string/deep_link_settings_calendar_settings" />
     </fragment>
 
-    <dialog
+    <fragment
         android:id="@+id/settings_submit_feedback"
-        tools:layout="@layout/fragment_edit_settings"
-        android:name="com.toggl.settings.ui.EditSettingsFragment"
-        android:label="EditSettingsDialog">
+        android:name="com.toggl.settings.ui.FeedbackFragment"
+        android:label="FeedbackFragment">
         <deepLink app:uri="@string/deep_link_settings_submit_feedback" />
-    </dialog>
+    </fragment>
 
     <dialog
         android:id="@+id/settings_about"

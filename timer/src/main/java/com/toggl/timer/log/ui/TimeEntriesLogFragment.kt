@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.MergeAdapter
 import com.google.android.material.snackbar.Snackbar
 import com.toggl.architecture.extensions.select
 import com.toggl.common.Constants.timeEntryDeletionDelayMs
+import com.toggl.common.extensions.adjustPaddingToStatusBarInsets
 import com.toggl.common.extensions.performClickHapticFeedback
 import com.toggl.common.services.time.TimeService
 import com.toggl.models.common.SwipeDirection
@@ -95,6 +96,7 @@ class TimeEntriesLogFragment : Fragment(R.layout.fragment_time_entries_log) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        app_bar_layout.adjustPaddingToStatusBarInsets()
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
 
         recycler_view.adapter = mergeAdapter
@@ -127,6 +129,7 @@ class TimeEntriesLogFragment : Fragment(R.layout.fragment_time_entries_log) {
 
     override fun onDestroyView() {
         snackbar = null
+        recycler_view.adapter = null
         (activity as AppCompatActivity).setSupportActionBar(null)
         super.onDestroyView()
     }
