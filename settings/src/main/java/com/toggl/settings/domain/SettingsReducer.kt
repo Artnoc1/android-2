@@ -12,7 +12,7 @@ import com.toggl.architecture.extensions.effectOf
 import com.toggl.architecture.extensions.noEffect
 import com.toggl.common.feature.extensions.mutateWithoutEffects
 import com.toggl.common.feature.navigation.Route
-import com.toggl.common.feature.navigation.popUntil
+import com.toggl.common.feature.navigation.pop
 import com.toggl.common.feature.navigation.push
 import com.toggl.common.services.permissions.PermissionCheckerService
 import com.toggl.models.domain.PlatformInfo
@@ -55,7 +55,7 @@ class SettingsReducer @Inject constructor(
             is SettingsAction.SmartAlertsOptionSelected -> state.updatePrefs { copy(smartAlertsOption = action.smartAlertsOption) }
             is SettingsAction.FinishedEditingSetting -> {
                 state.updateSendFeedbackRequestStateWithoutEffects(Loadable.Uninitialized)
-                state.popUntil<Route.Settings>()
+                state.mutateWithoutEffects { copy(backStack = backStack.pop()) }
             }
 
             // Feedback
@@ -125,7 +125,4 @@ class SettingsReducer @Inject constructor(
 
     private fun MutableValue<SettingsState>.navigateTo(route: Route): List<Effect<SettingsAction>> =
         mutateWithoutEffects { copy(backStack = backStack.push(route)) }
-
-    private inline fun <reified T : Route> MutableValue<SettingsState>.popUntil(): List<Effect<SettingsAction>> =
-        mutateWithoutEffects { copy(backStack = backStack.popUntil<T>()) }
 }

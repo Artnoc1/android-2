@@ -2,15 +2,6 @@ package com.toggl.common.feature.navigation
 
 typealias BackStack = List<Route>
 
-inline fun <reified R : Route> BackStack.popUntil() =
-    generateSequence(
-        seedFunction = { this },
-        nextFunction = {
-            if (it is R) null
-            else pop()
-        }
-    ).lastOrNull() ?: this
-
 fun backStackOf(vararg route: Route) =
     route.toList()
 
