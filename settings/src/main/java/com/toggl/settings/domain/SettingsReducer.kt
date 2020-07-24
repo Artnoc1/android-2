@@ -59,7 +59,7 @@ class SettingsReducer @Inject constructor(
             }
 
             // Feedback
-            SettingsAction.OpenSubmitFeedbackTapped -> state.mutateWithoutEffects { copy(backStack = backStack.push(Route.Feedback)) }
+            SettingsAction.OpenSubmitFeedbackTapped -> state.navigateTo(Route.Feedback)
             is SettingsAction.FeedbackSent -> state.updateSendFeedbackRequestStateWithoutEffects(Loadable.Loaded(Unit))
             is SettingsAction.SendFeedbackResultSeen -> {
                 val feedbackRequestResultThatWasSeen = state().localState.sendFeedbackRequest

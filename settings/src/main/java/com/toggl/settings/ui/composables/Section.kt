@@ -66,7 +66,7 @@ internal fun SettingsRow(
                 SettingsType.ManualMode -> SettingsAction.ManualModeToggled
                 SettingsType.CalendarSettings -> SettingsAction.OpenCalendarSettingsTapped
                 SettingsType.SmartAlert -> TODO()
-                SettingsType.SubmitFeedback -> TODO()
+                SettingsType.SubmitFeedback -> SettingsAction.OpenSubmitFeedbackTapped
                 SettingsType.About -> TODO()
                 SettingsType.PrivacyPolicy -> TODO()
                 SettingsType.TermsOfService -> TODO()
