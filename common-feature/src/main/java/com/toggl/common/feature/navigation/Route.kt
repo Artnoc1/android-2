@@ -5,6 +5,7 @@ import com.toggl.common.DeepLinkUrls
 import com.toggl.common.feature.models.SelectedCalendarItem
 import com.toggl.models.domain.EditableProject
 import com.toggl.models.domain.EditableTimeEntry
+import com.toggl.models.domain.SettingsType
 
 sealed class Route {
     object Welcome : Route()
@@ -14,6 +15,7 @@ sealed class Route {
     data class Project(override val parameter: EditableProject) : Route(), ParameterRoute<EditableProject>
     data class ContextualMenu(override val parameter: SelectedCalendarItem) : Route(), ParameterRoute<SelectedCalendarItem>
     object Settings : Route()
+    data class SettingsDialog(override val parameter: SettingsType) : Route(), ParameterRoute<SettingsType>
     object CalendarSettings : Route()
 }
 
@@ -30,6 +32,7 @@ fun Route.isSameTypeAs(otherRoute: Route) =
         is Route.Project -> otherRoute is Route.Project
         is Route.ContextualMenu -> otherRoute is Route.ContextualMenu
         Route.Settings -> otherRoute is Route.Settings
+        is Route.SettingsDialog -> otherRoute is Route.SettingsDialog
         Route.CalendarSettings -> otherRoute is Route.CalendarSettings
     }
 
@@ -41,6 +44,7 @@ fun Route.deepLink(deepLinks: DeepLinkUrls): Uri {
         is Route.StartEdit -> deepLinks.startEditDialog
         is Route.Project -> deepLinks.projectDialog
         is Route.ContextualMenu -> deepLinks.contextualMenu
+        is Route.SettingsDialog -> TODO()
         Route.Settings -> deepLinks.settings
         Route.CalendarSettings -> deepLinks.calendarSettings
     }

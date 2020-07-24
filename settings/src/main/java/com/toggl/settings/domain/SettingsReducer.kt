@@ -11,10 +11,10 @@ import com.toggl.architecture.extensions.effect
 import com.toggl.architecture.extensions.noEffect
 import com.toggl.common.feature.extensions.mutateWithoutEffects
 import com.toggl.common.feature.navigation.Route
+import com.toggl.common.feature.navigation.popUntil
 import com.toggl.common.feature.navigation.push
 import com.toggl.common.services.permissions.PermissionCheckerService
 import com.toggl.models.domain.PlatformInfo
-import com.toggl.models.domain.SettingsType
 import com.toggl.models.domain.UserPreferences
 import com.toggl.repository.interfaces.SettingsRepository
 import javax.inject.Inject
@@ -70,12 +70,9 @@ class SettingsReducer @Inject constructor(
             )
             is SettingsAction.UpdateEmail -> state.mutateWithoutEffects { copy(user = user.copy(email = action.email)) }
             is SettingsAction.UpdateName -> state.mutateWithoutEffects { copy(user = user.copy(name = action.name)) }
-            SettingsAction.OpenCalendarSettingsTapped -> state.mutateWithoutEffects {
-                copy(backStack = backStack.push(Route.CalendarSettings))
-            }
-            is SettingsAction.DialogDismissed -> state.mutateWithoutEffects {
-                copy(localState = localState.copy(singleChoiceSettingShowing = null))
-            }
+            SettingsAction.OpenCalendarSettingsTapped -> state.navigateTo(Route.CalendarSettings)
+            is SettingsAction.OpenSelectionDialog -> state.navigateTo(Route.SettingsDialog(action.settingType))
+            is SettingsAction.DialogDismissed -> state.popUntil<Route.Settings>()
         }
 
     private fun MutableValue<SettingsState>.handleAllowCalendarAccessToggled(): List<Effect<SettingsAction>> {
@@ -100,12 +97,10 @@ class SettingsReducer @Inject constructor(
                 it.copy(sendFeedbackRequest = loadable)
             }
         }
-    SettingsType.Workspace, SettingsType.DateFormat, SettingsType.DurationFormat, SettingsType.FirstDayOfTheWeek -> state.handleSingleChoiceSettingNavigation(
-    action.selectedSetting
-    )
 
-    private fun MutableValue<SettingsState>.handleSingleChoiceSettingNavigation(settingsType: SettingsType): List<Effect<SettingsAction>> =
-        this.mutateWithoutEffects {
-            copy(localState = localState.copy(singleChoiceSettingShowing = settingsType))
-        }
+    private fun MutableValue<SettingsState>.navigateTo(route: Route): List<Effect<SettingsAction>> =
+        mutateWithoutEffects { copy(backStack = backStack.push(route)) }
+
+    private inline fun <reified T : Route> MutableValue<SettingsState>.popUntil(): List<Effect<SettingsAction>> =
+        mutateWithoutEffects { copy(backStack = backStack.popUntil<T>()) }
 }

@@ -14,11 +14,15 @@ import androidx.ui.layout.padding
 import androidx.ui.material.MaterialTheme
 import androidx.ui.material.ripple.RippleIndication
 import androidx.ui.unit.dp
+import com.toggl.architecture.core.Effect
+import com.toggl.architecture.core.MutableValue
+import com.toggl.common.feature.extensions.mutateWithoutEffects
 import com.toggl.models.domain.SettingsType
 import com.toggl.settings.compose.theme.grid_1
 import com.toggl.settings.compose.theme.grid_2
 import com.toggl.settings.domain.SettingsAction
 import com.toggl.settings.domain.SettingsSectionViewModel
+import com.toggl.settings.domain.SettingsState
 import com.toggl.settings.domain.SettingsViewModel
 
 @Composable
@@ -56,11 +60,7 @@ internal fun SettingsRow(
             when (settingsType) {
                 SettingsType.Name -> TODO()
                 SettingsType.Email -> TODO()
-                SettingsType.Workspace -> TODO()
-                SettingsType.DateFormat -> TODO()
                 SettingsType.TwentyFourHourClock -> SettingsAction.Use24HourClockToggled
-                SettingsType.DurationFormat -> TODO()
-                SettingsType.FirstDayOfTheWeek -> TODO()
                 SettingsType.GroupSimilar -> SettingsAction.GroupSimilarTimeEntriesToggled
                 SettingsType.CellSwipe -> SettingsAction.CellSwipeActionsToggled
                 SettingsType.ManualMode -> SettingsAction.ManualModeToggled
@@ -72,6 +72,10 @@ internal fun SettingsRow(
                 SettingsType.TermsOfService -> TODO()
                 SettingsType.Licenses -> TODO()
                 SettingsType.Help -> TODO()
+                SettingsType.Workspace,
+                SettingsType.DateFormat,
+                SettingsType.DurationFormat,
+                SettingsType.FirstDayOfTheWeek -> SettingsAction.OpenSelectionDialog(settingsType)
                 SettingsType.SignOut -> SettingsAction.SignOutTapped
                 SettingsType.AllowCalendarAccess -> SettingsAction.AllowCalendarAccessToggled
                 is SettingsType.Calendar -> SettingsAction.UserCalendarIntegrationToggled(settingsType.id)

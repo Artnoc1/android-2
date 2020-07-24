@@ -18,13 +18,9 @@ data class SettingsState(
     val backStack: BackStack
 ) {
     data class LocalState internal constructor(
-        internal val sendFeedbackRequest: Loadable<Unit>,
-        internal val singleChoiceSettingShowing: SettingsType?
+        internal val sendFeedbackRequest: Loadable<Unit>
     ) {
-        constructor(): this(
-            sendFeedbackRequest = Loadable.Uninitialized,
-            singleChoiceSettingShowing = null
-        )
+        constructor(): this(sendFeedbackRequest = Loadable.Uninitialized)
 
         companion object
     }

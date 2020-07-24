@@ -2,6 +2,7 @@ package com.toggl.settings.domain
 
 import android.content.Context
 import com.toggl.architecture.core.Selector
+import com.toggl.common.feature.navigation.getRouteParam
 import com.toggl.models.domain.DateFormat
 import com.toggl.models.domain.DurationFormat
 import com.toggl.models.domain.SettingsType
@@ -15,7 +16,7 @@ class SingleChoiceSettingSelector @Inject constructor(
     private val context: Context
 ) : Selector<SettingsState, SingleChoiceSettingViewModel> {
     override suspend fun select(state: SettingsState) =
-        state.localState.singleChoiceSettingShowing?.toViewModel(state.userPreferences, state.workspaces)
+        state.backStack.getRouteParam<SettingsType>()?.toViewModel(state.userPreferences, state.workspaces)
             ?: SingleChoiceSettingViewModel.Empty
 
     private fun SettingsType.toViewModel(

@@ -3,6 +3,7 @@ package com.toggl.settings.domain
 import arrow.optics.optics
 import com.toggl.models.domain.DateFormat
 import com.toggl.models.domain.DurationFormat
+import com.toggl.models.domain.SettingsType
 import com.toggl.models.domain.SmartAlertsOption
 import com.toggl.models.domain.UserPreferences
 import com.toggl.models.validation.Email
@@ -33,6 +34,8 @@ sealed class SettingsAction {
     data class SetSendFeedbackError(val throwable: Throwable) : SettingsAction()
     data class UpdateEmail(val email: Email.Valid) : SettingsAction()
     data class UpdateName(val name: String) : SettingsAction()
+    data class OpenSelectionDialog(val settingType: SettingsType) : SettingsAction()
+
     object DialogDismissed : SettingsAction()
     companion object
 }
@@ -63,4 +66,5 @@ fun SettingsAction.formatForDebug() =
         is SettingsAction.UpdateName -> "Updated name to $name"
         SettingsAction.OpenCalendarSettingsTapped -> "Open calendar settings tapped"
         is SettingsAction.DialogDismissed -> "Dialog dismissed"
+        is SettingsAction.OpenSelectionDialog -> "Selection dialog opened for setting $settingType"
     }

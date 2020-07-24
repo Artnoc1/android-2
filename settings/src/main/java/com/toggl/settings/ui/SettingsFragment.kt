@@ -21,7 +21,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class SettingsFragment : Fragment() {
-    @Inject @JvmField var settingsSelector: SettingsSelector? = null‍
+    @Inject @JvmField var settingsSelector: SettingsSelector? = null // https://github.com/google/dagger/issues/1883#issuecomment-642565920 🤷‍
     @Inject @JvmField var singleChoiceSettingSelector: SingleChoiceSettingSelector? = null // https://github.com/google/dagger/issues/1883#issuecomment-642565920 🤷‍
     private val store: SettingsStoreViewModel by viewModels()
 
