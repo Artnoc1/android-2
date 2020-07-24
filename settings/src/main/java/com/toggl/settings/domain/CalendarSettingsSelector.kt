@@ -18,8 +18,8 @@ class CalendarSettingsSelector @Inject constructor(
         val availableCalendars = calendarService.getAvailableCalendars()
 
         return sequence {
-            val calendarIntegrationEnabled = permissionCheckerService.hasCalendarPermission()
-                && state.userPreferences.calendarIntegrationEnabled
+            val calendarIntegrationEnabled = permissionCheckerService.hasCalendarPermission() &&
+                state.userPreferences.calendarIntegrationEnabled
 
             yield(CalendarSettingsViewModel.IntegrationEnabled(calendarIntegrationEnabled))
 

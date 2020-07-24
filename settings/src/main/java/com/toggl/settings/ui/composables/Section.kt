@@ -14,15 +14,11 @@ import androidx.ui.layout.padding
 import androidx.ui.material.MaterialTheme
 import androidx.ui.material.ripple.RippleIndication
 import androidx.ui.unit.dp
-import com.toggl.architecture.core.Effect
-import com.toggl.architecture.core.MutableValue
-import com.toggl.common.feature.extensions.mutateWithoutEffects
 import com.toggl.models.domain.SettingsType
 import com.toggl.settings.compose.theme.grid_1
 import com.toggl.settings.compose.theme.grid_2
 import com.toggl.settings.domain.SettingsAction
 import com.toggl.settings.domain.SettingsSectionViewModel
-import com.toggl.settings.domain.SettingsState
 import com.toggl.settings.domain.SettingsViewModel
 
 @Composable

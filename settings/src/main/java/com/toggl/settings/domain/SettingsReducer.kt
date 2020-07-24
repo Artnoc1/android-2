@@ -45,7 +45,7 @@ class SettingsReducer @Inject constructor(
             is SettingsAction.CellSwipeActionsToggled -> state.updatePrefs { copy(cellSwipeActionsEnabled = !cellSwipeActionsEnabled) }
             is SettingsAction.GroupSimilarTimeEntriesToggled -> state.updatePrefs { copy(groupSimilarTimeEntriesEnabled = !groupSimilarTimeEntriesEnabled) }
 
-            //Dialogs
+            // Dialogs
             is SettingsAction.OpenSelectionDialog -> state.navigateTo(Route.SettingsDialog(action.settingType))
             is SettingsAction.UserPreferencesUpdated -> state.mutateWithoutEffects { copy(userPreferences = action.userPreferences) }
             is SettingsAction.WorkspaceSelected -> state.updatePrefs { copy(selectedWorkspaceId = action.selectedWorkspaceId) }
@@ -92,7 +92,7 @@ class SettingsReducer @Inject constructor(
                 else copy(calendarIds = calendarIds + action.calendarId)
             }
 
-            //Sign out
+            // Sign out
             SettingsAction.SignOutTapped -> effect(signOutEffect)
             SettingsAction.SignOutCompleted -> noEffect()
         }
