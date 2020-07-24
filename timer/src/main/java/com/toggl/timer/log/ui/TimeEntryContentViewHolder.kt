@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.core.view.isVisible
 import com.toggl.timer.R
-import com.toggl.timer.extensions.formatForDisplaying
+import com.toggl.common.feature.extensions.formatForDisplaying
 import com.toggl.timer.log.domain.TimeEntryContentViewModel
 import com.toggl.timer.log.domain.TimeEntryGroupViewModel
 import com.toggl.common.feature.domain.formatForDisplay

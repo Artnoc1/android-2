@@ -18,7 +18,7 @@ import com.toggl.calendar.contextualmenu.domain.ContextualMenuState
 import com.toggl.calendar.datepicker.domain.CalendarDatePickerAction
 import com.toggl.calendar.datepicker.domain.CalendarDatePickerReducer
 import com.toggl.calendar.datepicker.domain.CalendarDatePickerState
-import com.toggl.common.feature.navigation.handleClosableActionsUsing
+import com.toggl.common.feature.timeentry.TimeEntryAction
 import com.toggl.common.feature.timeentry.TimeEntryReducer
 import com.toggl.common.feature.timeentry.TimeEntryState
 import dagger.Module
@@ -89,22 +89,21 @@ object CalendarApplicationModule {
                 mapToGlobalState = CalendarDatePickerState.Companion::toCalendarState,
                 mapToGlobalAction = CalendarAction::DatePicker
             ),
-            contextualMenuReducer.optionalPullback(
+            contextualMenuReducer.decorateWith(timeEntryReducer).optionalPullback(
                 mapToLocalState = ContextualMenuState.Companion::fromCalendarState,
                 mapToLocalAction = CalendarAction::unwrap,
                 mapToGlobalState = ContextualMenuState.Companion::toCalendarState,
                 mapToGlobalAction = CalendarAction::ContextualMenu
             )
         )
-        .handleClosableActionsUsing<CalendarState, CalendarAction, ContextualMenuAction.Close>()
-        .decorateWith(timeEntryReducer)
     }
 
-    private fun CalendarReducer.decorateWith(timeEntryReducer: TimeEntryReducer) =
+    @ExperimentalContracts
+    private fun ContextualMenuReducer.decorateWith(timeEntryReducer: TimeEntryReducer) =
         decorateWith(timeEntryReducer,
             mapToLocalState = { TimeEntryState(it.timeEntries) },
-            mapToLocalAction = { CalendarAction.unwrapTimeEntryActionHolder(it) },
+            mapToLocalAction = { TimeEntryAction.fromTimeEntryActionHolder(it) },
             mapToGlobalState = { globalState, localState -> globalState.copy(timeEntries = localState.timeEntries) },
-            mapToGlobalAction = { CalendarAction.ContextualMenu(ContextualMenuAction.TimeEntryHandling(it)) }
+            mapToGlobalAction = { ContextualMenuAction.TimeEntryHandling(it) }
         )
 }

@@ -6,6 +6,7 @@ import com.toggl.domain.AppAction
 import com.toggl.domain.AppState
 import com.toggl.domain.reducers.AnalyticsReducer
 import com.toggl.domain.loading.LoadingReducer
+import com.toggl.domain.reducers.NavigationReducer
 import com.toggl.domain.reducers.SignOutReducer
 import com.toggl.domain.reducers.FeatureAvailabilityReducer
 import com.toggl.domain.reducers.LoggingReducer
@@ -34,6 +35,7 @@ object ReducerModule {
         timerReducer: TimerReducer,
         calendarReducer: CalendarReducer,
         settingsReducer: SettingsReducer,
+        navigationReducer: NavigationReducer,
         analyticsReducer: AnalyticsReducer
     ): Reducer<AppState, AppAction> =
         createAppReducer(
@@ -42,6 +44,7 @@ object ReducerModule {
             timerReducer,
             calendarReducer,
             settingsReducer,
+            navigationReducer,
             analyticsReducer
         )
 

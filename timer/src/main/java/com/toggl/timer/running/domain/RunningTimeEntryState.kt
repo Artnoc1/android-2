@@ -1,13 +1,11 @@
 package com.toggl.timer.running.domain
 
-import arrow.optics.optics
 import com.toggl.architecture.Loadable
 import com.toggl.common.feature.navigation.BackStack
 import com.toggl.models.domain.TimeEntry
 import com.toggl.models.domain.User
 import com.toggl.timer.common.domain.TimerState
 
-@optics
 data class RunningTimeEntryState(
     val user: User,
     val backStack: BackStack,

@@ -7,7 +7,7 @@ import javax.inject.Singleton
 
 @Singleton
 class Router @Inject constructor(private val deepLinkUrls: DeepLinkUrls) {
-    private var currentBackStack: BackStack = listOf(Route.Timer)
+    private var currentBackStack: BackStack = backStackOf(Route.Timer)
 
     @Suppress("UNCHECKED_CAST")
     fun processNewBackStack(

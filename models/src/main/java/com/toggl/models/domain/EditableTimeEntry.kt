@@ -1,10 +1,8 @@
 package com.toggl.models.domain
 
-import arrow.optics.optics
 import java.time.Duration
 import java.time.OffsetDateTime
 
-@optics
 data class EditableTimeEntry(
     val ids: List<Long> = listOf(),
     val workspaceId: Long,

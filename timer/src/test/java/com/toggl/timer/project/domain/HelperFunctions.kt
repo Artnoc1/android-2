@@ -1,6 +1,7 @@
 package com.toggl.timer.project.domain
 
 import com.toggl.architecture.DispatcherProvider
+import com.toggl.common.feature.navigation.backStackOf
 import com.toggl.models.common.AutocompleteSuggestion
 import com.toggl.models.domain.Client
 import com.toggl.models.domain.Project
@@ -31,7 +32,8 @@ fun createInitialState(
     editableTimeEntry = editableTimeEntry,
     cursorPosition = editableTimeEntry.description.length,
     autocompleteQuery = autocompleteQuery,
-    autocompleteSuggestions = autocompleteSuggestions
+    autocompleteSuggestions = autocompleteSuggestions,
+    backStack = backStackOf()
 )
 
 fun createProjectReducer(

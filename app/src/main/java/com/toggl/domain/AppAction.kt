@@ -13,4 +13,12 @@ sealed class AppAction {
     class Timer(override val action: TimerAction) : AppAction(), ActionWrapper<TimerAction>
     class Calendar(override val action: CalendarAction) : AppAction(), ActionWrapper<CalendarAction>
     class Settings(override val action: SettingsAction) : AppAction(), ActionWrapper<SettingsAction>
+    class TabSelected(val tab: Tab) : AppAction()
+    object BackButtonPressed : AppAction()
+}
+
+enum class Tab {
+    Timer,
+    Reports,
+    Calendar
 }

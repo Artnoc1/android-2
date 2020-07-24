@@ -18,10 +18,10 @@ import com.toggl.common.extensions.addInterceptingOnClickListener
 import com.toggl.common.extensions.adjustForUserTheme
 import com.toggl.common.extensions.performClickHapticFeedback
 import com.toggl.common.extensions.requestFocus
-import com.toggl.common.extensions.setOnBackKeyEventUpCallback
 import com.toggl.common.extensions.setOvalBackground
 import com.toggl.common.extensions.setSafeText
 import com.toggl.common.feature.extensions.toColor
+import com.toggl.common.feature.navigation.handleBackPressesEmitting
 import com.toggl.common.ui.LifecycleAwareAutocompletePopup
 import com.toggl.common.ui.Position
 import com.toggl.models.common.AutocompleteSuggestion.ProjectSuggestions
@@ -79,7 +79,7 @@ class ProjectDialogFragment : BottomSheetDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return super.onCreateDialog(savedInstanceState).also {
-            it.setOnBackKeyEventUpCallback { store.dispatch(ProjectAction.Close) }
+            it.handleBackPressesEmitting(lifecycle) { store.dispatch(ProjectAction.Close) }
         }
     }
 
@@ -326,7 +326,6 @@ class ProjectDialogFragment : BottomSheetDialogFragment() {
     @FlowPreview
     @ExperimentalCoroutinesApi
     override fun onDestroyView() {
-        dialog?.setOnKeyListener(null)
         super.onDestroyView()
 
         colorPickerAnimator.finish()

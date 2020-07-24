@@ -11,6 +11,7 @@ import com.toggl.architecture.extensions.effect
 import com.toggl.architecture.extensions.noEffect
 import com.toggl.common.feature.extensions.mutateWithoutEffects
 import com.toggl.common.feature.navigation.Route
+import com.toggl.common.feature.navigation.backStackOf
 import com.toggl.models.validation.Email
 import com.toggl.models.validation.Password
 import com.toggl.models.validation.toEmail
@@ -44,7 +45,7 @@ class LoginReducer @Inject constructor(
             is LoginAction.SetUser -> state.mutateWithoutEffects {
                 copy(
                     user = Loadable.Loaded(action.user),
-                    backStack = listOf(Route.Timer)
+                    backStack = backStackOf(Route.Timer)
                 )
             }
             is LoginAction.SetUserError -> state.mutateWithoutEffects {

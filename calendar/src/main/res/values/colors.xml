@@ -7,4 +7,6 @@
     <color name="default_calendar_editing_hour_label_text_color">#FF328FFF</color>
     <color name="default_calendar_primary_text_color">@color/text_on_background</color>
     <color name="default_calendar_default_calendar_item_color">#C2C2C2</color>
+    
+    <color name="week_stripe_disabled_day_color">#656565</color>
 </resources>

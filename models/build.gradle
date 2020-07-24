@@ -7,7 +7,4 @@ dependencies {
     implementation project(':common')
     implementation Libs.Kotlin.stdlib
     api Libs.AndroidX.Room.common
-    api Libs.Arrow.optics
-    api Libs.Arrow.syntax
-    kapt Libs.Arrow.meta
 }

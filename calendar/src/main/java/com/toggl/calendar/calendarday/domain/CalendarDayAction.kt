@@ -1,11 +1,9 @@
 package com.toggl.calendar.calendarday.domain
 
-import arrow.optics.optics
 import com.toggl.calendar.common.domain.CalendarItem
 import com.toggl.common.feature.services.calendar.CalendarEvent
 import java.time.OffsetDateTime
 
-@optics
 sealed class CalendarDayAction {
     data class ItemTapped(val calendarItem: CalendarItem) : CalendarDayAction()
     object CalendarViewAppeared : CalendarDayAction()

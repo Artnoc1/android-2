@@ -1,10 +1,8 @@
 package com.toggl.calendar.contextualmenu.domain
 
-import arrow.optics.optics
 import com.toggl.common.feature.timeentry.TimeEntryAction
 import com.toggl.common.feature.timeentry.TimeEntryActionHolder
 
-@optics
 sealed class ContextualMenuAction {
     object CloseButtonTapped : ContextualMenuAction()
     object DiscardButtonTapped : ContextualMenuAction()

@@ -8,7 +8,6 @@ import com.toggl.architecture.core.optionalPullback
 import com.toggl.architecture.core.pullback
 import com.toggl.architecture.core.unwrap
 import com.toggl.common.Constants
-import com.toggl.common.feature.navigation.handleClosableActionsUsing
 import com.toggl.common.feature.timeentry.TimeEntryAction
 import com.toggl.common.feature.timeentry.TimeEntryReducer
 import com.toggl.common.feature.timeentry.TimeEntryState
@@ -166,13 +165,13 @@ object ApplicationTimerModule {
                 mapToGlobalState = TimeEntriesLogState.Companion::toTimerState,
                 mapToGlobalAction = TimerAction::TimeEntriesLog
             ),
-            startEditReducer.optionalPullback(
+            startEditReducer.decorateWith(timeEntryReducer).optionalPullback(
                 mapToLocalState = StartEditState.Companion::fromTimerState,
                 mapToLocalAction = TimerAction::unwrap,
                 mapToGlobalState = StartEditState.Companion::toTimerState,
                 mapToGlobalAction = TimerAction::StartEditTimeEntry
             ),
-            runningTimeEntryReducer.optionalPullback(
+            runningTimeEntryReducer.decorateWith(timeEntryReducer).optionalPullback(
                 mapToLocalState = RunningTimeEntryState.Companion::fromTimerState,
                 mapToLocalAction = TimerAction::unwrap,
                 mapToGlobalState = RunningTimeEntryState.Companion::toTimerState,
@@ -184,16 +183,13 @@ object ApplicationTimerModule {
                 mapToGlobalState = ProjectState.Companion::toTimerState,
                 mapToGlobalAction = TimerAction::Project
             ),
-            suggestionsReducer.optionalPullback(
+            suggestionsReducer.decorateWith(timeEntryReducer).optionalPullback(
                 mapToLocalState = SuggestionsState.Companion::fromTimerState,
                 mapToLocalAction = TimerAction::unwrap,
                 mapToGlobalState = SuggestionsState.Companion::toTimerState,
                 mapToGlobalAction = TimerAction::Suggestions
             )
         )
-        .handleClosableActionsUsing<TimerState, TimerAction, ProjectAction.Close>()
-        .handleClosableActionsUsing<TimerState, TimerAction, StartEditAction.Close>()
-        .decorateWith(timeEntryReducer)
     }
 
     private fun TimeEntriesLogReducer.decorateWith(timeEntryReducer: TimeEntryReducer) =
@@ -214,24 +210,21 @@ object ApplicationTimerModule {
             mapToGlobalAction = { localAction -> RunningTimeEntryAction.TimeEntryHandling(localAction) }
         )
 
-    private fun TimerReducer.decorateWith(timeEntryReducer: TimeEntryReducer) =
-        decorateWith(
+    private fun StartEditReducer.decorateWith(timeEntryReducer: TimeEntryReducer) =
+        this.decorateWith(
             timeEntryReducer,
             mapToLocalState = { TimeEntryState(it.timeEntries) },
-            mapToLocalAction = { TimerAction.unwrapStartEditTimeEntryActionHolder(it) },
+            mapToLocalAction = { TimeEntryAction.fromTimeEntryActionHolder(it) },
             mapToGlobalState = { globalState, localState -> globalState.copy(timeEntries = localState.timeEntries) },
-            mapToGlobalAction = { localAction -> TimerAction.StartEditTimeEntry(StartEditAction.TimeEntryHandling(localAction)) }
-        ).decorateWith(
+            mapToGlobalAction = { localAction -> StartEditAction.TimeEntryHandling(localAction) }
+        )
+
+    private fun SuggestionsReducer.decorateWith(timeEntryReducer: TimeEntryReducer) =
+        this.decorateWith(
             timeEntryReducer,
             mapToLocalState = { TimeEntryState(it.timeEntries) },
-            mapToLocalAction = { TimerAction.unwrapSuggestionsTimeEntryActionHolder(it) },
+            mapToLocalAction = { TimeEntryAction.fromTimeEntryActionHolder(it) },
             mapToGlobalState = { globalState, localState -> globalState.copy(timeEntries = localState.timeEntries) },
-            mapToGlobalAction = { localAction -> TimerAction.Suggestions(SuggestionsAction.TimeEntryHandling(localAction)) }
-        ).decorateWith(
-            timeEntryReducer,
-            mapToLocalState = { TimeEntryState(it.timeEntries) },
-            mapToLocalAction = { TimerAction.unwrapRunningTimeEntryActionHolder(it) },
-            mapToGlobalState = { globalState, localState -> globalState.copy(timeEntries = localState.timeEntries) },
-            mapToGlobalAction = { localAction -> TimerAction.RunningTimeEntry(RunningTimeEntryAction.TimeEntryHandling(localAction)) }
+            mapToGlobalAction = { localAction -> SuggestionsAction.TimeEntryHandling(localAction) }
         )
 }

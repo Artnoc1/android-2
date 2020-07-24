@@ -11,6 +11,9 @@ inline fun <reified R : Route> BackStack.popUntil() =
         }
     ).lastOrNull() ?: this
 
+fun backStackOf(vararg route: Route) =
+    route.toList()
+
 fun BackStack.push(route: Route) =
     this + route
 

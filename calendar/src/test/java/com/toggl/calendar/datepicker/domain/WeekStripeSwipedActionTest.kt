@@ -1,14 +1,16 @@
 package com.toggl.calendar.datepicker.domain
 
 import com.toggl.calendar.common.CoroutineTest
+import com.toggl.calendar.common.domain.CalendarConstants.numberOfDaysToShow
 import com.toggl.calendar.common.testReduceNoEffects
 import com.toggl.calendar.common.testReduceState
 import com.toggl.calendar.common.toMutableValue
-import com.toggl.common.extensions.toList
+import com.toggl.common.services.time.TimeService
 import com.toggl.models.common.SwipeDirection
 import io.kotlintest.matchers.numerics.shouldBeLessThanOrEqual
 import io.kotlintest.shouldBe
 import io.kotlintest.shouldNotBe
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -26,25 +28,39 @@ import kotlin.contracts.ExperimentalContracts
 internal class WeekStripeSwipedActionTest : CoroutineTest() {
 
     private val fixedDate = OffsetDateTime.of(2020, Month.JULY.value, 14, 0, 0, 0, 0, ZoneOffset.UTC) // Tuesday
+
     private val initialState = CalendarDatePickerState(
-        selectedDate = fixedDate,
-        visibleDates = (fixedDate.minusDays(1)..fixedDate.plusDays(5)).toList(),
-        availableDates = (fixedDate.minusDays(14)..fixedDate).toList()
+        selectedDate = fixedDate
     )
 
-    private val reducer = CalendarDatePickerReducer(
-        timeService = mockk(),
-        settingsRepository = mockk(),
-        dispatcherProvider = dispatcherProvider
+    private val timeService: TimeService = mockk()
+
+    private val reducer = createReducer(
+        timeService = timeService
     )
+
+    init {
+        every { timeService.now() }.returns(fixedDate)
+    }
 
     @Test
-    fun `Should not change when swiping into the future`() = runBlockingTest {
+    fun `Should change the selected date to "today" when swiping into the future`() = runBlockingTest {
         reducer.testReduceState(
             initialState,
+            CalendarDatePickerAction.WeekStripeSwiped(SwipeDirection.Right)
+        ) { state ->
+            state.selectedDate.toLocalDate() shouldBe initialState.selectedDate.toLocalDate()
+        }
+    }
+
+    @Test
+    fun `Should change the selected date to the last available date when swiping past the past limit`() = runBlockingTest {
+        val testInitialState = initialState.copy(selectedDate = fixedDate.minusDays(numberOfDaysToShow - 1))
+        reducer.testReduceState(
+            testInitialState,
             CalendarDatePickerAction.WeekStripeSwiped(SwipeDirection.Left)
         ) { state ->
-            state shouldBe initialState
+            state.selectedDate.toLocalDate() shouldBe testInitialState.selectedDate.toLocalDate()
         }
     }
 
@@ -52,7 +68,7 @@ internal class WeekStripeSwipedActionTest : CoroutineTest() {
     fun `Changes the selected date by one week`() = runBlockingTest {
         reducer.testReduceState(
             initialState,
-            CalendarDatePickerAction.WeekStripeSwiped(SwipeDirection.Right)
+            CalendarDatePickerAction.WeekStripeSwiped(SwipeDirection.Left)
         ) { state ->
             state.selectedDate shouldNotBe initialState.selectedDate
             state.selectedDate.dayOfWeek shouldBe initialState.selectedDate.dayOfWeek
@@ -64,12 +80,12 @@ internal class WeekStripeSwipedActionTest : CoroutineTest() {
     fun `Swiping back and forth resets the state`() = runBlockingTest {
         reducer.testReduceState(
             initialState,
-            CalendarDatePickerAction.WeekStripeSwiped(SwipeDirection.Right)
+            CalendarDatePickerAction.WeekStripeSwiped(SwipeDirection.Left)
         ) { intermediateState ->
             intermediateState shouldNotBe initialState
             reducer.testReduceState(
                 intermediateState,
-                CalendarDatePickerAction.WeekStripeSwiped(SwipeDirection.Left)
+                CalendarDatePickerAction.WeekStripeSwiped(SwipeDirection.Right)
             ) { state ->
                 state shouldBe initialState
             }
@@ -80,7 +96,7 @@ internal class WeekStripeSwipedActionTest : CoroutineTest() {
     fun `Shouldn't allow swiping more than two weeks into the past`() = runBlockingTest {
         var state = initialState
         val mutableState = state.toMutableValue { state = it }
-        val action = CalendarDatePickerAction.WeekStripeSwiped(SwipeDirection.Right)
+        val action = CalendarDatePickerAction.WeekStripeSwiped(SwipeDirection.Left)
 
         repeat(5) {
             reducer.reduce(mutableState, action)

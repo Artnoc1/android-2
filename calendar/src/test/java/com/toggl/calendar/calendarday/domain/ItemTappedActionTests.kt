@@ -8,6 +8,7 @@ import com.toggl.calendar.common.testReduceNoEffects
 import com.toggl.calendar.common.testReduceState
 import com.toggl.common.feature.models.SelectedCalendarItem
 import com.toggl.common.feature.navigation.Route
+import com.toggl.common.feature.navigation.backStackOf
 import com.toggl.common.feature.navigation.push
 import com.toggl.common.feature.navigation.setRouteParam
 import com.toggl.common.feature.services.calendar.CalendarEvent
@@ -37,7 +38,7 @@ internal class ItemTappedActionTests : CoroutineTest() {
 
     @Test
     fun `should set selectedItem correctly when timeEntry is tapped and there already is another item selected`() = runBlockingTest {
-        val initialState = initialState.copy(backStack = listOf(Route.ContextualMenu(SelectedCalendarItem.SelectedCalendarEvent(calendarEvent))))
+        val initialState = initialState.copy(backStack = backStackOf(Route.ContextualMenu(SelectedCalendarItem.SelectedCalendarEvent(calendarEvent))))
         reducer.testReduceState(
             initialState,
             CalendarDayAction.ItemTapped(timeEntryItemToBeSelected)

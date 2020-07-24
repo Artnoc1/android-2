@@ -13,6 +13,7 @@ import com.toggl.common.feature.extensions.mutateWithoutEffects
 import com.toggl.common.feature.models.SelectedCalendarItem
 import com.toggl.common.feature.navigation.Route
 import com.toggl.common.feature.navigation.getRouteParam
+import com.toggl.common.feature.navigation.popBackStackWithoutEffects
 import com.toggl.common.feature.navigation.push
 import com.toggl.common.feature.timeentry.TimeEntryAction
 import com.toggl.common.feature.timeentry.exceptions.TimeEntryDoesNotExistException
@@ -101,7 +102,7 @@ class ContextualMenuReducer @Inject constructor(
                 create(editableTimeEntry) + ContextualMenuAction.Close.toEffect()
             }
             is ContextualMenuAction.TimeEntryHandling,
-            ContextualMenuAction.Close -> noEffect()
+            ContextualMenuAction.Close -> state.popBackStackWithoutEffects()
         }
 
     private fun stop(): Effect<ContextualMenuAction> {

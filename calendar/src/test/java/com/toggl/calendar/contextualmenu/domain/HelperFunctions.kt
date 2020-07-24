@@ -4,6 +4,7 @@ import com.toggl.calendar.common.createCalendarEvent
 import com.toggl.calendar.common.validUser
 import com.toggl.common.feature.models.SelectedCalendarItem
 import com.toggl.common.feature.navigation.Route
+import com.toggl.common.feature.navigation.backStackOf
 import com.toggl.common.feature.services.calendar.Calendar
 import com.toggl.models.domain.Client
 import com.toggl.models.domain.EditableTimeEntry
@@ -26,7 +27,7 @@ fun createInitialState(
     validUser,
     timeEntries.associateBy { it.id },
     selectedItem = selectedItem,
-    backStack = listOf(Route.ContextualMenu(selectedItem)),
+    backStack = backStackOf(Route.ContextualMenu(selectedItem)),
     projects = projects.associateBy { it.id },
     clients = clients.associateBy { it.id },
     calendars = calendars

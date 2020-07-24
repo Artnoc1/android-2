@@ -1,6 +1,5 @@
 package com.toggl.timer.suggestions.domain
 
-import arrow.optics.optics
 import com.toggl.architecture.Loadable
 import com.toggl.common.feature.services.calendar.CalendarEvent
 import com.toggl.models.domain.Client
@@ -9,7 +8,6 @@ import com.toggl.models.domain.TimeEntry
 import com.toggl.models.domain.User
 import com.toggl.timer.common.domain.TimerState
 
-@optics
 data class SuggestionsState(
     val suggestions: List<Suggestion>,
     val user: User,

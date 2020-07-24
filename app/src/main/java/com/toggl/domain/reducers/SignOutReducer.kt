@@ -6,6 +6,7 @@ import com.toggl.architecture.core.MutableValue
 import com.toggl.architecture.core.Reducer
 import com.toggl.architecture.core.isOrWraps
 import com.toggl.common.feature.navigation.Route
+import com.toggl.common.feature.navigation.backStackOf
 import com.toggl.domain.AppAction
 import com.toggl.domain.AppState
 import com.toggl.settings.domain.SettingsAction
@@ -18,7 +19,7 @@ class SignOutReducer(override val innerReducer: Reducer<AppState, AppAction>) : 
         if (action.isOrWraps<SettingsAction.SignOutCompleted>()) {
             state.mutate {
                 AppState(
-                    backStack = listOf(Route.Welcome),
+                    backStack = backStackOf(Route.Welcome),
                     calendarPermissionWasGranted = calendarPermissionWasGranted
                 )
             }

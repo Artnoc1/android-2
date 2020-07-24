@@ -1,10 +1,10 @@
 package com.toggl.timer.log.domain
 
 import com.toggl.common.feature.domain.ProjectViewModel
+import com.toggl.common.feature.timeentry.extensions.totalDuration
 import com.toggl.models.domain.Client
 import com.toggl.models.domain.Project
 import com.toggl.models.domain.TimeEntry
-import java.time.Duration
 
 fun TimeEntry.toFlatTimeEntryViewModel(projects: Map<Long, Project>, clients: Map<Long, Client>) =
     FlatTimeEntryViewModel(
@@ -38,12 +38,8 @@ fun List<TimeEntry>.toTimeEntryGroupViewModel(
 fun Project.toProjectViewModel(clients: Map<Long, Client>) =
     ProjectViewModel(id, name, color, clients[clientId]?.name)
 
-fun List<TimeEntry>.totalDuration(): Duration =
-    fold(Duration.ZERO) { acc, timeEntry -> acc + timeEntry.duration }
-
 fun Map<Long, Project>.getProjectViewModelFor(timeEntry: TimeEntry, clients: Map<Long, Client>): ProjectViewModel? {
     val projectId = timeEntry.projectId
     return if (projectId == null) null
-
     else this[projectId]?.toProjectViewModel(clients)
 }

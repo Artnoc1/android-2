@@ -38,4 +38,5 @@
     <dimen name="default_calendar_calendar_icon_size">24dp</dimen>
     <dimen name="default_calendar_calendarIcon_right_inset_margin">4dp</dimen>
     <dimen name="contextual_menu_project_dot_size">10dp</dimen>
+    <dimen name="calendar_week_stripe_horizontal_margin">22dp</dimen>
 </resources>

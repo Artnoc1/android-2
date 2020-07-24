@@ -4,8 +4,6 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.View
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -35,8 +33,6 @@ class ContextualMenuFragment : Fragment(R.layout.fragment_contextualmenu) {
 
     private lateinit var behavior: BottomSheetBehavior<*>
     private val contextualMenuAdapter = ContextualMenuActionsAdapter { store.dispatch(it) }
-    private var bottomSheetBackButtonHandlerCallback: BottomSheetStateCallback? = null
-    private var onBackPressedCallback: OnBackPressedCallback? = null
 
     @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,32 +52,6 @@ class ContextualMenuFragment : Fragment(R.layout.fragment_contextualmenu) {
         behavior = BottomSheetBehavior.from(view.parent as View)
         behavior.state = BottomSheetBehavior.STATE_HIDDEN
         bottomSheetNavigator.setupWithBehaviour(behavior, viewLifecycleOwner) {
-            store.dispatch(ContextualMenuAction.DialogDismissed)
-        }
-        val bottomSheetExpandedCallback = object : BottomSheetStateCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                setupBackPressCallback(newState == BottomSheetBehavior.STATE_EXPANDED)
-            }
-        }
-        behavior.addBottomSheetCallback(bottomSheetExpandedCallback)
-        bottomSheetBackButtonHandlerCallback = bottomSheetExpandedCallback
-    }
-
-    override fun onResume() {
-        super.onResume()
-        setupBackPressCallback(behavior.state == BottomSheetBehavior.STATE_EXPANDED)
-    }
-
-    override fun onDestroyView() {
-        onBackPressedCallback = null
-        bottomSheetBackButtonHandlerCallback = null
-        super.onDestroyView()
-    }
-
-    private fun setupBackPressCallback(shouldHandleCallback: Boolean) {
-        onBackPressedCallback?.remove()
-        onBackPressedCallback = requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, enabled = shouldHandleCallback) {
-            isEnabled = false
             store.dispatch(ContextualMenuAction.DialogDismissed)
         }
     }
@@ -119,9 +89,5 @@ class ContextualMenuFragment : Fragment(R.layout.fragment_contextualmenu) {
             project_dot.visibility = View.GONE
             project_label.visibility = View.GONE
         }
-    }
-
-    private abstract class BottomSheetStateCallback : BottomSheetBehavior.BottomSheetCallback() {
-        override fun onSlide(bottomSheet: View, slideOffset: Float) {}
     }
 }

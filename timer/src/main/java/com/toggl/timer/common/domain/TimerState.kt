@@ -1,6 +1,5 @@
 package com.toggl.timer.common.domain
 
-import arrow.optics.optics
 import com.toggl.architecture.Loadable
 import com.toggl.common.Constants
 import com.toggl.common.feature.navigation.BackStack
@@ -21,7 +20,6 @@ import com.toggl.timer.startedit.domain.DateTimePickMode
 import com.toggl.timer.startedit.domain.TemporalInconsistency
 import com.toggl.timer.suggestions.domain.Suggestion
 
-@optics
 data class TimerState(
     val user: Loadable<User>,
     val tags: Map<Long, Tag>,

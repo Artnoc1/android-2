@@ -1,8 +1,5 @@
 package com.toggl.onboarding.passwordreset.domain
 
-import arrow.optics.optics
-
-@optics
 sealed class PasswordResetAction {
     object SendEmailButtonTapped : PasswordResetAction()
     data class EmailEntered(val email: String) : PasswordResetAction()

@@ -46,9 +46,6 @@ dependencies {
     kapt Libs.AndroidX.Hilt.compiler
     implementation Libs.Hilt.hilt
     kapt Libs.Hilt.compiler
-    implementation Libs.Arrow.optics
-    implementation Libs.Arrow.syntax
-    kapt Libs.Arrow.meta
 
     testImplementation Libs.Test.Jupiter.api
     testRuntimeOnly Libs.Test.Jupiter.engine

@@ -1,8 +1,5 @@
 package com.toggl.models.domain
 
-import arrow.optics.optics
-
-@optics
 data class EditableProject(
     val name: String = "",
     val color: String = Project.defaultColors.random(),

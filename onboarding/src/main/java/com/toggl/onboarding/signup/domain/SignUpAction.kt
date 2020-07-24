@@ -1,8 +1,5 @@
 package com.toggl.onboarding.signup.domain
 
-import arrow.optics.optics
-
-@optics
 sealed class SignUpAction {
     object SignUpButtonTapped : SignUpAction()
     data class EmailEntered(val email: String) : SignUpAction()

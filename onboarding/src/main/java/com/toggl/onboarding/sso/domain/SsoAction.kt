@@ -1,8 +1,5 @@
 package com.toggl.onboarding.sso.domain
 
-import arrow.optics.optics
-
-@optics
 sealed class SsoAction {
     object ContinueButtonTapped : SsoAction()
     data class EmailEntered(val email: String) : SsoAction()

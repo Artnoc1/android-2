@@ -1,6 +1,5 @@
 package com.toggl.settings.domain
 
-import arrow.optics.optics
 import com.toggl.models.domain.DateFormat
 import com.toggl.models.domain.DurationFormat
 import com.toggl.models.domain.SettingsType
@@ -9,7 +8,6 @@ import com.toggl.models.domain.UserPreferences
 import com.toggl.models.validation.Email
 import java.time.DayOfWeek
 
-@optics
 sealed class SettingsAction {
     data class UserPreferencesUpdated(val userPreferences: UserPreferences) : SettingsAction()
     data class UserCalendarIntegrationToggled(val calendarId: String) : SettingsAction()

@@ -1,5 +1,6 @@
 package com.toggl.timer.extensions
 
+import com.toggl.common.feature.extensions.formatForDisplaying
 import com.toggl.timer.generators.threeTenDuration
 import io.kotlintest.matchers.numerics.shouldBeGreaterThanOrEqual
 import io.kotlintest.properties.Gen

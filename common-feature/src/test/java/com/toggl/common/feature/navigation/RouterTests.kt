@@ -101,8 +101,8 @@ class RouterTests : CoroutineTest() {
     @Test
     fun `navigates between stacks with the same size`() = runBlockingTest {
 
-        val oldStack = listOf(Route.Timer)
-        val newStack = listOf<Route>(Route.Login)
+        val oldStack = backStackOf(Route.Timer)
+        val newStack = backStackOf(Route.Login)
 
         router.processNewBackStack(oldStack, navController)
         router.processNewBackStack(newStack, navController)
@@ -116,14 +116,12 @@ class RouterTests : CoroutineTest() {
     @Test
     fun `pops everything that is different from both stacks and only navigates what is needed`() = runBlockingTest {
 
-        val oldStack = listOf(
+        val oldStack = backStackOf(
             Route.Timer,
             Route.StartEdit(EditableTimeEntry.empty(1)),
             Route.Project(EditableProject.empty(1))
         )
-        val newStack = listOf<Route>(
-            Route.Timer
-        )
+        val newStack = backStackOf(Route.Timer)
 
         router.processNewBackStack(oldStack, navController)
         router.processNewBackStack(newStack, navController)

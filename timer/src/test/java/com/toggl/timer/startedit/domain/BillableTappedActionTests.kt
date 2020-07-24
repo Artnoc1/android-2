@@ -15,8 +15,11 @@ class BillableTappedActionTests : FreeCoroutineSpec() {
         "The BillableTapped action" - {
             "should invert the values of the editable time entry" - {
                 Gen.bool().constants().forEach { originalBillableValue ->
-                    var state = StartEditState.editableTimeEntry
-                        .modify(createInitialState()) { it.copy(billable = originalBillableValue) }
+                    var state = createInitialState().let {
+                        it.copy(
+                            editableTimeEntry = it.editableTimeEntry.copy(billable = originalBillableValue)
+                        )
+                    }
                     val mutableValue = state.toMutableValue { state = it }
 
                     val effects = reducer.reduce(mutableValue, StartEditAction.BillableTapped)

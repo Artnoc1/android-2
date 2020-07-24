@@ -7,11 +7,11 @@ import com.toggl.architecture.core.Reducer
 import com.toggl.architecture.extensions.effect
 import com.toggl.architecture.extensions.effectOf
 import com.toggl.architecture.extensions.effects
-import com.toggl.architecture.extensions.noEffect
 import com.toggl.common.Constants.AutoCompleteSuggestions.projectToken
 import com.toggl.common.feature.extensions.mutateWithoutEffects
 import com.toggl.common.feature.extensions.returnEffect
 import com.toggl.common.feature.extensions.toHex
+import com.toggl.common.feature.navigation.popBackStackWithoutEffects
 import com.toggl.models.common.AutocompleteSuggestion.ProjectSuggestions
 import com.toggl.models.domain.EditableProject
 import com.toggl.models.domain.isValid
@@ -35,9 +35,11 @@ class ProjectReducer @Inject constructor(
             ProjectAction.CloseButtonTapped,
             ProjectAction.DialogDismissed -> effectOf(ProjectAction.Close)
             is ProjectAction.NameEntered -> state.mutateWithoutEffects {
-                ProjectState.editableProject.modify(this) {
-                    it.copy(name = action.name, error = EditableProject.ProjectError.None)
-                }
+                copy(
+                    editableProject = editableProject.copy(
+                        name = action.name, error = EditableProject.ProjectError.None
+                    )
+                )
             }
             ProjectAction.DoneButtonTapped -> {
                 val (project, projectCanBeCreated) = state.mapState {
@@ -47,16 +49,20 @@ class ProjectReducer @Inject constructor(
 
                 if (projectCanBeCreated) createProject(project)
                 else state.mutateWithoutEffects {
-                    ProjectState.editableProject.modify(this) {
-                        it.copy(error = EditableProject.ProjectError.ProjectAlreadyExists)
-                    }
+                    copy(
+                        editableProject = editableProject.copy(
+                            error = EditableProject.ProjectError.ProjectAlreadyExists
+                        )
+                    )
                 }
             }
             ProjectAction.PrivateProjectSwitchTapped ->
                 state.mutateWithoutEffects {
-                    ProjectState.editableProject.modify(this) {
-                        it.copy(isPrivate = !it.isPrivate)
-                    }
+                    copy(
+                        editableProject = editableProject.copy(
+                            isPrivate = !editableProject.isPrivate
+                        )
+                    )
                 }
             is ProjectAction.ColorValueChanged -> {
                 val newCustomColor = state().customColor.copy(value = action.value)
@@ -73,22 +79,23 @@ class ProjectReducer @Inject constructor(
                 effectOf(ProjectAction.ColorPicked(newCustomColor.toHex()))
             }
             is ProjectAction.ColorPicked -> state.mutateWithoutEffects {
-                ProjectState.editableProject.modify(this) {
-                    it.copy(color = action.color)
-                }
+                copy(editableProject = editableProject.copy(color = action.color))
             }
             is ProjectAction.WorkspacePicked -> state.mutateWithoutEffects {
-                ProjectState.editableProject.modify(this) {
-                    it.copy(workspaceId = action.workspace.id)
-                }
+                copy(editableProject = editableProject.copy(workspaceId = action.workspace.id))
             }
             is ProjectAction.ClientPicked -> state.mutateWithoutEffects {
-                ProjectState.editableProject.modify(this) {
-                    it.copy(clientId = action.client?.id)
-                }
+                copy(
+                    editableProject = editableProject.copy(
+                        clientId = action.client?.id
+                    )
+                )
             }
             is ProjectAction.ProjectCreated -> state.mutate {
-                val (token, currentQuery) = editableTimeEntry.description.findTokenAndQueryMatchesForAutocomplete(projectToken, cursorPosition)
+                val (token, currentQuery) = editableTimeEntry.description.findTokenAndQueryMatchesForAutocomplete(
+                    projectToken,
+                    cursorPosition
+                )
                 val delimiter = "$token$currentQuery"
                 copy(
                     editableTimeEntry = editableTimeEntry.copy(
@@ -97,7 +104,7 @@ class ProjectReducer @Inject constructor(
                     )
                 )
             } returnEffect effectOf(ProjectAction.Close)
-            ProjectAction.Close -> noEffect()
+            ProjectAction.Close -> state.popBackStackWithoutEffects()
             is ProjectAction.CreateClientSuggestionTapped -> effect(
                 CreateClientEffect(
                     dispatcherProvider,

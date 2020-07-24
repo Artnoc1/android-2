@@ -26,6 +26,8 @@ class LoggingReducer(override val innerReducer: Reducer<AppState, AppAction>)
                 is AppAction.Loading -> action.action.formatForDebug()
                 is AppAction.Calendar -> action.action.formatForDebug()
                 is AppAction.Settings -> action.action.formatForDebug()
+                is AppAction.TabSelected -> "Selected tab $action.tabItem"
+                AppAction.BackButtonPressed -> "Physical back button pressed"
             }
         )
 

@@ -3,6 +3,7 @@ package com.toggl.onboarding.login.domain
 import com.toggl.api.login.LoginApiClient
 import com.toggl.architecture.Loadable
 import com.toggl.common.feature.navigation.Route
+import com.toggl.common.feature.navigation.backStackOf
 import com.toggl.onboarding.common.CoroutineTest
 import com.toggl.onboarding.common.testReduceState
 import com.toggl.onboarding.common.validUser
@@ -27,7 +28,7 @@ class SetUserActionTests : CoroutineTest() {
 
         reducer.testReduceState(initialState, LoginAction.SetUser(validUser)) { newState ->
             newState shouldBe initialState.copy(
-                backStack = listOf(Route.Timer),
+                backStack = backStackOf(Route.Timer),
                 user = Loadable.Loaded(validUser)
             )
         }

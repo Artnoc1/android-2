@@ -10,10 +10,16 @@ import com.toggl.models.domain.SettingsType
 sealed class Route {
     object Welcome : Route()
     object Login : Route()
+
     object Timer : Route()
     data class StartEdit(override val parameter: EditableTimeEntry) : Route(), ParameterRoute<EditableTimeEntry>
     data class Project(override val parameter: EditableProject) : Route(), ParameterRoute<EditableProject>
+
+    object Reports : Route()
+
+    object Calendar : Route()
     data class ContextualMenu(override val parameter: SelectedCalendarItem) : Route(), ParameterRoute<SelectedCalendarItem>
+
     object Settings : Route()
     data class SettingsDialog(override val parameter: SettingsType) : Route(), ParameterRoute<SettingsType>
     object CalendarSettings : Route()
@@ -29,6 +35,8 @@ fun Route.isSameTypeAs(otherRoute: Route) =
         Route.Welcome -> otherRoute is Route.Welcome
         Route.Login -> otherRoute is Route.Login
         Route.Timer -> otherRoute is Route.Timer
+        Route.Reports -> otherRoute is Route.Reports
+        Route.Calendar -> otherRoute is Route.Calendar
         is Route.StartEdit -> otherRoute is Route.StartEdit
         is Route.Project -> otherRoute is Route.Project
         is Route.ContextualMenu -> otherRoute is Route.ContextualMenu
@@ -43,6 +51,8 @@ fun Route.deepLink(deepLinks: DeepLinkUrls): Uri {
         Route.Welcome -> deepLinks.welcome
         Route.Login -> deepLinks.login
         Route.Timer -> deepLinks.timeEntriesLog
+        Route.Reports -> deepLinks.reports
+        Route.Calendar -> deepLinks.calendar
         is Route.StartEdit -> deepLinks.startEditDialog
         is Route.Project -> deepLinks.projectDialog
         is Route.ContextualMenu -> deepLinks.contextualMenu

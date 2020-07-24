@@ -3,7 +3,10 @@ package com.toggl.domain
 import com.toggl.architecture.Loadable
 import com.toggl.calendar.common.domain.CalendarState
 import com.toggl.common.feature.navigation.BackStack
+import com.toggl.common.feature.navigation.BackStackAwareState
 import com.toggl.common.feature.navigation.Route
+import com.toggl.common.feature.navigation.backStackOf
+import com.toggl.common.feature.navigation.pop
 import com.toggl.common.feature.services.calendar.CalendarEvent
 import com.toggl.models.domain.Client
 import com.toggl.models.domain.Project
@@ -26,7 +29,7 @@ data class AppState(
     val clients: Map<Long, Client> = mapOf(),
     val tags: Map<Long, Tag> = mapOf(),
     val timeEntries: Map<Long, TimeEntry> = mapOf(),
-    val backStack: BackStack = listOf(Route.Timer),
+    val backStack: BackStack = backStackOf(Route.Timer),
     val calendarPermissionWasGranted: Boolean = false,
     val shouldRequestCalendarPermission: Boolean = false,
     val calendarEvents: Map<String, CalendarEvent> = mapOf(),
@@ -34,4 +37,7 @@ data class AppState(
     val timerLocalState: TimerState.LocalState = TimerState.LocalState(),
     val calendarLocalState: CalendarState.LocalState = CalendarState.LocalState(),
     val settingsLocalState: SettingsState.LocalState = SettingsState.LocalState()
-)
+) : BackStackAwareState<AppState> {
+    override fun popBackStack(): AppState =
+        copy(backStack = backStack.pop())
+}

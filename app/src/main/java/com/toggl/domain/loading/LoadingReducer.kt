@@ -10,6 +10,7 @@ import com.toggl.architecture.extensions.effects
 import com.toggl.common.feature.extensions.mutateWithoutEffects
 import com.toggl.common.feature.extensions.returnEffect
 import com.toggl.common.feature.navigation.Route
+import com.toggl.common.feature.navigation.backStackOf
 import com.toggl.repository.interfaces.ClientRepository
 import com.toggl.repository.interfaces.SettingsRepository
 import com.toggl.repository.interfaces.TagRepository
@@ -40,12 +41,12 @@ class LoadingReducer @Inject constructor(
             } returnEffect effect(TryLoadingUserEffect(userRepository, dispatcherProvider))
             is LoadingAction.UserLoaded ->
                 if (action.user == null) {
-                    state.mutateWithoutEffects { copy(user = Loadable.Uninitialized, backStack = listOf(Route.Welcome)) }
+                    state.mutateWithoutEffects { copy(user = Loadable.Uninitialized, backStack = backStackOf(Route.Welcome)) }
                 } else {
                     state.mutate {
                         copy(
                             user = Loadable.Loaded(action.user),
-                            backStack = listOf(Route.Timer)
+                            backStack = backStackOf(Route.Timer)
                         )
                     } returnEffect effects(
                         LoadWorkspacesEffect(workspaceRepository, dispatcherProvider),

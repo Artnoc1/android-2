@@ -1,10 +1,8 @@
 package com.toggl.timer.running.domain
 
-import arrow.optics.optics
 import com.toggl.common.feature.timeentry.TimeEntryAction
 import com.toggl.common.feature.timeentry.TimeEntryActionHolder
 
-@optics
 sealed class RunningTimeEntryAction {
     object StartButtonTapped : RunningTimeEntryAction()
     object StopButtonTapped : RunningTimeEntryAction()

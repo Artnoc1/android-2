@@ -3,6 +3,7 @@ package com.toggl.domain.reducers
 import com.toggl.architecture.Loadable
 import com.toggl.common.CoroutineTest
 import com.toggl.common.feature.navigation.Route
+import com.toggl.common.feature.navigation.backStackOf
 import com.toggl.domain.extensions.createClient
 import com.toggl.domain.extensions.createProject
 import com.toggl.domain.extensions.createTag
@@ -88,7 +89,7 @@ class LoadingReducerTests : CoroutineTest() {
             reducer.reduce(mutableValue, LoadingAction.StartLoading)
 
             initialState shouldBe emptyState.copy(
-                backStack = listOf(Route.Timer)
+                backStack = backStackOf(Route.Timer)
             )
         }
 
@@ -121,7 +122,7 @@ class LoadingReducerTests : CoroutineTest() {
                 )))
 
                 initialState shouldBe emptyState.copy(
-                    backStack = listOf(Route.Timer)
+                    backStack = backStackOf(Route.Timer)
                 )
             }
 
@@ -156,7 +157,7 @@ class LoadingReducerTests : CoroutineTest() {
                 reducer.reduce(mutableValue, LoadingAction.UserLoaded(null))
 
                 initialState shouldBe emptyState.copy(
-                    backStack = listOf(Route.Login),
+                    backStack = backStackOf(Route.Login),
                     user = Loadable.Uninitialized
                 )
             }

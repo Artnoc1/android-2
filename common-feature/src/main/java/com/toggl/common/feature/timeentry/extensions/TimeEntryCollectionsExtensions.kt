@@ -1,6 +1,7 @@
 package com.toggl.common.feature.timeentry.extensions
 
 import com.toggl.models.domain.TimeEntry
+import java.time.Duration
 
 fun Map<Long, TimeEntry>.replaceTimeEntryWithId(id: Long, timeEntryToReplace: TimeEntry): Map<Long, TimeEntry> =
     toMutableMap()
@@ -8,4 +9,11 @@ fun Map<Long, TimeEntry>.replaceTimeEntryWithId(id: Long, timeEntryToReplace: Ti
         .toMap()
 
 fun Map<Long, TimeEntry>.runningTimeEntryOrNull() =
-    this.values.firstOrNull { it.duration == null }
+    this.values.runningTimeEntryOrNull()
+
+fun Collection<TimeEntry>.runningTimeEntryOrNull() =
+    firstOrNull { it.duration == null }
+
+fun Collection<TimeEntry>.totalDuration(): Duration =
+    mapNotNull { it.duration }
+        .fold(Duration.ZERO) { acc, duration -> acc + duration }

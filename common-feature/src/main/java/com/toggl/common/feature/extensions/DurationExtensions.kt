@@ -1,4 +1,4 @@
-package com.toggl.timer.extensions
+package com.toggl.common.feature.extensions
 
 import java.time.Duration
 import java.util.concurrent.TimeUnit

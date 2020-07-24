@@ -36,6 +36,8 @@ import com.toggl.common.feature.models.SelectedCalendarItem
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asFlow
 import java.time.Duration
 import java.time.OffsetDateTime
@@ -101,8 +103,8 @@ class CalendarWidgetView @JvmOverloads constructor(
     private var primaryTextColor: Int
     private var defaultCalendarItemColor: Int
 
-    private var hourHeight: Float = 0f
-    private var scrollOffset: Float = 0f
+    private val hourHeight: MutableStateFlow<Float>
+    private val scrollOffset = MutableStateFlow(0)
 
     private val viewFrame = RectF()
     private val touchRectF = RectF()
@@ -125,9 +127,9 @@ class CalendarWidgetView @JvmOverloads constructor(
     private var editAction: EditAction = EditAction.None
     private var currentTouchY: Float = 0f
     private var draggingDelta: Float = 0f
-    private var draggingScrollDelta: Float = 0f
+    private var draggingScrollDelta: Int = 0
     private var dragStartingTouchY: Float = 0f
-    private var dragStartingScrollOffset: Float = 0f
+    private var dragStartingScrollOffset: Int = 0
     private var draggingSpeed: Float = 0f
     private val dragAcceleration = 0.1f
     private val dragMaxSpeed = 15f
@@ -159,6 +161,8 @@ class CalendarWidgetView @JvmOverloads constructor(
     val startTimeFlow = startTimeChangesChannel.asFlow()
     val endTimeFlow = endTimeChangesChannel.asFlow()
     val offsetFlow = offsetChangesChannel.asFlow()
+    val scrollOffsetFlow: Flow<Int> = scrollOffset
+    val hourHeightFlow: Flow<Float>
 
     init {
         context.resources.run {
@@ -364,7 +368,8 @@ class CalendarWidgetView @JvmOverloads constructor(
             ContextCompat.getDrawable(context, calendarIconId)!!
                 .toBitmap((calendarIconSize / 2f).toInt(), (calendarIconSize / 2).toInt())
 
-        hourHeight = calendarBaseHourHeight
+        hourHeight = MutableStateFlow(calendarBaseHourHeight)
+        hourHeightFlow = hourHeight
         calendarItemDrawingDelegate = CalendarItemDrawingDelegate(
             itemSpacing = calendarEventsItemsSpacing,
             leftMargin = calendarVerticalLineDividerStartMargin,
@@ -453,6 +458,22 @@ class CalendarWidgetView @JvmOverloads constructor(
         }
     }
 
+    fun setScrollOffset(newScrollOffset: Int) {
+        if (scrollOffset.value == newScrollOffset) return
+
+        scrollOffset.value = newScrollOffset
+        invalidate()
+    }
+
+    fun setHourHeight(newHourHeight: Float) {
+        if (hourHeight.value == newHourHeight) return
+
+        hourHeight.value = newHourHeight
+        updateDrawingDelegatesHourHeights()
+        cleanAnimationsAndDrawingCache()
+        invalidate()
+    }
+
     private fun animateChangingSelectedItemRectIfNecessary(selectedCalendarItemToDraw: CalendarItem?) {
         if (viewFrame.isEmpty || selectedCalendarItemToDraw == null)
             return
@@ -532,11 +553,12 @@ class CalendarWidgetView @JvmOverloads constructor(
     }
 
     override fun onDraw(canvas: Canvas) {
-        viewFrame.set(0f, scrollOffset, width.toFloat(), scrollOffset + height)
+        val currScrollOffset = scrollOffset.value.toFloat()
+        viewFrame.set(0f, currScrollOffset, width.toFloat(), currScrollOffset + height)
         topAreaTriggerLine = viewFrame.top + calendarEdgeDistanceToTriggerAutoScroll
         bottomAreaTriggerLine = viewFrame.bottom - calendarEdgeDistanceToTriggerAutoScroll
 
-        canvas.withTranslation(0f, -scrollOffset) {
+        canvas.withTranslation(0f, -currScrollOffset) {
             clipRect(viewFrame)
             drawCalendarBackground()
             drawCalendarItems()
@@ -622,7 +644,7 @@ class CalendarWidgetView @JvmOverloads constructor(
     @Suppress("UNUSED_PARAMETER")
     private fun Canvas.drawCurrentHourIndicator() {
         val now = OffsetDateTime.now()
-        val currentHourY = (now.hour + now.minute.toFloat() / Constants.ClockMath.minutesInAnHour) * hourHeight
+        val currentHourY = (now.hour + now.minute.toFloat() / Constants.ClockMath.minutesInAnHour) * hourHeight.value
         currentHourDrawingDelegate.onDraw(this, viewFrame, currentHourY)
     }
 
@@ -644,15 +666,16 @@ class CalendarWidgetView @JvmOverloads constructor(
             val touchX = event.x
             val touchY = event.y
 
+            val currScrollOffset = scrollOffset.value
             dragStartingTouchY = touchY
-            dragStartingScrollOffset = scrollOffset
+            dragStartingScrollOffset = currScrollOffset
             eventStartingRect.set(touchRectF)
 
             editAction = when {
-                dragTopRect.contains(touchX, touchY + scrollOffset) -> EditAction.ChangeStart
+                dragTopRect.contains(touchX, touchY + currScrollOffset) -> EditAction.ChangeStart
                 it.isRunning -> EditAction.None
-                dragBottomRect.contains(touchX, touchY + scrollOffset) -> EditAction.ChangeEnd
-                touchRectF.contains(touchX, touchY + scrollOffset) -> EditAction.ChangeOffset
+                dragBottomRect.contains(touchX, touchY + currScrollOffset) -> EditAction.ChangeEnd
+                touchRectF.contains(touchX, touchY + currScrollOffset) -> EditAction.ChangeOffset
                 else -> EditAction.None
             }
 
@@ -686,7 +709,7 @@ class CalendarWidgetView @JvmOverloads constructor(
             val touchY = if (histCount > 0) touchYSum / histCount else event.y
             currentTouchY = touchY
             draggingDelta = touchY - dragStartingTouchY
-            draggingScrollDelta = scrollOffset - dragStartingScrollOffset
+            draggingScrollDelta = scrollOffset.value - dragStartingScrollOffset
 
             when (editAction) {
                 EditAction.ChangeStart -> updateItemInEditModeStartTime()
@@ -709,15 +732,18 @@ class CalendarWidgetView @JvmOverloads constructor(
         }
     }
 
-    private fun shouldAutoScrollUp(): Boolean =
-        currentTouchY + scrollOffset < topAreaTriggerLine &&
-            scrollOffset > 0 &&
+    private fun shouldAutoScrollUp(): Boolean {
+        val currScrollOffset = scrollOffset.value
+        return currentTouchY + currScrollOffset < topAreaTriggerLine &&
+            currScrollOffset > 0 &&
             itemInEditModeRect.top > 0
+    }
 
     private fun shouldAutoScrollDown(): Boolean {
+        val currScrollOffset = scrollOffset.value
         val maxHeight = calculateMaxHeight()
-        return currentTouchY + scrollOffset > bottomAreaTriggerLine &&
-            scrollOffset < maxHeight - height &&
+        return currentTouchY + currScrollOffset > bottomAreaTriggerLine &&
+            currScrollOffset < maxHeight - height &&
             itemInEditModeRect.bottom < maxHeight
     }
 
@@ -728,11 +754,13 @@ class CalendarWidgetView @JvmOverloads constructor(
         }
 
         val maxScrollOffset = calculateMaxScrollOffset()
-        draggingSpeed = (draggingSpeed + dragAcceleration * draggingDirection.value).coerceIn(-dragMaxSpeed, dragMaxSpeed)
-        scrollOffset = (scrollOffset + draggingSpeed).coerceIn(0f, maxScrollOffset)
-        draggingScrollDelta = scrollOffset - dragStartingScrollOffset
 
-        if (draggingDirection == Up && scrollOffset <= 0 || draggingDirection == Down && scrollOffset >= maxScrollOffset) {
+        draggingSpeed = (draggingSpeed + dragAcceleration * draggingDirection.value).coerceIn(-dragMaxSpeed, dragMaxSpeed)
+        scrollOffset.value = (scrollOffset.value + draggingSpeed).coerceIn(0f, maxScrollOffset.toFloat()).toInt()
+        val currentScrollOffset = scrollOffset.value
+        draggingScrollDelta = currentScrollOffset - dragStartingScrollOffset
+
+        if (draggingDirection == Up && currentScrollOffset <= 0 || draggingDirection == Down && currentScrollOffset >= maxScrollOffset) {
             cancelDraggingAndAutoScroll()
             return
         }
@@ -780,7 +808,7 @@ class CalendarWidgetView @JvmOverloads constructor(
             val maxHeight = calculateMaxHeight()
             val newBottom = (eventStartingRect.bottom + draggingDelta + draggingScrollDelta).coerceIn(
                 itemInEditModeRect.top,
-                maxHeight
+                maxHeight.toFloat()
             )
             itemInEditModeRect.bottom = newBottom
             val newEndTime = snappingTimeAtYOffset(itemInEditModeRect.bottom, it.itemsStartAndEndTimes)
@@ -896,16 +924,16 @@ class CalendarWidgetView @JvmOverloads constructor(
         val x = e.x
         val y = e.y
 
-        val touchedCalendarItem = findCalendarItemFromPoint(x, y + scrollOffset)
+        val touchedCalendarItem = findCalendarItemFromPoint(x, y + scrollOffset.value)
         if (touchedCalendarItem == null) {
-            emptySpaceLongPressedChannel.offer(dateTimeOffsetAtYOffset(y + scrollOffset))
+            emptySpaceLongPressedChannel.offer(dateTimeOffsetAtYOffset(y + scrollOffset.value))
         }
     }
 
     private fun dateTimeOffsetAtYOffset(y: Float): OffsetDateTime {
         val currentOffset = OffsetDateTime.now().offset
         val currentDate = OffsetDateTime.now().toLocalDate().atStartOfDay()
-        val seconds = (y / hourHeight) * 60 * 60
+        val seconds = (y / hourHeight.value) * 60 * 60
         val duration = Duration.ofSeconds(seconds.toLong())
         val nextDay = currentDate.plusDays(1)
 
@@ -923,17 +951,17 @@ class CalendarWidgetView @JvmOverloads constructor(
         if (isDragging)
             return
 
-        val oldScrollOffset = scrollOffset
-        val newScrollOffset = scrollOffset + distanceY
-        scrollOffset = newScrollOffset.coerceIn(0f, calculateMaxScrollOffset())
+        val oldScrollOffset = scrollOffset.value
+        val newScrollOffset = (oldScrollOffset + distanceY).toInt()
+        scrollOffset.value = newScrollOffset.coerceIn(0, calculateMaxScrollOffset())
 
-        onScrollChanged(0, scrollOffset.toInt(), 0, oldScrollOffset.toInt())
+        onScrollChanged(0, scrollOffset.value, 0, oldScrollOffset)
 
         isScrolling = true
         postInvalidate()
     }
 
-    private fun calculateMaxHeight() = hourHeight * hoursInTheDay
+    private fun calculateMaxHeight() = (hourHeight.value * hoursInTheDay).toInt()
     private fun calculateMaxScrollOffset() = calculateMaxHeight() - height
 
     @Suppress("UNUSED_PARAMETER")
@@ -941,7 +969,7 @@ class CalendarWidgetView @JvmOverloads constructor(
         scroller.forceFinished(true)
         flingWasCalled = true
         isScrolling = true
-        scroller.fling(0, scrollOffset.toInt(), 0, (-velocityY / 2f).toInt(), 0, 0, 0, calculateMaxHeight().toInt())
+        scroller.fling(0, scrollOffset.value, 0, (-velocityY / 2f).toInt(), 0, 0, 0, calculateMaxHeight().toInt())
         handler.post(::continueScroll)
     }
 
@@ -952,15 +980,15 @@ class CalendarWidgetView @JvmOverloads constructor(
             return
         }
 
-        if (scroller.currY == scrollOffset.toInt()) {
+        if (scroller.currY == scrollOffset.value) {
             handler.post(::continueScroll)
             return
         }
 
-        val oldScrollOffset = scrollOffset
-        scrollOffset = scroller.currY.coerceIn(0, calculateMaxScrollOffset().toInt()).toFloat()
+        val oldScrollOffset = scrollOffset.value
+        scrollOffset.value = scroller.currY.coerceIn(0, calculateMaxScrollOffset())
 
-        onScrollChanged(0, scrollOffset.toInt(), 0, oldScrollOffset.toInt())
+        onScrollChanged(0, scrollOffset.value, 0, oldScrollOffset)
 
         handler.post(::continueScroll)
         invalidate()
@@ -978,12 +1006,12 @@ class CalendarWidgetView @JvmOverloads constructor(
     }
 
     private fun onScale(scaleDetector: ScaleGestureDetector): Boolean {
-        val oldHourHeight = hourHeight
+        val oldHourHeight = hourHeight.value
         val scaleFactor = scaleDetector.scaleFactor
-        val newHourHeight = (hourHeight * scaleFactor)
-        hourHeight = newHourHeight.coerceIn(calendarBaseHourHeight, calendarMaxHourHeight)
+        val newHourHeight = (oldHourHeight * scaleFactor)
+        hourHeight.value = newHourHeight.coerceIn(calendarBaseHourHeight, calendarMaxHourHeight)
 
-        val hourSizeChanged = oldHourHeight != hourHeight
+        val hourSizeChanged = oldHourHeight != hourHeight.value
         if (!hourSizeChanged)
             return true
 
@@ -996,32 +1024,43 @@ class CalendarWidgetView @JvmOverloads constructor(
         // like it's zooming in and not sliding below
         // the user's fingers
         val focusPointOffset = scaleDetector.focusY * actualScale
-        val scaledOffset = scrollOffset * actualScale
-        val newScrollOffset = scrollOffset + scaledOffset + focusPointOffset
-        scrollOffset = newScrollOffset.coerceIn(0f, calculateMaxScrollOffset())
+        val currScrollOffset = scrollOffset.value
+        val scaledOffset = currScrollOffset * actualScale
+        val newScrollOffset = currScrollOffset + scaledOffset + focusPointOffset
+        scrollOffset.value = newScrollOffset.toInt().coerceIn(0, calculateMaxScrollOffset())
 
-        backgroundDrawingDelegate.currentHourHeight = hourHeight
-        calendarItemDrawingDelegate.currentHourHeight = hourHeight
-        runningAnimations.values.forEach { (_, animator) ->
-            animator.cancel()
-        }
-        runningAnimations.clear()
-        drawingRectFs.clear()
+        updateDrawingDelegatesHourHeights()
+        cleanAnimationsAndDrawingCache()
         invalidate()
 
         return true
     }
 
+    private fun updateDrawingDelegatesHourHeights() {
+        hourHeight.value.let {
+            backgroundDrawingDelegate.currentHourHeight = it
+            calendarItemDrawingDelegate.currentHourHeight = it
+        }
+    }
+
+    private fun cleanAnimationsAndDrawingCache() {
+        runningAnimations.values.forEach { (_, animator) ->
+            animator.cancel()
+        }
+        runningAnimations.clear()
+        drawingRectFs.clear()
+    }
+
     private fun findCalendarItemFromPoint(x: Float, y: Float): CalendarItem? = drawingData.let {
         if (it.selectedCalendarItemToDraw != null) {
             calendarItemDrawingDelegate.calculateItemRect(it.selectedCalendarItemToDraw, viewFrame, touchRectF)
-            if (touchRectF.contains(x, y + scrollOffset))
+            if (touchRectF.contains(x, y + scrollOffset.value))
                 return it.selectedCalendarItemToDraw
         }
 
         it.nonSelectedCalendarItemsToDraw.find { calendarItem ->
             calendarItemDrawingDelegate.calculateItemRect(calendarItem, viewFrame, touchRectF)
-            touchRectF.contains(x, y + scrollOffset)
+            touchRectF.contains(x, y + scrollOffset.value)
         }
     }
 
@@ -1056,7 +1095,7 @@ class CalendarWidgetView @JvmOverloads constructor(
         if (isScrolling) return
         scroller.forceFinished(true)
         isScrolling = true
-        scroller.startScroll(0, scrollOffset.toInt(), 0, deltaY)
+        scroller.startScroll(0, scrollOffset.value, 0, deltaY)
         handler.post(::continueScroll)
     }
 

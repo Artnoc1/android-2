@@ -1,9 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:background="@color/background"
+    android:orientation="vertical">
 
-    <!-- TODO add view contents -->
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.appbar.MaterialToolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/headerDateTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|center_vertical"
+                android:layout_marginStart="8dp"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/text_on_background"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/headerTimeEntriesDurationTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="8dp"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/text_on_background"
+                android:textSize="12sp"
+                android:textStyle="normal" />
+        </FrameLayout>
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/week_labels_container"
+        android:layout_width="match_parent"
+        android:layout_height="28dp">
+
+        <TextView
+            android:id="@+id/weekDayOneLabel"
+            style="@style/CalendarWeekStripeLabelTextViewStyle"
+            android:layout_marginLeft="@dimen/calendar_week_stripe_horizontal_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/weekDayTwoLabel"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="S" />
+
+        <TextView
+            android:id="@+id/weekDayTwoLabel"
+            style="@style/CalendarWeekStripeLabelTextViewStyle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/weekDayOneLabel"
+            app:layout_constraintRight_toLeftOf="@+id/weekDayThreeLabel"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="M" />
+
+        <TextView
+            android:id="@+id/weekDayThreeLabel"
+            style="@style/CalendarWeekStripeLabelTextViewStyle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/weekDayTwoLabel"
+            app:layout_constraintRight_toLeftOf="@+id/weekDayFourLabel"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="T" />
+
+        <TextView
+            android:id="@+id/weekDayFourLabel"
+            style="@style/CalendarWeekStripeLabelTextViewStyle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/weekDayThreeLabel"
+            app:layout_constraintRight_toLeftOf="@+id/weekDayFiveLabel"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="W" />
+
+        <TextView
+            android:id="@+id/weekDayFiveLabel"
+            style="@style/CalendarWeekStripeLabelTextViewStyle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/weekDayFourLabel"
+            app:layout_constraintRight_toLeftOf="@+id/weekDaySixLabel"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="T" />
+
+        <TextView
+            android:id="@+id/weekDaySixLabel"
+            style="@style/CalendarWeekStripeLabelTextViewStyle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/weekDayFiveLabel"
+            app:layout_constraintRight_toLeftOf="@+id/weekDaySevenLabel"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="F" />
+
+        <TextView
+            android:id="@+id/weekDaySevenLabel"
+            style="@style/CalendarWeekStripeLabelTextViewStyle"
+            android:layout_marginRight="@dimen/calendar_week_stripe_horizontal_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/weekDaySixLabel"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="S" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.toggl.common.ui.LockableViewPager
+        android:id="@+id/week_stripe_pager"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+</com.google.android.material.appbar.AppBarLayout>

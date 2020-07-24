@@ -1,11 +1,9 @@
 package com.toggl.timer.project.domain
 
-import arrow.optics.optics
 import com.toggl.models.domain.Client
 import com.toggl.models.domain.Project
 import com.toggl.models.domain.Workspace
 
-@optics
 sealed class ProjectAction {
     data class NameEntered(val name: String) : ProjectAction()
     object DoneButtonTapped : ProjectAction()

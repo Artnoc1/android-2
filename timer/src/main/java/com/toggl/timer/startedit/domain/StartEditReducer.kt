@@ -1,4 +1,5 @@
 package com.toggl.timer.startedit.domain
+
 import com.toggl.architecture.DispatcherProvider
 import com.toggl.architecture.core.Effect
 import com.toggl.architecture.core.MutableValue
@@ -14,6 +15,7 @@ import com.toggl.common.extensions.absoluteDurationBetween
 import com.toggl.common.feature.extensions.mutateWithoutEffects
 import com.toggl.common.feature.extensions.returnEffect
 import com.toggl.common.feature.navigation.Route
+import com.toggl.common.feature.navigation.popBackStackWithoutEffects
 import com.toggl.common.feature.navigation.push
 import com.toggl.common.feature.timeentry.TimeEntryAction.CreateTimeEntry
 import com.toggl.common.feature.timeentry.TimeEntryAction.EditTimeEntry
@@ -70,21 +72,25 @@ class StartEditReducer @Inject constructor(
 
             StartEditAction.BillableTapped ->
                 state.mutateWithoutEffects {
-                    StartEditState.editableTimeEntry.modify(this) {
-                        it.copy(billable = !it.billable)
-                    }
+                    copy(
+                        editableTimeEntry = editableTimeEntry.copy(
+                            billable = !editableTimeEntry.billable
+                        )
+                    )
                 }
             StartEditAction.AddProjectChipTapped,
             StartEditAction.ProjectButtonTapped ->
                 state.mapState {
-                    val stringBeforeToken = if (editableTimeEntry.description.isEmpty()) "" else "${editableTimeEntry.description} "
+                    val stringBeforeToken =
+                        if (editableTimeEntry.description.isEmpty()) "" else "${editableTimeEntry.description} "
                     val description = "$stringBeforeToken$projectToken"
                     effectOf(StartEditAction.DescriptionEntered(description, description.length))
                 }
             StartEditAction.AddTagChipTapped,
             StartEditAction.TagButtonTapped ->
                 state.mapState {
-                    val stringBeforeToken = if (editableTimeEntry.description.isEmpty()) "" else "${editableTimeEntry.description} "
+                    val stringBeforeToken =
+                        if (editableTimeEntry.description.isEmpty()) "" else "${editableTimeEntry.description} "
                     val description = "$stringBeforeToken$tagToken"
                     effectOf(StartEditAction.DescriptionEntered(description, description.length))
                 }
@@ -108,21 +114,24 @@ class StartEditReducer @Inject constructor(
                     timeEntriesToEdit.map {
 
                         val isGroup = editableTimeEntry.isRepresentingGroup()
-                        val startTime = if (isGroup) it.startTime else editableTimeEntry.startTime ?: throw StartTimeShouldNotBeNullException()
+                        val startTime = if (isGroup) it.startTime else editableTimeEntry.startTime
+                            ?: throw StartTimeShouldNotBeNullException()
                         val duration = if (isGroup) it.duration else editableTimeEntry.duration
 
-                        StartEditAction.TimeEntryHandling(EditTimeEntry(
-                            it.copy(
-                                description = editableTimeEntry.description,
-                                billable = editableTimeEntry.billable,
-                                workspaceId = editableTimeEntry.workspaceId,
-                                projectId = editableTimeEntry.projectId,
-                                taskId = editableTimeEntry.taskId,
-                                tagIds = editableTimeEntry.tagIds,
-                                startTime = startTime,
-                                duration = duration
+                        StartEditAction.TimeEntryHandling(
+                            EditTimeEntry(
+                                it.copy(
+                                    description = editableTimeEntry.description,
+                                    billable = editableTimeEntry.billable,
+                                    workspaceId = editableTimeEntry.workspaceId,
+                                    projectId = editableTimeEntry.projectId,
+                                    taskId = editableTimeEntry.taskId,
+                                    tagIds = editableTimeEntry.tagIds,
+                                    startTime = startTime,
+                                    duration = duration
+                                )
                             )
-                        ))
+                        )
                     }.toEffects()
                 } + effectOf(StartEditAction.Close)
             }
@@ -152,7 +161,14 @@ class StartEditReducer @Inject constructor(
                         val workspaceId = state.mapState { editableTimeEntry.workspaceId }
                         state.mutate {
                             modifyWithCreateTagSuggestion()
-                        } returnEffect effect(CreateTagEffect(dispatcherProvider, repository, tagCreationSuggestion.name, workspaceId))
+                        } returnEffect effect(
+                            CreateTagEffect(
+                                dispatcherProvider,
+                                repository,
+                                tagCreationSuggestion.name,
+                                workspaceId
+                            )
+                        )
                     }
                 }
             }
@@ -192,10 +208,10 @@ class StartEditReducer @Inject constructor(
                 state.mutateWithoutEffects {
                     val editableTimeEntry = state().editableTimeEntry
 
-                    StartEditState.editableTimeEntry.modify(this) {
-                        if (editableTimeEntry.isRunningOrNew()) it.copy(startTime = timeService.now() - action.duration)
-                        else it.copy(duration = action.duration)
-                    }
+                    if (editableTimeEntry.isRunningOrNew())
+                        copy(editableTimeEntry = editableTimeEntry.copy(startTime = timeService.now() - action.duration))
+                    else
+                        copy(editableTimeEntry = editableTimeEntry.copy(duration = action.duration))
                 }
             }
             is StartEditAction.WheelChangedStartTime -> {
@@ -208,12 +224,10 @@ class StartEditReducer @Inject constructor(
                     return noEffect()
 
                 state.mutateWithoutEffects {
-                    StartEditState.editableTimeEntry.modify(this) {
-                        if (editableTimeEntry.isRunningOrNew())
-                            it.copy(startTime = action.startTime)
-                        else
-                            it.copy(startTime = action.startTime, duration = newDuration)
-                    }
+                    if (editableTimeEntry.isRunningOrNew())
+                        copy(editableTimeEntry = editableTimeEntry.copy(startTime = action.startTime))
+                    else
+                        copy(editableTimeEntry = editableTimeEntry.copy(startTime = action.startTime, duration = newDuration))
                 }
             }
             is StartEditAction.WheelChangedEndTime -> {
@@ -226,9 +240,7 @@ class StartEditReducer @Inject constructor(
                     if (editableTimeEntry.isNew()) throw EditableTimeEntryDoesNotHaveAStartTimeSetException()
                     if (editableTimeEntry.isRunning()) throw EditableTimeEntryDoesNotHaveADurationSetException()
 
-                    StartEditState.editableTimeEntry.modify(this) {
-                        it.copy(duration = action.duration)
-                    }
+                    copy(editableTimeEntry = editableTimeEntry.copy(duration = action.duration))
                 }
             }
             StartEditAction.StopButtonTapped -> {
@@ -241,12 +253,12 @@ class StartEditReducer @Inject constructor(
 
                 if (startTime == null)
                     return state.mutateWithoutEffects {
-                        StartEditState.editableTimeEntry.modify(this) {
-                            it.copy(
+                        copy(
+                            editableTimeEntry = editableTimeEntry.copy(
                                 startTime = now,
                                 duration = Duration.ZERO
                             )
-                        }
+                        )
                     }
 
                 val maxDuration = Duration.ofHours(maxDurationInHours)
@@ -255,9 +267,11 @@ class StartEditReducer @Inject constructor(
                     return noEffect()
 
                 state.mutateWithoutEffects {
-                    StartEditState.editableTimeEntry.modify(this) {
-                        it.copy(duration = durationUntilNow)
-                    }
+                    copy(
+                        editableTimeEntry = editableTimeEntry.copy(
+                            duration = durationUntilNow
+                        )
+                    )
                 }
             }
             is StartEditAction.TagCreated -> {
@@ -271,33 +285,41 @@ class StartEditReducer @Inject constructor(
                 }
             }
             is StartEditAction.TimeEntryHandling,
-            StartEditAction.Close -> noEffect()
+            StartEditAction.Close -> state.popBackStackWithoutEffects()
         }
     }
 
-    private fun StartEditState.modifyWithCreateTagSuggestion(): StartEditState =
-        StartEditState.editableTimeEntry.modify(this) {
-            val (token, currentQuery) = it.description.findTokenAndQueryMatchesForAutocomplete(tagToken, cursorPosition)
-            val delimiter = "$token$currentQuery"
-            it.copy(description = it.description.substringBeforeLast(delimiter))
-        }
+    private fun StartEditState.modifyWithCreateTagSuggestion(): StartEditState {
+        val (token, currentQuery) = editableTimeEntry.description.findTokenAndQueryMatchesForAutocomplete(
+            tagToken,
+            cursorPosition
+        )
+        val delimiter = "$token$currentQuery"
+        val description = editableTimeEntry.description.substringBeforeLast(delimiter)
+        return copy(editableTimeEntry = editableTimeEntry.copy(description = description))
+    }
 
-    private fun StartEditState.modifyWithProjectSuggestion(autocompleteSuggestion: StartEditSuggestions.Project): StartEditState =
-        StartEditState.editableTimeEntry.modify(this) {
-            val projectSuggestion = autocompleteSuggestion.project
-            val (token, currentQuery) = it.description.findTokenAndQueryMatchesForAutocomplete(projectToken, cursorPosition)
-            val delimiter = "$token$currentQuery"
-            it.copy(
-                description = it.description.substringBefore(delimiter),
+    private fun StartEditState.modifyWithProjectSuggestion(autocompleteSuggestion: StartEditSuggestions.Project): StartEditState {
+        val projectSuggestion = autocompleteSuggestion.project
+        val (token, currentQuery) = editableTimeEntry.description.findTokenAndQueryMatchesForAutocomplete(
+            projectToken,
+            cursorPosition
+        )
+        val delimiter = "$token$currentQuery"
+        val description = editableTimeEntry.description.substringBefore(delimiter)
+        return copy(
+            editableTimeEntry = editableTimeEntry.copy(
+                description = description,
                 projectId = projectSuggestion.id,
                 workspaceId = projectSuggestion.workspaceId
             )
-        }
+        )
+    }
 
-    private fun StartEditState.modifyWithTimeEntrySuggestion(autocompleteSuggestion: StartEditSuggestions.TimeEntry): StartEditState =
-        StartEditState.editableTimeEntry.modify(this) {
-            val timeEntrySuggestion = autocompleteSuggestion.timeEntry
-            it.copy(
+    private fun StartEditState.modifyWithTimeEntrySuggestion(autocompleteSuggestion: StartEditSuggestions.TimeEntry): StartEditState {
+        val timeEntrySuggestion = autocompleteSuggestion.timeEntry
+        return copy(
+            editableTimeEntry = editableTimeEntry.copy(
                 workspaceId = timeEntrySuggestion.workspaceId,
                 description = timeEntrySuggestion.description,
                 projectId = timeEntrySuggestion.projectId,
@@ -305,19 +327,24 @@ class StartEditReducer @Inject constructor(
                 billable = timeEntrySuggestion.billable,
                 taskId = timeEntrySuggestion.taskId
             )
-        }
+        )
+    }
 
-    private fun StartEditState.modifyWithTagSuggestion(autocompleteSuggestion: StartEditSuggestions.Tag): StartEditState =
-        StartEditState.editableTimeEntry.modify(this) {
-            val tagSuggestion = autocompleteSuggestion.tag
-            if (tags[tagSuggestion.id] == null) throw TagDoesNotExistException()
-            val (token, currentQuery) = it.description.findTokenAndQueryMatchesForAutocomplete(tagToken, cursorPosition)
-            val delimiter = "$token$currentQuery"
-            it.copy(
-                description = it.description.substringBeforeLast(delimiter),
-                tagIds = it.tagIds + tagSuggestion.id
+    private fun StartEditState.modifyWithTagSuggestion(autocompleteSuggestion: StartEditSuggestions.Tag): StartEditState {
+        val tagSuggestion = autocompleteSuggestion.tag
+        if (tags[tagSuggestion.id] == null) throw TagDoesNotExistException()
+        val (token, currentQuery) = editableTimeEntry.description.findTokenAndQueryMatchesForAutocomplete(
+            tagToken,
+            cursorPosition
+        )
+        val delimiter = "$token$currentQuery"
+        return copy(
+            editableTimeEntry = editableTimeEntry.copy(
+                description = editableTimeEntry.description.substringBeforeLast(delimiter),
+                tagIds = editableTimeEntry.tagIds + tagSuggestion.id
             )
-        }
+        )
+    }
 
     private fun StartEditState.modifyWithCreateProjectSuggestion(autocompleteSuggestion: StartEditSuggestions.CreateProject): StartEditState {
         val editableProject = EditableProject(
@@ -328,19 +355,23 @@ class StartEditReducer @Inject constructor(
         return copy(backStack = backStack.push(route))
     }
 
-    private fun StartEditState.modifyWithTaskSuggestion(autocompleteSuggestion: StartEditSuggestions.Task): StartEditState =
-        StartEditState.editableTimeEntry.modify(this) {
-            val taskSuggestion = autocompleteSuggestion.task
-            if (this.projects[taskSuggestion.projectId] == null) throw ProjectDoesNotExistException()
-            val (token, currentQuery) = it.description.findTokenAndQueryMatchesForAutocomplete(projectToken, cursorPosition)
-            val delimiter = "$token$currentQuery"
-            it.copy(
-                description = it.description.substringBefore(delimiter),
+    private fun StartEditState.modifyWithTaskSuggestion(autocompleteSuggestion: StartEditSuggestions.Task): StartEditState {
+        val taskSuggestion = autocompleteSuggestion.task
+        if (this.projects[taskSuggestion.projectId] == null) throw ProjectDoesNotExistException()
+        val (token, currentQuery) = editableTimeEntry.description.findTokenAndQueryMatchesForAutocomplete(
+            projectToken,
+            cursorPosition
+        )
+        val delimiter = "$token$currentQuery"
+        return copy(
+            editableTimeEntry = editableTimeEntry.copy(
+                description = editableTimeEntry.description.substringBefore(delimiter),
                 projectId = taskSuggestion.projectId,
                 taskId = taskSuggestion.id,
                 workspaceId = taskSuggestion.workspaceId
             )
-        }
+        )
+    }
 
     private fun StartEditState.handleEndTimeEdition(
         editableTimeEntry: EditableTimeEntry,

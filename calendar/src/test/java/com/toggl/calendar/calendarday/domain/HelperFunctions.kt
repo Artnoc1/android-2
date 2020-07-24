@@ -3,6 +3,7 @@ package com.toggl.calendar.calendarday.domain
 import com.toggl.calendar.common.validUser
 import com.toggl.common.feature.models.SelectedCalendarItem
 import com.toggl.common.feature.navigation.Route
+import com.toggl.common.feature.navigation.backStackOf
 import com.toggl.common.feature.services.calendar.Calendar
 import com.toggl.common.feature.services.calendar.CalendarEvent
 import com.toggl.models.domain.Project
@@ -20,7 +21,7 @@ fun createInitialState(
     validUser,
     timeEntries.associateBy { it.id },
     projects.associateBy { it.id },
-    if (selectedItem == null) emptyList() else listOf(Route.ContextualMenu(selectedItem)),
+    if (selectedItem == null) emptyList() else backStackOf(Route.ContextualMenu(selectedItem)),
     calendarEvents.associateBy { it.id },
     date,
     calendars

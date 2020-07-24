@@ -1,8 +1,5 @@
 package com.toggl.onboarding.welcome.domain
 
-import arrow.optics.optics
-
-@optics
 sealed class WelcomeAction {
     object ContinueWithEmailButtonTapped : WelcomeAction()
     object ContinueWithGoogleButtonTapped : WelcomeAction()

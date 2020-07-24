@@ -1,8 +1,10 @@
 package com.toggl.timer.project.domain
 
-import arrow.optics.optics
+import com.toggl.common.feature.navigation.BackStack
+import com.toggl.common.feature.navigation.BackStackAwareState
 import com.toggl.common.feature.navigation.Route
 import com.toggl.common.feature.navigation.getRouteParam
+import com.toggl.common.feature.navigation.pop
 import com.toggl.common.feature.navigation.setRouteParam
 import com.toggl.models.common.AutocompleteSuggestion
 import com.toggl.models.domain.Client
@@ -13,7 +15,6 @@ import com.toggl.models.domain.Workspace
 import com.toggl.models.validation.HSVColor
 import com.toggl.timer.common.domain.TimerState
 
-@optics
 data class ProjectState(
     val editableProject: EditableProject,
     val editableTimeEntry: EditableTimeEntry,
@@ -23,8 +24,9 @@ data class ProjectState(
     val cursorPosition: Int,
     val customColor: HSVColor,
     val autocompleteQuery: ProjectAutocompleteQuery,
-    val autocompleteSuggestions: List<AutocompleteSuggestion.ProjectSuggestions>
-) {
+    val autocompleteSuggestions: List<AutocompleteSuggestion.ProjectSuggestions>,
+    val backStack: BackStack
+) : BackStackAwareState<ProjectState> {
     companion object {
 
         fun fromTimerState(timerState: TimerState): ProjectState? {
@@ -32,6 +34,7 @@ data class ProjectState(
             val editableProject = timerState.backStack.getRouteParam<EditableProject>() ?: return null
 
             return ProjectState(
+                backStack = timerState.backStack,
                 editableProject = editableProject,
                 editableTimeEntry = editableTimeEntry,
                 projects = timerState.projects,
@@ -54,10 +57,13 @@ data class ProjectState(
                         projectAutocompleteQuery = projectState.autocompleteQuery,
                         projectAutoCompleteSuggestions = projectState.autocompleteSuggestions
                     ),
-                    backStack = timerState.backStack
+                    backStack = projectState.backStack
                         .setRouteParam { Route.StartEdit(projectState.editableTimeEntry) }
                         .setRouteParam { Route.Project(projectState.editableProject) }
                 )
             } ?: timerState
     }
+
+    override fun popBackStack() =
+        copy(backStack = backStack.pop())
 }

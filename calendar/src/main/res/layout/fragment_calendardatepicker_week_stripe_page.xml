@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <FrameLayout
+        android:id="@+id/currentDayIndicator"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/circle_shape"
+        android:backgroundTint="@color/primary"
+        android:gravity="center"
+        android:minWidth="20dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/weekDaySevenText"
+        app:layout_constraintLeft_toLeftOf="@id/weekDaySevenText"
+        app:layout_constraintRight_toRightOf="@id/weekDaySevenText"
+        app:layout_constraintTop_toTopOf="@id/weekDaySevenText" />
+
+    <TextView
+        android:id="@+id/weekDayOneText"
+        style="@style/CalendarWeekStripeDayTextViewStyle"
+        android:layout_marginStart="@dimen/calendar_week_stripe_horizontal_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/weekDayTwoText"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="01" />
+
+    <TextView
+        android:id="@+id/weekDayTwoText"
+        style="@style/CalendarWeekStripeDayTextViewStyle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/weekDayOneText"
+        app:layout_constraintRight_toLeftOf="@+id/weekDayThreeText"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="2" />
+
+    <TextView
+        android:id="@+id/weekDayThreeText"
+        style="@style/CalendarWeekStripeDayTextViewStyle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/weekDayTwoText"
+        app:layout_constraintRight_toLeftOf="@+id/weekDayFourText"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="3" />
+
+    <TextView
+        android:id="@+id/weekDayFourText"
+        style="@style/CalendarWeekStripeDayTextViewStyle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/weekDayThreeText"
+        app:layout_constraintRight_toLeftOf="@+id/weekDayFiveText"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="4" />
+
+    <TextView
+        android:id="@+id/weekDayFiveText"
+        style="@style/CalendarWeekStripeDayTextViewStyle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/weekDayFourText"
+        app:layout_constraintRight_toLeftOf="@+id/weekDaySixText"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="5" />
+
+    <TextView
+        android:id="@+id/weekDaySixText"
+        style="@style/CalendarWeekStripeDayTextViewStyle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/weekDayFiveText"
+        app:layout_constraintRight_toLeftOf="@+id/weekDaySevenText"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="6" />
+
+    <TextView
+        android:id="@+id/weekDaySevenText"
+        style="@style/CalendarWeekStripeDayTextViewStyle"
+        android:layout_marginEnd="@dimen/calendar_week_stripe_horizontal_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/weekDaySixText"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="7" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

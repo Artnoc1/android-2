@@ -1,13 +1,11 @@
 package com.toggl.onboarding.common.domain
 
-import arrow.optics.optics
 import com.toggl.architecture.Loadable
 import com.toggl.common.feature.navigation.BackStack
 import com.toggl.models.domain.User
 import com.toggl.models.validation.Email
 import com.toggl.models.validation.Password
 
-@optics
 data class OnboardingState(
     val user: Loadable<User>,
     val backStack: BackStack,

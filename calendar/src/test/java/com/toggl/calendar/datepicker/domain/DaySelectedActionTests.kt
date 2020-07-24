@@ -14,7 +14,7 @@ import java.time.OffsetDateTime
 @DisplayName("The DaySelected action")
 class DaySelectedActionTests : CoroutineTest() {
 
-    val reducer = createReducer(dispatcherProvider = dispatcherProvider)
+    val reducer = createReducer()
 
     @Test
     fun `Updates the selected day`() = runBlockingTest {
