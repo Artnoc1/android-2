@@ -2,13 +2,15 @@ package com.toggl.settings.domain
 
 import com.toggl.architecture.core.Selector
 import com.toggl.common.feature.services.calendar.CalendarService
+import com.toggl.common.services.permissions.PermissionCheckerService
 import com.toggl.models.domain.SettingsType
 import dagger.hilt.android.scopes.FragmentScoped
 import javax.inject.Inject
 
 @FragmentScoped
 class CalendarSettingsSelector @Inject constructor(
-    private val calendarService: CalendarService
+    private val calendarService: CalendarService,
+    private val permissionCheckerService: PermissionCheckerService
 ) : Selector<SettingsState, List<CalendarSettingsViewModel>> {
     override suspend fun select(state: SettingsState): List<CalendarSettingsViewModel> {
 
@@ -16,10 +18,12 @@ class CalendarSettingsSelector @Inject constructor(
         val availableCalendars = calendarService.getAvailableCalendars()
 
         return sequence {
-            val accessGranted = !state.userPreferences.calendarIntegrationEnabled
-            yield(CalendarSettingsViewModel.AccessGranted(accessGranted))
+            val calendarIntegrationEnabled = permissionCheckerService.hasCalendarPermission()
+                && state.userPreferences.calendarIntegrationEnabled
 
-            if (!accessGranted) return@sequence
+            yield(CalendarSettingsViewModel.IntegrationEnabled(calendarIntegrationEnabled))
+
+            if (!calendarIntegrationEnabled) return@sequence
 
             val calendarSections = availableCalendars
                 .groupBy { it.sourceName }

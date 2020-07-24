@@ -104,7 +104,10 @@ class SettingsReducer @Inject constructor(
                 calendarIds = if (calendarIntegrationEnabled) calendarIds else emptyList()
             )
         }
-        return if (!this().userPreferences.calendarIntegrationEnabled && !permissionCheckerService.hasCalendarPermission())
+
+        val integrationIsCurrentlyDisabled = !this().userPreferences.calendarIntegrationEnabled
+
+        return if (integrationIsCurrentlyDisabled && !permissionCheckerService.hasCalendarPermission())
             updatePrefsEffects + RequestCalendarPermissionEffect()
         else
             updatePrefsEffects

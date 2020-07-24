@@ -65,7 +65,7 @@ fun CalendarSettingsPageContent(
         bodyContent = {
             LazyColumnItems(calendarSettingsViewModels) { viewModel ->
                 when (viewModel) {
-                    is CalendarSettingsViewModel.AccessGranted ->
+                    is CalendarSettingsViewModel.IntegrationEnabled ->
                         LinkCalendarsSection(viewModel.accessGranted, dispatcher)
                     is CalendarSettingsViewModel.CalendarSection ->
                         Section(section = viewModel.section, dispatcher = dispatcher)
@@ -113,7 +113,7 @@ fun PreviewCalendarSettingsPageDark() {
 }
 
 val calendarSettingsPreviewData: List<CalendarSettingsViewModel> = listOf(
-    CalendarSettingsViewModel.AccessGranted(false),
+    CalendarSettingsViewModel.IntegrationEnabled(false),
     CalendarSettingsViewModel.CalendarSection(SettingsSectionViewModel("someone@toggl.com", listOf(
         SettingsViewModel.Toggle("Meetings", SettingsType.Calendar("123"), true),
         SettingsViewModel.Toggle("Peer Reviews", SettingsType.Calendar("123"), false),
