@@ -40,7 +40,7 @@ class FeedbackFragment : Fragment() {
 
             FeedbackPage(
                 sendFeedbackRequest = sendFeedbackRequest,
-                onBack = { store.dispatch(SettingsAction.BackToMainScreenTapped) },
+                onBack = { store.dispatch(SettingsAction.FinishedEditingSetting) },
                 onFeedbackSent = { feedbackText ->
                     store.dispatch(SettingsAction.SendFeedbackTapped(feedbackText))
                 }

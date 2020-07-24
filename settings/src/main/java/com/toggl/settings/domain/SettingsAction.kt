@@ -35,7 +35,7 @@ sealed class SettingsAction {
     data class SetSendFeedbackError(val throwable: Throwable) : SettingsAction()
     data class UpdateEmail(val email: Email.Valid) : SettingsAction()
     data class UpdateName(val name: String) : SettingsAction()
-    object SettingEditionDismissed : SettingsAction()
+    object FinishedEditingSetting : SettingsAction()
     data class OpenSelectionDialog(val settingType: SettingsType) : SettingsAction()
     companion object
 }
@@ -65,8 +65,7 @@ fun SettingsAction.formatForDebug() =
         is SettingsAction.UpdateEmail -> "Updated email to $email"
         is SettingsAction.UpdateName -> "Updated name to $name"
         SettingsAction.OpenCalendarSettingsTapped -> "Open calendar settings tapped"
-        SettingsAction.BackToMainScreenTapped -> "Back to main screen tapped"
-        is SettingsAction.SettingEditionDismissed -> "Dialog dismissed"
+        is SettingsAction.FinishedEditingSetting -> "Dialog dismissed"
         is SettingsAction.OpenSelectionDialog -> "Selection dialog opened for setting $settingType"
         SettingsAction.OpenSubmitFeedbackTapped -> "Open submit feedback tapped"
     }

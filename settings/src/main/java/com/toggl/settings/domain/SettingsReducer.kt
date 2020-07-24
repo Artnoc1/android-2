@@ -35,26 +35,42 @@ class SettingsReducer @Inject constructor(
         action: SettingsAction
     ): List<Effect<SettingsAction>> =
         when (action) {
-            SettingsAction.OpenSubmitFeedbackTapped -> state.mutateWithoutEffects { copy(backStack = backStack.push(Route.Feedback)) }
-            is SettingsAction.UserPreferencesUpdated -> state.mutateWithoutEffects { copy(userPreferences = action.userPreferences) }
+            // Text results
+            is SettingsAction.UpdateEmail -> state.mutateWithoutEffects { copy(user = user.copy(email = action.email)) }
+            is SettingsAction.UpdateName -> state.mutateWithoutEffects { copy(user = user.copy(name = action.name)) }
+
+            // Toggles
             is SettingsAction.ManualModeToggled -> state.updatePrefs { copy(manualModeEnabled = !manualModeEnabled) }
             is SettingsAction.Use24HourClockToggled -> state.updatePrefs { copy(twentyFourHourClockEnabled = !twentyFourHourClockEnabled) }
             is SettingsAction.CellSwipeActionsToggled -> state.updatePrefs { copy(cellSwipeActionsEnabled = !cellSwipeActionsEnabled) }
             is SettingsAction.GroupSimilarTimeEntriesToggled -> state.updatePrefs { copy(groupSimilarTimeEntriesEnabled = !groupSimilarTimeEntriesEnabled) }
+
+            //Dialogs
+            is SettingsAction.OpenSelectionDialog -> state.navigateTo(Route.SettingsDialog(action.settingType))
+            is SettingsAction.UserPreferencesUpdated -> state.mutateWithoutEffects { copy(userPreferences = action.userPreferences) }
             is SettingsAction.WorkspaceSelected -> state.updatePrefs { copy(selectedWorkspaceId = action.selectedWorkspaceId) }
             is SettingsAction.DateFormatSelected -> state.updatePrefs { copy(dateFormat = action.dateFormat) }
             is SettingsAction.DurationFormatSelected -> state.updatePrefs { copy(durationFormat = action.durationFormat) }
             is SettingsAction.FirstDayOfTheWeekSelected -> state.updatePrefs { copy(firstDayOfTheWeek = action.firstDayOfTheWeek) }
             is SettingsAction.SmartAlertsOptionSelected -> state.updatePrefs { copy(smartAlertsOption = action.smartAlertsOption) }
-            is SettingsAction.UserCalendarIntegrationToggled -> state.updatePrefs {
-                if (calendarIds.contains(action.calendarId)) copy(calendarIds = calendarIds - action.calendarId)
-                else copy(calendarIds = calendarIds + action.calendarId)
+            is SettingsAction.FinishedEditingSetting -> {
+                state.updateSendFeedbackRequestStateWithoutEffects(Loadable.Uninitialized)
+                state.popUntil<Route.Settings>()
             }
-            is SettingsAction.AllowCalendarAccessToggled -> state.handleAllowCalendarAccessToggled()
-            is SettingsAction.CalendarPermissionRequested -> state.mutateWithoutEffects { copy(shouldRequestCalendarPermission = true) }
-            is SettingsAction.CalendarPermissionReceived -> state.mutateWithoutEffects { copy(shouldRequestCalendarPermission = false) }
-            SettingsAction.SignOutTapped -> effect(signOutEffect)
-            SettingsAction.SignOutCompleted -> noEffect()
+
+            // Feedback
+            SettingsAction.OpenSubmitFeedbackTapped -> state.mutateWithoutEffects { copy(backStack = backStack.push(Route.Feedback)) }
+            is SettingsAction.FeedbackSent -> state.updateSendFeedbackRequestStateWithoutEffects(Loadable.Loaded(Unit))
+            is SettingsAction.SendFeedbackResultSeen -> {
+                val feedbackRequestResultThatWasSeen = state().localState.sendFeedbackRequest
+                state.updateSendFeedbackRequestStateWithoutEffects(Loadable.Uninitialized)
+                if (feedbackRequestResultThatWasSeen is Loadable.Loaded<Unit>) {
+                    effectOf(SettingsAction.FinishedEditingSetting)
+                } else noEffect()
+            }
+            is SettingsAction.SetSendFeedbackError -> state.updateSendFeedbackRequestStateWithoutEffects(
+                Loadable.Error(Failure(action.throwable, ""))
+            )
             is SettingsAction.SendFeedbackTapped -> {
                 state.mutate {
                     SettingsState.localState.modify(this) {
@@ -65,25 +81,20 @@ class SettingsReducer @Inject constructor(
                     SendFeedbackEffect(action.feedbackMessage, state().user, platformInfo, feedbackDataBuilder, feedbackApiClient, dispatcherProvider)
                 )
             }
-            is SettingsAction.FeedbackSent -> state.updateSendFeedbackRequestStateWithoutEffects(Loadable.Loaded(Unit))
-            is SettingsAction.SendFeedbackResultSeen -> {
-                val feedbackRequestResultThatWasSeen = state().localState.sendFeedbackRequest
-                state.updateSendFeedbackRequestStateWithoutEffects(Loadable.Uninitialized)
-                if (feedbackRequestResultThatWasSeen is Loadable.Loaded<Unit>) {
-                    effectOf(SettingsAction.SettingEditionDismissed)
-                } else noEffect()
-            }
-            is SettingsAction.SetSendFeedbackError -> state.updateSendFeedbackRequestStateWithoutEffects(
-                Loadable.Error(Failure(action.throwable, ""))
-            )
-            is SettingsAction.UpdateEmail -> state.mutateWithoutEffects { copy(user = user.copy(email = action.email)) }
-            is SettingsAction.UpdateName -> state.mutateWithoutEffects { copy(user = user.copy(name = action.name)) }
+
+            // Calendar settings
             SettingsAction.OpenCalendarSettingsTapped -> state.navigateTo(Route.CalendarSettings)
-            is SettingsAction.OpenSelectionDialog -> state.navigateTo(Route.SettingsDialog(action.settingType))
-            is SettingsAction.SettingEditionDismissed -> {
-                state.updateSendFeedbackRequestStateWithoutEffects(Loadable.Uninitialized)
-                state.popUntil<Route.Settings>()
+            is SettingsAction.AllowCalendarAccessToggled -> state.handleAllowCalendarAccessToggled()
+            is SettingsAction.CalendarPermissionRequested -> state.mutateWithoutEffects { copy(shouldRequestCalendarPermission = true) }
+            is SettingsAction.CalendarPermissionReceived -> state.mutateWithoutEffects { copy(shouldRequestCalendarPermission = false) }
+            is SettingsAction.UserCalendarIntegrationToggled -> state.updatePrefs {
+                if (calendarIds.contains(action.calendarId)) copy(calendarIds = calendarIds - action.calendarId)
+                else copy(calendarIds = calendarIds + action.calendarId)
             }
+
+            //Sign out
+            SettingsAction.SignOutTapped -> effect(signOutEffect)
+            SettingsAction.SignOutCompleted -> noEffect()
         }
 
     private fun MutableValue<SettingsState>.handleAllowCalendarAccessToggled(): List<Effect<SettingsAction>> {

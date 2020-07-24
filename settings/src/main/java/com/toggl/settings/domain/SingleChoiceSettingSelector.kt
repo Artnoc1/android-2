@@ -84,6 +84,6 @@ class SingleChoiceSettingSelector @Inject constructor(
             }
         }
 
-        return SingleChoiceSettingViewModel(settingHeader, settingChoiceListItems, SettingsAction.DialogDismissed)
+        return SingleChoiceSettingViewModel(settingHeader, settingChoiceListItems, SettingsAction.FinishedEditingSetting)
     }
 }
