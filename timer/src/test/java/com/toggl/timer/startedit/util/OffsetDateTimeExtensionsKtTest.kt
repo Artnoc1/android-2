@@ -3,10 +3,10 @@ package com.toggl.timer.startedit.util
 import com.toggl.common.extensions.absoluteDurationBetween
 import com.toggl.common.extensions.roundToClosestMinute
 import com.toggl.common.extensions.timeOfDay
-import io.kotlintest.matchers.beGreaterThanOrEqualTo
-import io.kotlintest.matchers.beLessThan
-import io.kotlintest.shouldBe
-import io.kotlintest.shouldNotBe
+import io.kotest.matchers.beGreaterThanOrEqualTo
+import io.kotest.matchers.beLessThan
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource

@@ -6,8 +6,8 @@ import com.toggl.timer.common.CoroutineTest
 import com.toggl.timer.common.assertNoEffectsWereReturned
 import com.toggl.timer.common.createTimeEntry
 import com.toggl.timer.common.testReduce
-import io.kotlintest.matchers.types.shouldNotBeNull
-import io.kotlintest.shouldBe
+import io.kotest.matchers.types.shouldNotBeNull
+import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk

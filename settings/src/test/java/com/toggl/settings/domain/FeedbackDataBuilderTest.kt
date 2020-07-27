@@ -8,9 +8,9 @@ import com.toggl.models.domain.UserPreferences
 import com.toggl.repository.Repository
 import com.toggl.repository.interfaces.SettingsRepository
 import com.toggl.settings.common.CoroutineTest
-import io.kotlintest.matchers.numerics.shouldBeExactly
-import io.kotlintest.matchers.types.shouldBeNull
-import io.kotlintest.shouldBe
+import io.kotest.matchers.numerics.shouldBeExactly
+import io.kotest.matchers.types.shouldBeNull
+import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk

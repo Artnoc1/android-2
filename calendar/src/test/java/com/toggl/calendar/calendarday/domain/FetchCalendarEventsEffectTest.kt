@@ -3,7 +3,7 @@ package com.toggl.calendar.calendarday.domain
 import com.toggl.calendar.common.CoroutineTest
 import com.toggl.common.feature.services.calendar.Calendar
 import com.toggl.common.feature.services.calendar.CalendarService
-import io.kotlintest.matchers.types.shouldBeTypeOf
+import io.kotest.matchers.types.shouldBeTypeOf
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

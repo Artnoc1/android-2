@@ -2,7 +2,7 @@ package com.toggl.timer.common.domain
 
 import com.toggl.models.domain.EditableTimeEntry
 import com.toggl.timer.common.createTimeEntry
-import io.kotlintest.shouldBe
+import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import java.time.Duration

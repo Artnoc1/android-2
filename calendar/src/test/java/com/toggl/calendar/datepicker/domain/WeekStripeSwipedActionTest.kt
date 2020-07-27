@@ -7,9 +7,9 @@ import com.toggl.calendar.common.testReduceState
 import com.toggl.calendar.common.toMutableValue
 import com.toggl.common.services.time.TimeService
 import com.toggl.models.common.SwipeDirection
-import io.kotlintest.matchers.numerics.shouldBeLessThanOrEqual
-import io.kotlintest.shouldBe
-import io.kotlintest.shouldNotBe
+import io.kotest.matchers.numerics.shouldBeLessThanOrEqual
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi

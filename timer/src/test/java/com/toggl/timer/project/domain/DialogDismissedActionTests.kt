@@ -3,7 +3,7 @@ package com.toggl.timer.project.domain
 import com.toggl.models.domain.EditableProject
 import com.toggl.timer.common.CoroutineTest
 import com.toggl.timer.common.testReduceEffects
-import io.kotlintest.matchers.types.shouldNotBeNull
+import io.kotest.matchers.types.shouldNotBeNull
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.DisplayName

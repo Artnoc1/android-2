@@ -6,7 +6,7 @@ import com.toggl.calendar.common.domain.startTime
 import com.toggl.common.feature.services.calendar.CalendarEvent
 import com.toggl.common.services.time.TimeService
 import com.toggl.models.domain.TimeEntry
-import io.kotlintest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.collections.shouldHaveSize
 import io.mockk.every
 import io.mockk.mockk
 import org.assertj.core.api.Assertions.assertThat

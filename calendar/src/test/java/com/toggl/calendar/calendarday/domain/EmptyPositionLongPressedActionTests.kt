@@ -11,7 +11,7 @@ import com.toggl.common.feature.navigation.Route
 import com.toggl.common.feature.navigation.push
 import com.toggl.common.feature.navigation.setRouteParam
 import com.toggl.models.domain.EditableTimeEntry
-import io.kotlintest.shouldBe
+import io.kotest.matchers.shouldBe
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest

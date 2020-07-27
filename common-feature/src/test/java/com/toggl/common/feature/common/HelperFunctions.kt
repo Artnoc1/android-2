@@ -4,7 +4,7 @@ import com.toggl.architecture.core.Effect
 import com.toggl.architecture.core.MutableValue
 import com.toggl.architecture.core.Reducer
 import com.toggl.models.domain.TimeEntry
-import io.kotlintest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.collections.shouldBeEmpty
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.Assertions

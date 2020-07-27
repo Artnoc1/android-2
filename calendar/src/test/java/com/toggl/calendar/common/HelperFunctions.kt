@@ -14,8 +14,8 @@ import com.toggl.models.domain.TimeEntry
 import com.toggl.models.domain.User
 import com.toggl.models.validation.ApiToken
 import com.toggl.models.validation.Email
-import io.kotlintest.matchers.collections.shouldBeEmpty
-import io.kotlintest.matchers.types.shouldBeTypeOf
+import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.types.shouldBeTypeOf
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest

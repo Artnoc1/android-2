@@ -6,7 +6,7 @@ import com.toggl.settings.common.createSettingsState
 import com.toggl.settings.common.createUserPreferences
 import com.toggl.settings.common.testReduceNoEffects
 import com.toggl.settings.common.testReduceState
-import io.kotlintest.matchers.boolean.shouldBeTrue
+import io.kotest.matchers.boolean.shouldBeTrue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.DisplayName

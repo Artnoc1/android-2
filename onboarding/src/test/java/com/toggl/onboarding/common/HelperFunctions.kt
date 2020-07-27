@@ -7,7 +7,7 @@ import com.toggl.models.domain.User
 import com.toggl.models.validation.ApiToken
 import com.toggl.models.validation.Email
 import com.toggl.models.validation.Password
-import io.kotlintest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.collections.shouldBeEmpty
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.Assertions

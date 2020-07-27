@@ -6,8 +6,8 @@ import com.toggl.models.domain.Workspace
 import com.toggl.timer.common.FreeCoroutineSpec
 import com.toggl.timer.common.shouldEmitTimeEntryAction
 import com.toggl.timer.common.testReduce
-import io.kotlintest.matchers.collections.shouldBeSingleton
-import io.kotlintest.shouldBe
+import io.kotest.matchers.collections.shouldBeSingleton
+import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi

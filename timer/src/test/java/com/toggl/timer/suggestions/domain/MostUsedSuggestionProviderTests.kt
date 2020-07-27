@@ -5,8 +5,8 @@ import com.toggl.common.services.time.TimeService
 import com.toggl.models.domain.TimeEntry
 import com.toggl.timer.common.CoroutineTest
 import com.toggl.timer.common.createTimeEntry
-import io.kotlintest.matchers.collections.shouldHaveSize
-import io.kotlintest.shouldBe
+import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi

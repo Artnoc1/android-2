@@ -5,11 +5,11 @@ import com.toggl.common.extensions.beginningOfWeek
 import com.toggl.common.extensions.roundToClosestMinute
 import com.toggl.common.extensions.timeOfDay
 import com.toggl.common.extensions.toList
-import io.kotlintest.matchers.beGreaterThanOrEqualTo
-import io.kotlintest.matchers.beLessThan
-import io.kotlintest.matchers.collections.shouldBeEmpty
-import io.kotlintest.shouldBe
-import io.kotlintest.shouldNotBe
+import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.comparables.beGreaterThanOrEqualTo
+import io.kotest.matchers.comparables.beLessThan
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource

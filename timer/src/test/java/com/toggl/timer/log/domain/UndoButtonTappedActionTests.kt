@@ -3,7 +3,7 @@ package com.toggl.timer.log.domain
 import com.toggl.architecture.extensions.noEffect
 import com.toggl.timer.common.FreeCoroutineSpec
 import com.toggl.timer.common.toMutableValue
-import io.kotlintest.shouldBe
+import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi

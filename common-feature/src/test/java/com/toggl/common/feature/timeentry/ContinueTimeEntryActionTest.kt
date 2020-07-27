@@ -8,9 +8,9 @@ import com.toggl.common.feature.common.testReduceState
 import com.toggl.common.feature.timeentry.exceptions.TimeEntryDoesNotExistException
 import com.toggl.common.services.time.TimeService
 import com.toggl.repository.interfaces.TimeEntryRepository
-import io.kotlintest.matchers.collections.shouldBeSingleton
-import io.kotlintest.matchers.types.shouldBeTypeOf
-import io.kotlintest.shouldBe
+import io.kotest.matchers.collections.shouldBeSingleton
+import io.kotest.matchers.types.shouldBeTypeOf
+import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi

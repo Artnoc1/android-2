@@ -5,7 +5,7 @@ import com.toggl.calendar.common.testReduceNoEffects
 import com.toggl.calendar.common.testReduceState
 import com.toggl.common.services.time.TimeService
 import com.toggl.models.common.SwipeDirection
-import io.kotlintest.shouldBe
+import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi

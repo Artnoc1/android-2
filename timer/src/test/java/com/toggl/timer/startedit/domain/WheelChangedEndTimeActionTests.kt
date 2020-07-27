@@ -9,7 +9,7 @@ import com.toggl.timer.common.testReduceException
 import com.toggl.timer.common.testReduceState
 import com.toggl.timer.exceptions.EditableTimeEntryDoesNotHaveADurationSetException
 import com.toggl.timer.exceptions.EditableTimeEntryDoesNotHaveAStartTimeSetException
-import io.kotlintest.shouldBe
+import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi

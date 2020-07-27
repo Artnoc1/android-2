@@ -4,7 +4,7 @@ import com.google.gson.JsonParser
 import com.toggl.models.domain.User
 import com.toggl.models.validation.ApiToken
 import com.toggl.models.validation.Email
-import io.kotlintest.shouldBe
+import io.kotest.matchers.shouldBe
 import io.mockk.mockk
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test

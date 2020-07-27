@@ -9,8 +9,8 @@ import com.toggl.common.feature.services.analytics.AnalyticsService
 import com.toggl.common.feature.services.analytics.Event
 import com.toggl.timer.common.domain.TimerAction
 import com.toggl.timer.log.domain.TimeEntriesLogAction
-import io.kotlintest.shouldBe
-import io.kotlintest.specs.FreeSpec
+import io.kotest.matchers.shouldBe
+import io.kotest.specs.FreeSpec
 import io.mockk.Called
 import io.mockk.mockk
 import io.mockk.mockkStatic

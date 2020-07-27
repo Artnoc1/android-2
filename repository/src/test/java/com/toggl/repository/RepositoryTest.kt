@@ -17,10 +17,10 @@ import com.toggl.repository.dto.StartTimeEntryDTO
 import com.toggl.repository.extensions.toDatabaseModel
 import com.toggl.repository.extensions.toModelWithoutTags
 import com.toggl.repository.interfaces.StartTimeEntryResult
-import io.kotlintest.TestCase
-import io.kotlintest.matchers.collections.shouldBeEmpty
-import io.kotlintest.shouldBe
-import io.kotlintest.specs.StringSpec
+import io.kotest.core.spec.style.StringSpec
+import io.kotest.core.test.TestCase
+import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.shouldBe
 import io.mockk.called
 import io.mockk.clearMocks
 import io.mockk.every

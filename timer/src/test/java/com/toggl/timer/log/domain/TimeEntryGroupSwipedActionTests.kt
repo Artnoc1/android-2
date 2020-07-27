@@ -8,12 +8,12 @@ import com.toggl.timer.common.createTimeEntry
 import com.toggl.timer.common.shouldEmitTimeEntryAction
 import com.toggl.timer.common.testReduceEffects
 import com.toggl.timer.common.toMutableValue
-import io.kotlintest.matchers.collections.shouldBeSingleton
-import io.kotlintest.matchers.collections.shouldHaveSize
-import io.kotlintest.matchers.numerics.shouldBeExactly
-import io.kotlintest.matchers.types.shouldBeTypeOf
-import io.kotlintest.shouldBe
-import io.kotlintest.shouldThrow
+import io.kotest.matchers.collections.shouldBeSingleton
+import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.numerics.shouldBeExactly
+import io.kotest.matchers.types.shouldBeTypeOf
+import io.kotest.matchers.shouldBe
+import io.kotest.shouldThrow
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 

@@ -7,9 +7,9 @@ import com.toggl.settings.common.createSettingsReducer
 import com.toggl.settings.common.createSettingsState
 import com.toggl.settings.common.createUserPreferences
 import com.toggl.settings.common.testReduce
-import io.kotlintest.matchers.collections.shouldBeSingleton
-import io.kotlintest.matchers.types.shouldBeInstanceOf
-import io.kotlintest.shouldBe
+import io.kotest.matchers.collections.shouldBeSingleton
+import io.kotest.matchers.types.shouldBeInstanceOf
+import io.kotest.matchers.shouldBe
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk

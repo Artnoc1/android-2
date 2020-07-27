@@ -7,7 +7,7 @@ import com.toggl.common.extensions.toList
 import com.toggl.common.services.time.TimeService
 import com.toggl.models.domain.UserPreferences
 import com.toggl.repository.interfaces.SettingsRepository
-import io.kotlintest.shouldBe
+import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk

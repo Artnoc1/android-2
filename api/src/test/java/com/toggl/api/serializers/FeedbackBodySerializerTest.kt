@@ -1,7 +1,7 @@
 package com.toggl.api.serializers
 
 import com.toggl.api.network.FeedbackBody
-import io.kotlintest.shouldBe
+import io.kotest.matchers.shouldBe
 import io.mockk.mockk
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -21,6 +21,6 @@ class FeedbackBodySerializerTest {
 
         val json = jsonSerializer.serialize(feedbackBody, mockk(), mockk())
 
-        json.toString() shouldBe "{\"email\":\"$expectedEmail\",\"message\":\"$expectedMessage\",\"data\":[{\"key\":\"device\",\"value\":\"${data["device"]}\"},{\"key\":\"some random key\",\"value\":\"${data["some random key"]}\"}]}"
+        json.toString() shouldBe  "{\"email\":\"$expectedEmail\",\"message\":\"$expectedMessage\",\"data\":[{\"key\":\"device\",\"value\":\"${data["device"]}\"},{\"key\":\"some random key\",\"value\":\"${data["some random key"]}\"}]}"
     }
 }

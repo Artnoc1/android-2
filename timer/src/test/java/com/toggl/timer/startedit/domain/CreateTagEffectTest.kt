@@ -3,7 +3,7 @@ package com.toggl.timer.startedit.domain
 import com.toggl.models.domain.Tag
 import com.toggl.repository.interfaces.TagRepository
 import com.toggl.timer.common.CoroutineTest
-import io.kotlintest.shouldBe
+import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

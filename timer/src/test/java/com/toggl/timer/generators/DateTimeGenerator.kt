@@ -1,6 +1,6 @@
 package com.toggl.timer.generators
 
-import io.kotlintest.properties.Gen
+import io.kotest.properties.Gen
 import java.time.Month
 import java.time.OffsetDateTime
 import java.time.Year

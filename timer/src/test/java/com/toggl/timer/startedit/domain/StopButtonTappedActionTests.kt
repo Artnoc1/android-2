@@ -6,8 +6,8 @@ import com.toggl.timer.common.testReduce
 import com.toggl.timer.common.testReduceNoEffects
 import com.toggl.timer.common.testReduceState
 import com.toggl.timer.startedit.domain.StopButtonTappedActionTests.TheoryHolder.Companion.now
-import io.kotlintest.matchers.collections.shouldBeEmpty
-import io.kotlintest.shouldBe
+import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi

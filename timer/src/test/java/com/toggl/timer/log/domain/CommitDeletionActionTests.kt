@@ -8,9 +8,9 @@ import com.toggl.timer.common.createTimeEntry
 import com.toggl.timer.common.shouldEmitTimeEntryAction
 import com.toggl.timer.common.testReduce
 import com.toggl.timer.common.toMutableValue
-import io.kotlintest.matchers.collections.shouldBeEmpty
-import io.kotlintest.matchers.collections.shouldHaveSize
-import io.kotlintest.shouldBe
+import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi

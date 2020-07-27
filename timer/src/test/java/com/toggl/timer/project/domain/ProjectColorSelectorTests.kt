@@ -6,10 +6,10 @@ import com.toggl.models.domain.Project
 import com.toggl.models.domain.Workspace
 import com.toggl.models.domain.WorkspaceFeature
 import com.toggl.timer.common.CoroutineTest
-import io.kotlintest.matchers.boolean.shouldBeTrue
-import io.kotlintest.matchers.collections.shouldHaveSize
-import io.kotlintest.matchers.types.shouldNotBeNull
-import io.kotlintest.shouldBe
+import io.kotest.matchers.boolean.shouldBeTrue
+import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.types.shouldNotBeNull
+import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test

@@ -2,9 +2,9 @@ package com.toggl.timer.log.domain
 
 import com.toggl.timer.common.FreeCoroutineSpec
 import com.toggl.timer.common.testReduce
-import io.kotlintest.matchers.collections.shouldBeEmpty
-import io.kotlintest.matchers.collections.shouldContain
-import io.kotlintest.matchers.collections.shouldNotContain
+import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.collections.shouldContain
+import io.kotest.matchers.collections.shouldNotContain
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi

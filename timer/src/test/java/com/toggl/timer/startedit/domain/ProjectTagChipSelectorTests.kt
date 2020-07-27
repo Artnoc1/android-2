@@ -8,9 +8,9 @@ import com.toggl.timer.common.createTimeEntry
 import com.toggl.models.domain.EditableTimeEntry
 import com.toggl.timer.project.domain.createProject
 import com.toggl.timer.startedit.ui.chips.ChipViewModel
-import io.kotlintest.matchers.boolean.shouldBeTrue
-import io.kotlintest.matchers.collections.shouldBeEmpty
-import io.kotlintest.matchers.types.shouldNotBeNull
+import io.kotest.matchers.boolean.shouldBeTrue
+import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.types.shouldNotBeNull
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test

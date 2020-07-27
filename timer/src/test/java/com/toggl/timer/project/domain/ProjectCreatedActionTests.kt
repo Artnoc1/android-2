@@ -5,8 +5,8 @@ import com.toggl.models.domain.EditableTimeEntry
 import com.toggl.timer.common.CoroutineTest
 import com.toggl.timer.common.testReduceEffects
 import com.toggl.timer.common.testReduceState
-import io.kotlintest.matchers.types.shouldNotBeNull
-import io.kotlintest.shouldBe
+import io.kotest.matchers.types.shouldNotBeNull
+import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.DisplayName

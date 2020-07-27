@@ -5,11 +5,11 @@ import com.toggl.common.feature.services.calendar.CalendarEvent
 import com.toggl.common.services.time.TimeService
 import com.toggl.timer.common.CoroutineTest
 import com.toggl.timer.common.createCalendarEvent
-import io.kotlintest.matchers.boolean.shouldBeTrue
-import io.kotlintest.matchers.collections.shouldBeEmpty
-import io.kotlintest.matchers.collections.shouldHaveSize
-import io.kotlintest.should
-import io.kotlintest.shouldBe
+import io.kotest.matchers.boolean.shouldBeTrue
+import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.should
+import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi

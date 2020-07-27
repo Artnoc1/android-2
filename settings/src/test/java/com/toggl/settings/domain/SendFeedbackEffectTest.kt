@@ -7,8 +7,8 @@ import com.toggl.models.domain.User
 import com.toggl.models.validation.ApiToken
 import com.toggl.models.validation.Email
 import com.toggl.settings.common.CoroutineTest
-import io.kotlintest.matchers.types.shouldBeTypeOf
-import io.kotlintest.shouldBe
+import io.kotest.matchers.types.shouldBeTypeOf
+import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

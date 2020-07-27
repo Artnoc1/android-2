@@ -3,7 +3,7 @@ package com.toggl.timer.startedit.domain
 import com.toggl.common.Constants.AutoCompleteSuggestions.tagToken
 import com.toggl.models.domain.EditableTimeEntry
 import com.toggl.timer.common.testReduceEffects
-import io.kotlintest.shouldBe
+import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test

@@ -9,7 +9,7 @@ import com.toggl.domain.extensions.createUser
 import com.toggl.models.domain.Project
 import com.toggl.models.domain.User
 import com.toggl.repository.interfaces.ProjectRepository
-import io.kotlintest.shouldBe
+import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi

@@ -8,8 +8,8 @@ import com.toggl.common.feature.timeentry.TimeEntryActionHolder
 import com.toggl.common.feature.services.calendar.CalendarEvent
 import com.toggl.models.domain.Task
 import com.toggl.models.domain.TimeEntry
-import io.kotlintest.matchers.collections.shouldBeEmpty
-import io.kotlintest.matchers.types.shouldBeTypeOf
+import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.types.shouldBeTypeOf
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.Assertions

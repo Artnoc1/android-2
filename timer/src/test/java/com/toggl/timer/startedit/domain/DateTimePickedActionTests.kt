@@ -11,9 +11,9 @@ import com.toggl.timer.common.testReduceException
 import com.toggl.timer.common.testReduceState
 import com.toggl.timer.exceptions.EditableTimeEntryDoesNotHaveADurationSetException
 import com.toggl.timer.exceptions.EditableTimeEntryDoesNotHaveAStartTimeSetException
-import io.kotlintest.matchers.collections.shouldBeEmpty
-import io.kotlintest.matchers.collections.shouldBeSingleton
-import io.kotlintest.shouldBe
+import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.collections.shouldBeSingleton
+import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi

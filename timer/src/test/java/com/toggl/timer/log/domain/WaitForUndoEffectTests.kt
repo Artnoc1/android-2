@@ -1,8 +1,8 @@
 package com.toggl.timer.log.domain
 
 import com.toggl.common.Constants.timeEntryDeletionDelayMs
-import io.kotlintest.shouldBe
-import io.kotlintest.specs.FreeSpec
+import io.kotest.matchers.shouldBe
+import io.kotest.specs.FreeSpec
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runBlockingTest
 

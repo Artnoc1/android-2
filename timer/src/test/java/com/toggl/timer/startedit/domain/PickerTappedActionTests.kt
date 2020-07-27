@@ -7,8 +7,8 @@ import com.toggl.timer.startedit.domain.StartEditAction
 import com.toggl.timer.startedit.domain.TemporalInconsistency
 import com.toggl.timer.startedit.domain.createInitialState
 import com.toggl.timer.startedit.domain.createReducer
-import io.kotlintest.matchers.collections.shouldBeEmpty
-import io.kotlintest.shouldBe
+import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.shouldBe
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.DisplayName

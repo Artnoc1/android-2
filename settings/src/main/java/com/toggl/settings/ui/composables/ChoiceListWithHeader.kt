@@ -79,13 +79,13 @@ internal fun SingleChoiceListWithHeader(
         )
         RadioGroup {
             items.forEach { item ->
-                RadioGroupItem(selected = item.isSelected, onSelect = { dispatchOnSelected(item) }) {
+                Box(modifier = Modifier.clickable(onClick = { dispatchOnSelected(item) })) {
                     Row(
                         modifier = Modifier.preferredHeight(grid_6) +
                             Modifier.clickable(onClick = { dispatchOnSelected(item) }) +
                             Modifier.fillMaxWidth()
                     ) {
-                        RadioButton(selected = item.isSelected, onSelect = { dispatchOnSelected(item) })
+                        RadioButton(selected = item.isSelected, onClick = { dispatchOnSelected(item) })
                         Spacer(modifier = Modifier.preferredWidth(grid_4))
                         Text(
                             text = item.label,

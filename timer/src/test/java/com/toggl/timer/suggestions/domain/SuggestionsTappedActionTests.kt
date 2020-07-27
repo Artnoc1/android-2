@@ -7,7 +7,7 @@ import com.toggl.timer.common.createCalendarEvent
 import com.toggl.timer.common.createTimeEntry
 import com.toggl.timer.common.shouldEmitTimeEntryAction
 import com.toggl.timer.common.testReduceEffects
-import io.kotlintest.shouldBe
+import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest

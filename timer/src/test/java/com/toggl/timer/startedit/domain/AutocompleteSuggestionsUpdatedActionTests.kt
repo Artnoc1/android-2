@@ -4,8 +4,8 @@ import com.toggl.models.common.AutocompleteSuggestion.StartEditSuggestions
 import com.toggl.timer.common.CoroutineTest
 import com.toggl.timer.common.createTimeEntry
 import com.toggl.timer.common.testReduce
-import io.kotlintest.matchers.collections.shouldBeEmpty
-import io.kotlintest.matchers.collections.shouldContainInOrder
+import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.collections.shouldContainInOrder
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.DisplayName

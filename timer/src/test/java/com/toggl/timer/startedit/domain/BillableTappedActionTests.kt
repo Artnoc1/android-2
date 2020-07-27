@@ -3,8 +3,8 @@ package com.toggl.timer.startedit.domain
 import com.toggl.architecture.extensions.noEffect
 import com.toggl.timer.common.FreeCoroutineSpec
 import com.toggl.timer.common.toMutableValue
-import io.kotlintest.properties.Gen
-import io.kotlintest.shouldBe
+import io.kotest.properties.Gen
+import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi

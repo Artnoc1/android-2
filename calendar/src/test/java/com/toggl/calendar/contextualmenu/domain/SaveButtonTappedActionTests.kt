@@ -11,7 +11,7 @@ import com.toggl.common.feature.timeentry.TimeEntryAction
 import com.toggl.common.feature.timeentry.exceptions.TimeEntryShouldNotBeRunningException
 import com.toggl.common.services.time.TimeService
 import com.toggl.models.domain.EditableTimeEntry
-import io.kotlintest.matchers.types.shouldBeInstanceOf
+import io.kotest.matchers.types.shouldBeInstanceOf
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi

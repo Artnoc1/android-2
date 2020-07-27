@@ -4,9 +4,9 @@ import com.toggl.timer.common.FreeCoroutineSpec
 import com.toggl.timer.common.createTimeEntry
 import com.toggl.timer.common.toMutableValue
 import com.toggl.common.feature.timeentry.exceptions.TimeEntryDoesNotExistException
-import io.kotlintest.properties.assertAll
-import io.kotlintest.shouldBe
-import io.kotlintest.shouldThrow
+import io.kotest.properties.assertAll
+import io.kotest.matchers.shouldBe
+import io.kotest.shouldThrow
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi

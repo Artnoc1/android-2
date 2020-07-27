@@ -173,7 +173,7 @@ class CalendarItemDrawingDelegate(
         (0 until eventTextLayout.lineCount)
             .map(eventTextLayout::getLineBottom)
             .filter { it <= eventHeight }
-            .max() ?: 0
+            .maxOrNull() ?: 0
 
     private fun getCalendarItemTextLayout(
         item: CalendarItem,

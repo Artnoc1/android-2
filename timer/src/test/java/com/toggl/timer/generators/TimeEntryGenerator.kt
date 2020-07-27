@@ -2,7 +2,7 @@ package com.toggl.timer.generators
 
 import com.toggl.models.domain.TimeEntry
 import com.toggl.timer.common.createTimeEntry
-import io.kotlintest.properties.Gen
+import io.kotest.properties.Gen
 import java.time.Duration
 import java.time.Month
 import java.time.OffsetDateTime

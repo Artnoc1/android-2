@@ -9,7 +9,7 @@ import com.toggl.domain.extensions.CoroutineTest
 import com.toggl.domain.extensions.testReduceNoEffects
 import com.toggl.domain.extensions.testReduceState
 import com.toggl.settings.domain.SettingsAction
-import io.kotlintest.shouldBe
+import io.kotest.matchers.shouldBe
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest

@@ -6,8 +6,8 @@ import com.toggl.onboarding.common.validEmail
 import com.toggl.onboarding.common.validPassword
 import com.toggl.onboarding.common.validUser
 import com.toggl.repository.interfaces.UserRepository
-import io.kotlintest.matchers.types.shouldBeInstanceOf
-import io.kotlintest.shouldBe
+import io.kotest.matchers.types.shouldBeInstanceOf
+import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

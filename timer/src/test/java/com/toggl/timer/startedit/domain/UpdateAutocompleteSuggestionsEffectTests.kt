@@ -10,10 +10,10 @@ import com.toggl.timer.common.CoroutineTest
 import com.toggl.timer.common.createTimeEntry
 import com.toggl.timer.project.domain.createProject
 import com.toggl.timer.project.domain.createTask
-import io.kotlintest.matchers.boolean.shouldBeTrue
-import io.kotlintest.matchers.collections.shouldBeEmpty
-import io.kotlintest.matchers.types.shouldNotBeNull
-import io.kotlintest.shouldBe
+import io.kotest.matchers.boolean.shouldBeTrue
+import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.types.shouldNotBeNull
+import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.DisplayName

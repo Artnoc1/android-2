@@ -4,9 +4,9 @@ import com.toggl.common.services.time.TimeService
 import com.toggl.timer.common.CoroutineTest
 import com.toggl.timer.common.testReduceEffects
 import com.toggl.timer.common.testReduceState
-import io.kotlintest.matchers.collections.shouldBeSingleton
-import io.kotlintest.matchers.types.shouldBeTypeOf
-import io.kotlintest.shouldBe
+import io.kotest.matchers.collections.shouldBeSingleton
+import io.kotest.matchers.types.shouldBeTypeOf
+import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest

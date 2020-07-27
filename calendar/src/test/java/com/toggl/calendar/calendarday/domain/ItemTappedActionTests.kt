@@ -13,7 +13,7 @@ import com.toggl.common.feature.navigation.push
 import com.toggl.common.feature.navigation.setRouteParam
 import com.toggl.common.feature.services.calendar.CalendarEvent
 import com.toggl.models.domain.EditableTimeEntry
-import io.kotlintest.shouldBe
+import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.DisplayName

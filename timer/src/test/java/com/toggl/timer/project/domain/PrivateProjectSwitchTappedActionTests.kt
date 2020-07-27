@@ -4,7 +4,7 @@ import com.toggl.architecture.extensions.noEffect
 import com.toggl.timer.common.CoroutineTest
 import com.toggl.models.domain.EditableProject
 import com.toggl.timer.common.testReduce
-import io.kotlintest.shouldBe
+import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.DisplayName

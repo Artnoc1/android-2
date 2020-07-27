@@ -4,9 +4,9 @@ import com.toggl.common.feature.common.CoroutineTest
 import com.toggl.common.feature.common.testReduceEffects
 import com.toggl.common.feature.common.testReduceState
 import com.toggl.repository.interfaces.TimeEntryRepository
-import io.kotlintest.matchers.collections.shouldBeSingleton
-import io.kotlintest.matchers.types.shouldBeTypeOf
-import io.kotlintest.shouldBe
+import io.kotest.matchers.collections.shouldBeSingleton
+import io.kotest.matchers.types.shouldBeTypeOf
+import io.kotest.matchers.shouldBe
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest

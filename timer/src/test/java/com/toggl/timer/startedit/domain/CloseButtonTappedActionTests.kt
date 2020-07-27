@@ -5,7 +5,7 @@ import com.toggl.models.domain.Workspace
 import com.toggl.timer.common.CoroutineTest
 import com.toggl.timer.common.createTimeEntry
 import com.toggl.timer.common.testReduceEffects
-import io.kotlintest.matchers.types.shouldNotBeNull
+import io.kotest.matchers.types.shouldNotBeNull
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi

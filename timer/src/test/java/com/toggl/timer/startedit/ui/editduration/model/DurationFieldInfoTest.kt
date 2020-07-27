@@ -1,10 +1,10 @@
 package com.toggl.timer.startedit.ui.editduration.model
 
 import com.toggl.common.Constants.ClockMath.secondsInAMinute
-import io.kotlintest.matchers.beGreaterThanOrEqualTo
-import io.kotlintest.matchers.beLessThanOrEqualTo
-import io.kotlintest.should
-import io.kotlintest.shouldBe
+import io.kotest.matchers.beGreaterThanOrEqualTo
+import io.kotest.matchers.beLessThanOrEqualTo
+import io.kotest.should
+import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test

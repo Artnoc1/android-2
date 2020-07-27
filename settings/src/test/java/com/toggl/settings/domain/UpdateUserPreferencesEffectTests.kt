@@ -6,8 +6,8 @@ import com.toggl.models.domain.SmartAlertsOption
 import com.toggl.repository.interfaces.SettingsRepository
 import com.toggl.settings.common.CoroutineTest
 import com.toggl.settings.common.createUserPreferences
-import io.kotlintest.matchers.boolean.shouldBeTrue
-import io.kotlintest.shouldBe
+import io.kotest.matchers.boolean.shouldBeTrue
+import io.kotest.matchers.shouldBe
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi

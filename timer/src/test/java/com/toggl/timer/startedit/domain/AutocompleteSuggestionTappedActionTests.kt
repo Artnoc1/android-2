@@ -18,11 +18,11 @@ import com.toggl.timer.common.testReduceState
 import com.toggl.timer.exceptions.ProjectDoesNotExistException
 import com.toggl.timer.exceptions.TagDoesNotExistException
 import com.toggl.timer.project.domain.createProject
-import io.kotlintest.matchers.collections.shouldBeSingleton
-import io.kotlintest.matchers.collections.shouldContain
-import io.kotlintest.matchers.types.shouldBeTypeOf
-import io.kotlintest.matchers.types.shouldNotBeNull
-import io.kotlintest.shouldBe
+import io.kotest.matchers.collections.shouldBeSingleton
+import io.kotest.matchers.collections.shouldContain
+import io.kotest.matchers.types.shouldBeTypeOf
+import io.kotest.matchers.types.shouldNotBeNull
+import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.DisplayName

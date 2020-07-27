@@ -6,7 +6,7 @@ import com.toggl.timer.common.assertNoEffectsWereReturned
 import com.toggl.models.domain.EditableTimeEntry
 import com.toggl.timer.common.testReduce
 import com.toggl.timer.common.testReduceState
-import io.kotlintest.shouldBe
+import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi

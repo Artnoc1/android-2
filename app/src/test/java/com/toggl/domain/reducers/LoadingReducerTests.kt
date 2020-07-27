@@ -34,10 +34,10 @@ import com.toggl.repository.interfaces.TagRepository
 import com.toggl.repository.interfaces.TaskRepository
 import com.toggl.repository.interfaces.UserRepository
 import com.toggl.repository.interfaces.WorkspaceRepository
-import io.kotlintest.matchers.collections.shouldBeEmpty
-import io.kotlintest.matchers.collections.shouldContainExactlyInAnyOrder
-import io.kotlintest.matchers.types.shouldBeInstanceOf
-import io.kotlintest.shouldBe
+import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
+import io.kotest.matchers.types.shouldBeInstanceOf
+import io.kotest.matchers.shouldBe
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.jupiter.api.DisplayName

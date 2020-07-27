@@ -11,7 +11,7 @@ import com.toggl.onboarding.common.domain.OnboardingAction
 import com.toggl.onboarding.login.domain.LoginAction
 import com.toggl.timer.common.domain.TimerAction
 import com.toggl.timer.startedit.domain.StartEditAction
-import io.kotlintest.specs.FreeSpec
+import io.kotest.specs.FreeSpec
 import io.mockk.spyk
 import io.mockk.verify
 

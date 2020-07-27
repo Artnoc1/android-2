@@ -51,7 +51,7 @@ class CalendarLayoutCalculator @Inject constructor(private val timeService: Time
 
         val now = timeService.now()
         val group = buckets.last()
-        val maxEndTime = group.map { calculateEndTimeWith(it, now) }.max() ?: OffsetDateTime.MIN
+        val maxEndTime = group.map { calculateEndTimeWith(it, now) }.maxOrNull() ?: OffsetDateTime.MIN
         if (calendarItem.startTime < maxEndTime)
             group.add(calendarItem)
         else

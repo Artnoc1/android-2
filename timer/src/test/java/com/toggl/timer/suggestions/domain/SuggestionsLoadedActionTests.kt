@@ -5,7 +5,7 @@ import com.toggl.common.services.time.TimeService
 import com.toggl.timer.common.CoroutineTest
 import com.toggl.timer.common.testReduceNoEffects
 import com.toggl.timer.common.testReduceState
-import io.kotlintest.shouldBe
+import io.kotest.matchers.shouldBe
 import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.jupiter.api.DisplayName

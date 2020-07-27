@@ -24,8 +24,8 @@ import com.toggl.settings.domain.FeedbackDataBuilder
 import com.toggl.settings.domain.SettingsReducer
 import com.toggl.settings.domain.SettingsState
 import com.toggl.settings.domain.SignOutEffect
-import io.kotlintest.matchers.collections.shouldBeEmpty
-import io.kotlintest.matchers.types.shouldBeTypeOf
+import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.types.shouldBeTypeOf
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest

@@ -1,10 +1,10 @@
 package com.toggl.timer.common
 
 import com.toggl.architecture.DispatcherProvider
-import io.kotlintest.TestCase
-import io.kotlintest.TestResult
-import io.kotlintest.specs.AbstractFreeSpec
-import io.kotlintest.specs.FreeSpec
+import io.kotest.TestCase
+import io.kotest.TestResult
+import io.kotest.specs.AbstractFreeSpec
+import io.kotest.specs.FreeSpec
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
