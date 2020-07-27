@@ -1,8 +1,6 @@
 package com.toggl.common.extensions
 
-import android.content.Context
 import android.graphics.drawable.GradientDrawable
-import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.updateLayoutParams
@@ -38,4 +36,3 @@ fun View.adjustMarginToNavigationBarInsets() {
         insets
     }
 }
-
