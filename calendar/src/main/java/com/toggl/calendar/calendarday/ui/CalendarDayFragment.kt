@@ -10,6 +10,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.toggl.calendar.R
 import com.toggl.calendar.datepicker.domain.CalendarDatePickerAction
 import com.toggl.calendar.datepicker.ui.CalendarDatePickerStoreViewModel
+import com.toggl.common.extensions.adjustPaddingToStatusBarInsets
 import com.toggl.common.feature.models.SelectedCalendarItem
 import com.toggl.common.feature.navigation.getRouteParam
 import com.toggl.common.services.permissions.PermissionRequesterService
@@ -43,6 +44,8 @@ class CalendarDayFragment : Fragment(R.layout.fragment_calendarday) {
     @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        date_picker_container.adjustPaddingToStatusBarInsets()
 
         daysAdapter = CalendarDayPageFragmentAdapter(this)
         calendar_day_pager.adapter = daysAdapter

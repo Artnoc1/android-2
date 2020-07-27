@@ -1,4 +1,4 @@
-package com.toggl.settings.ui.composables
+package com.toggl.settings.ui.composables.pages
 
 import androidx.compose.Composable
 import androidx.compose.collectAsState
@@ -7,6 +7,7 @@ import androidx.compose.setValue
 import androidx.compose.state
 import androidx.ui.core.Alignment
 import androidx.ui.core.Modifier
+import androidx.ui.foundation.Icon
 import androidx.ui.foundation.Text
 import androidx.ui.input.TextFieldValue
 import androidx.ui.layout.Column
@@ -25,9 +26,11 @@ import androidx.ui.material.OutlinedButton
 import androidx.ui.material.OutlinedTextField
 import androidx.ui.material.Scaffold
 import androidx.ui.material.TopAppBar
+import androidx.ui.material.icons.Icons
 import androidx.ui.material.icons.filled.ArrowBack
 import androidx.ui.res.stringResource
 import androidx.ui.tooling.preview.Preview
+import androidx.ui.unit.Dp
 import androidx.ui.unit.dp
 import com.toggl.architecture.Loadable
 import com.toggl.settings.R
@@ -43,25 +46,30 @@ import kotlinx.coroutines.flow.Flow
 fun FeedbackPage(
     sendFeedbackRequest: Flow<Loadable<Unit>>,
     onBack: () -> Unit,
-    onFeedbackSent: (String) -> Unit
+    onFeedbackSent: (String) -> Unit,
+    statusBarHeight: Dp
 ) {
     val sendFeedbackRequestState by sendFeedbackRequest.collectAsState(Loadable.Uninitialized)
     TogglTheme {
         Scaffold(
             topBar = {
                 TopAppBar(
+                    modifier = Modifier.padding(top = statusBarHeight),
                     backgroundColor = MaterialTheme.colors.surface,
                     contentColor = MaterialTheme.colors.onSurface,
                     title = { Text(text = stringResource(R.string.submit_feedback)) },
                     navigationIcon = {
                         IconButton(onClick = onBack) {
-                            androidx.ui.foundation.Icon(androidx.ui.material.icons.Icons.Filled.ArrowBack)
+                            Icon(Icons.Filled.ArrowBack)
                         }
                     }
                 )
             },
             bodyContent = {
-                FeedbackForm(sendFeedbackRequestState, onFeedbackSent)
+                FeedbackForm(
+                    sendFeedbackRequestState,
+                    onFeedbackSent
+                )
             }
         )
     }

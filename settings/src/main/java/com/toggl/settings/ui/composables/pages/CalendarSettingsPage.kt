@@ -15,6 +15,8 @@ import androidx.ui.material.TopAppBar
 import androidx.ui.material.icons.filled.ArrowBack
 import androidx.ui.res.stringResource
 import androidx.ui.tooling.preview.Preview
+import androidx.ui.unit.Dp
+import androidx.ui.unit.dp
 import com.toggl.models.domain.SettingsType
 import com.toggl.settings.R
 import com.toggl.settings.compose.ThemedPreview
@@ -33,12 +35,16 @@ import kotlinx.coroutines.flow.Flow
 @Composable
 fun CalendarSettingsPage(
     calendarSettingsViewModels: Flow<List<CalendarSettingsViewModel>>,
+    statusBarHeight: Dp,
+    navigationBarHeight: Dp,
     dispatcher: (SettingsAction) -> Unit
 ) {
     val observableState by calendarSettingsViewModels.collectAsState(listOf())
     TogglTheme {
         CalendarSettingsPageContent(
             observableState,
+            statusBarHeight,
+            navigationBarHeight,
             dispatcher
         )
     }
@@ -47,11 +53,14 @@ fun CalendarSettingsPage(
 @Composable
 fun CalendarSettingsPageContent(
     calendarSettingsViewModels: List<CalendarSettingsViewModel>,
+    statusBarHeight: Dp,
+    navigationBarHeight: Dp,
     dispatcher: (SettingsAction) -> Unit
 ) {
     Scaffold(
         topBar = {
             TopAppBar(
+                modifier = Modifier.padding(top = statusBarHeight),
                 backgroundColor = MaterialTheme.colors.surface,
                 contentColor = MaterialTheme.colors.onSurface,
                 title = { Text(text = stringResource(R.string.settings)) },
@@ -63,12 +72,18 @@ fun CalendarSettingsPageContent(
             )
         },
         bodyContent = {
-            LazyColumnItems(calendarSettingsViewModels) { viewModel ->
+            val lastItem = calendarSettingsViewModels.lastOrNull()
+            LazyColumnItems(items = calendarSettingsViewModels) { viewModel ->
+                val bottomPadding = if (viewModel == lastItem) navigationBarHeight else 0.dp
                 when (viewModel) {
                     is CalendarSettingsViewModel.IntegrationEnabled ->
                         LinkCalendarsSection(viewModel.accessGranted, dispatcher)
                     is CalendarSettingsViewModel.CalendarSection ->
-                        Section(section = viewModel.section, dispatcher = dispatcher)
+                        Section(
+                            section = viewModel.section,
+                            dispatcher = dispatcher,
+                            modifier = Modifier.padding(bottom = bottomPadding)
+                        )
                 }
             }
         }
@@ -100,7 +115,7 @@ fun LinkCalendarsSection(
 @Preview("Settings page light theme")
 fun PreviewCalendarSettingsPageLight() {
     ThemedPreview(false) {
-        CalendarSettingsPageContent(calendarSettingsPreviewData) { }
+        CalendarSettingsPageContent(calendarSettingsPreviewData, 10.dp, 10.dp) { }
     }
 }
 
@@ -108,7 +123,7 @@ fun PreviewCalendarSettingsPageLight() {
 @Preview("Settings page dark theme")
 fun PreviewCalendarSettingsPageDark() {
     ThemedPreview(true) {
-        CalendarSettingsPageContent(calendarSettingsPreviewData) { }
+        CalendarSettingsPageContent(calendarSettingsPreviewData, 10.dp, 10.dp) { }
     }
 }
 

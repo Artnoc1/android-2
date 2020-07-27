@@ -10,8 +10,12 @@ import androidx.ui.layout.padding
 import androidx.ui.material.MaterialTheme
 import androidx.ui.material.Scaffold
 import androidx.ui.material.TopAppBar
+import androidx.ui.res.stringResource
 import androidx.ui.tooling.preview.Preview
+import androidx.ui.unit.Dp
+import androidx.ui.unit.dp
 import com.toggl.models.domain.SettingsType
+import com.toggl.settings.R
 import com.toggl.settings.compose.ThemedPreview
 import com.toggl.settings.compose.theme.TogglTheme
 import com.toggl.settings.domain.SettingsAction
@@ -25,14 +29,16 @@ import kotlinx.coroutines.flow.Flow
 @Composable
 fun SettingsPage(
     sectionsState: Flow<List<SettingsSectionViewModel>>,
-    pageTitle: String,
+    statusBarHeight: Dp,
+    navigationBarHeight: Dp,
     dispatcher: (SettingsAction) -> Unit = {}
 ) {
     val observableSectionState by sectionsState.collectAsState(listOf())
     TogglTheme {
         SettingsPageContent(
             observableSectionState,
-            pageTitle,
+            statusBarHeight,
+            navigationBarHeight,
             dispatcher
         )
     }
@@ -42,22 +48,24 @@ fun SettingsPage(
 @Composable
 fun SettingsPageContent(
     sectionsState: List<SettingsSectionViewModel>,
-    pageTitle: String,
+    statusBarHeight: Dp,
+    navigationBarHeight: Dp,
     dispatcher: (SettingsAction) -> Unit = {}
 ) {
     Scaffold(
         topBar = {
             TopAppBar(
+                modifier = Modifier.padding(top = statusBarHeight),
                 backgroundColor = MaterialTheme.colors.surface,
                 contentColor = MaterialTheme.colors.onSurface,
-                title = { Text(text = pageTitle) }
+                title = { Text(text = stringResource(R.string.settings)) }
             )
         },
-        bodyContent = { innerPadding ->
+        bodyContent = {
             SectionList(
                 sectionsList = sectionsState,
                 dispatcher = dispatcher,
-                modifier = Modifier.padding(innerPadding)
+                navigationBarHeight = navigationBarHeight
             )
         }
     )
@@ -67,13 +75,17 @@ fun SettingsPageContent(
 private fun SectionList(
     sectionsList: List<SettingsSectionViewModel>,
     dispatcher: (SettingsAction) -> Unit,
-    modifier: Modifier
+    navigationBarHeight: Dp
 ) {
+    val lastSection = sectionsList.lastOrNull()
     LazyColumnItems(sectionsList) { section ->
+
+        val bottomPadding = if (section == lastSection) navigationBarHeight else 0.dp
+
         Section(
             section = section,
             dispatcher = dispatcher,
-            modifier = modifier
+            modifier = Modifier.padding(bottom = bottomPadding)
         )
     }
 }
@@ -85,7 +97,8 @@ fun PreviewSettingsPageLight() {
     ThemedPreview(false) {
         SettingsPageContent(
             settingsListPreviewData,
-            "Settings"
+            10.dp,
+            10.dp
         )
     }
 }
@@ -97,7 +110,8 @@ fun PreviewSettingsPageDark() {
     ThemedPreview(true) {
         SettingsPageContent(
             settingsListPreviewData,
-            "Settings"
+            10.dp,
+            10.dp
         )
     }
 }

@@ -1,6 +1,8 @@
 package com.toggl.common.extensions
 
+import android.content.Context
 import android.graphics.drawable.GradientDrawable
+import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.updateLayoutParams
@@ -21,9 +23,9 @@ fun View.adjustPaddingToStatusBarInsets() {
     }
 }
 
-fun View.adjustPaddingToStatusBarAndNavigationBarInsets() {
+fun View.doOnInsetsChanged(callback: (Int, Int) -> Unit) {
     setOnApplyWindowInsetsListener { _, insets ->
-        updatePadding(top = paddingTop + insets.systemWindowInsetTop, bottom = insets.systemWindowInsetBottom)
+        callback(insets.systemWindowInsetTop, insets.systemWindowInsetBottom)
         setOnApplyWindowInsetsListener(null)
         insets
     }
@@ -36,3 +38,4 @@ fun View.adjustMarginToNavigationBarInsets() {
         insets
     }
 }
+
