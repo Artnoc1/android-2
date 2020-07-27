@@ -21,6 +21,6 @@ class FeedbackBodySerializerTest {
 
         val json = jsonSerializer.serialize(feedbackBody, mockk(), mockk())
 
-        json.toString() shouldBe  "{\"email\":\"$expectedEmail\",\"message\":\"$expectedMessage\",\"data\":[{\"key\":\"device\",\"value\":\"${data["device"]}\"},{\"key\":\"some random key\",\"value\":\"${data["some random key"]}\"}]}"
+        json.toString() shouldBe "{\"email\":\"$expectedEmail\",\"message\":\"$expectedMessage\",\"data\":[{\"key\":\"device\",\"value\":\"${data["device"]}\"},{\"key\":\"some random key\",\"value\":\"${data["some random key"]}\"}]}"
     }
 }
